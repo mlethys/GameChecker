@@ -1,0 +1,61 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2014-07-20, 21:44:10
+    Author     : mlethys
+*/
+
+#container {
+    width: 1024px;
+    margin: auto;
+    border: 1px
+}
+#loginBarBackground {
+    background-color: #ae0200; 
+    width: 1024px; 
+    height: 24px; 
+    margin: auto
+}
+#loginBar {
+    background-color: #aaaaaa; 
+    border-radius: 10px; 
+    margin: auto; 
+    width: 1000px;
+    height: 24px;
+    border: 1px
+}
+.imageSliderWrapper {
+    overflow: hidden;
+    height: 150px;
+    border-top: 1px;
+}
+#imageSlider {
+    position: relative;
+    overflow: hidden;
+    height: 150px;
+    padding:0;
+    left:0;
+}
+#imageSlider li {
+    position: initial;
+    max-width: 100%;
+    float: right;
+    list-style: none;
+    left: 0;
+}
+.slider {
+    width: 1024px;
+    height: 150px;
+    padding: 0px;
+    box-sizing: border-box;
+    background: #000000;
+}
+.menuBackground {
+    width: 1024px;
+    height: 35px;
+    margin-top: 40px;
+    background: #aaaaaa;
+}
