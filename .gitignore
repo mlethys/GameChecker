@@ -1,0 +1,5 @@
+#dirs
+lib/
+target/
+#files
+/nb-configuration.xml
