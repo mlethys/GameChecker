@@ -14,48 +14,182 @@ and open the template in the editor.
     border: 1px
 }
 #loginBarBackground {
-    background-color: #ae0200; 
+    background-color: #e5e5e5; 
     width: 1024px; 
-    height: 24px; 
-    margin: auto
+    height: 40px; 
+    margin: auto;
 }
-#loginBar {
-    background-color: #aaaaaa; 
-    border-radius: 10px; 
-    margin: auto; 
-    width: 1000px;
-    height: 24px;
-    border: 1px
+.loginRegButton {
+    width: 100px;
+    height: 30px;
+    background-color: #e5e5e5;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    text-align: center;
 }
-.imageSliderWrapper {
-    overflow: hidden;
-    height: 150px;
-    border-top: 1px;
-}
-#imageSlider {
-    position: relative;
-    overflow: hidden;
-    height: 150px;
-    padding:0;
-    left:0;
-}
-#imageSlider li {
-    position: initial;
-    max-width: 100%;
+#loginButton {
     float: right;
-    list-style: none;
-    left: 0;
 }
-.slider {
-    width: 1024px;
-    height: 150px;
-    padding: 0px;
-    box-sizing: border-box;
-    background: #000000;
+#loginButton a {
+    text-decoration: none;
+    color: #000000;
 }
-.menuBackground {
+#registerButton {
+    float: right;
+    margin-right: 50px;
+}
+#registerButton a {
+    text-decoration: none;
+    color: #000000;
+}
+#menuBar {
     width: 1024px;
-    height: 35px;
-    margin-top: 40px;
-    background: #aaaaaa;
+    height: 50px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+    border-radius: 5px;
+    clear: both;
+    background: -webkit-linear-gradient(#2c80fe, #0050c7); 
+    background: -o-linear-gradient(#2c80fe, #0050c7); 
+    background: -moz-linear-gradient(#2c80fe, #0050c7); 
+    background: linear-gradient(#2c80fe, #0050c7); 
+}
+#gameEnc {
+    float: right;
+    margin-top: -37px;
+}
+.menuText {
+    color: #ffffff;
+    text-decoration: none;
+    -webkit-text-stroke: 1px black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#sliderFrame {
+    position:relative;
+    width:1024px;
+    margin:0 auto;
+    border-radius: 5px;
+}
+
+#slider, #slider div.sliderInner {
+    width: 1025px;
+    height: 200px;/* Must be the same size as the slider images */
+    border-radius: 5px;
+}
+
+#slider {
+    background:#fff url(loading.gif) no-repeat 50% 50%;
+    position:relative;
+    margin:0 auto; /*center-aligned*/
+    transform: translate3d(0,0,0);
+    box-shadow: 0px 1px 5px #999999;
+}
+
+/* image wrapper */
+#slider a.imgLink, #slider div.video {
+    z-index:2;
+    position:absolute;
+    top:0px;
+    left:0px;
+    border:0;
+    padding:0;
+    margin:0;
+    width:100%;
+    height:100%;
+}
+#slider .video {
+    background:transparent url(video.png) no-repeat 50% 50%;
+}
+
+/* Caption styles */
+#slider div.mc-caption-bg, #slider div.mc-caption-bg2 {
+    position:absolute;
+    width:100%;
+    height:auto;
+    padding:10px 0;/* 10px will increase the height.*/
+    left:0px; /*if the caption needs to be aligned from right, specify by right instead of left. i.e. right:20px;*/
+    bottom:0px;/*if the caption needs to be aligned from top, specify by top instead of bottom. i.e. top:150px;*/
+    z-index:3;
+    overflow:hidden;
+    font-size: 0;
+}
+#slider div.mc-caption-bg 
+{
+    /* NOTE: Its opacity is to be set through the sliderOptions.captionOpacity setting in the js-image-slider.js file.*/
+    background:Black;/* or any other colors such as White, or: background:none; */
+}
+#slider div.mc-caption-bg2 {
+    background:none;
+}
+#slider div.mc-caption {
+    font: bold 14px/20px Arial;
+    color:#EEE;
+    z-index:4;
+    text-align:center;
+    background:none;
+}
+#slider div.mc-caption a {
+    color:#FB0;
+}
+#slider div.mc-caption a:hover {
+    color:#DA0;
+}
+
+
+/* ------ built-in navigation bullets wrapper ------*/
+/* Note: check themes\2\js-image-slider.css to see how to hide nav bullets */
+#slider div.navBulletsWrapper  {
+    top:320px;/* Its position is relative to the #slider */
+    text-align:center;
+    background:none;
+    position:relative;
+    z-index:5;
+}
+
+/* each bullet */
+#slider div.navBulletsWrapper div 
+{
+    width:11px; height:11px;
+    font-size:0;color:White;/*hide the index number in the bullet element*/
+    background:transparent url(bullet.png) no-repeat 0 0;
+    display:inline-block; *display:inline; zoom:1;
+    overflow:hidden;cursor:pointer;
+    margin:0 6px;/* set distance between each bullet*/
+}
+
+#slider div.navBulletsWrapper div.active {
+    background-position:0 -11px;
+}
+
+
+/* --------- Others ------- */
+
+#slider div.loading {
+    width:100%; height:100%;
+    background:transparent url(loading.gif) no-repeat 50% 50%;
+    filter: alpha(opacity=60);
+    opacity:0.6;
+    position:absolute;
+    left:0;
+    top:0; 
+    z-index:9;
+}
+
+#slider img, #slider>b, #slider a>b {
+    position:absolute; border:none; display:none;
+}
+
+#slider div.sliderInner {
+    overflow:hidden; 
+    -webkit-transform: rotate(0.000001deg);/* fixed the Chrome not crop border-radius bug*/
+    position:absolute; top:0; left:0;
+}
+
+#slider>a, #slider video, #slider audio {
+    display:none;
 }
