@@ -18,7 +18,7 @@ function changeImage(direction) {
         imgNum = imgLength;
     }
     document.getElementById('slideshow').src = images[imgNum];
-    return false; // prevent default link
+    return false;
 }
 window.setInterval(function() {
     changeImage(1);

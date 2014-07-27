@@ -3,8 +3,17 @@
     Author     : mlethys
 */
 
+html,
+body {
+   margin:0;
+   margin-top: 5px;
+   padding:0;
+   height:100%;
+}
+
 #container {
     width: 1024px;
+    min-height: 100%;
     margin: auto;
     border: 1px
 }
@@ -88,4 +97,67 @@
 }
 #preload { 
     display:none 
+}
+#mainBody {
+    width: 1024px;
+    height: auto;
+    //overflow: auto;
+}
+.mainBody {
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+    background: #ffffff;
+}
+#newsContainer {
+    width: 830px;
+    height: auto;
+    float: left;
+    box-shadow: 6px 6px 10px #888888;
+}
+#addsContainer {
+    width: 170px;
+    height: auto;
+    float: left;
+    margin-left: 20px;
+}
+.headline {
+    color: #0050c9;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 50px;
+}
+.newsText {
+    width: 600px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 50px;
+    font-size: 14px;
+}
+.add {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+}
+.footer {
+    width: 1024px;
+    height: 20px;
+    margin: auto;
+    float: bottom;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+    background: -webkit-linear-gradient(#2c80fe, #0050c7); 
+    background: -o-linear-gradient(#2c80fe, #0050c7); 
+    background: -moz-linear-gradient(#2c80fe, #0050c7); 
+    background: linear-gradient(#2c80fe, #0050c7); 
+}
+.footer p {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ffffff;
 }
