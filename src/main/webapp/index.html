@@ -4,6 +4,7 @@
         <title>Game Checker Service</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/main.css" type="text/css" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script type="text/javascript" src="js/slider.js"></script>
     </head>
     <body bgcolor="e5e5e5">
@@ -18,20 +19,23 @@
             </div>
             <div id="menuBar">
                 <div id="home">
-                    <a href="index.html"><img src="images/logo.png" alt="logo"/></a>
+                    <a href="index.html"><img src="images/logo1.png" alt="logo" 
+                                              onmouseover="this.src='images/logo2.png'"
+                                              onmouseout="this.src='images/logo1.png'"/></a>
                 </div>
-<!--                <div id="gameEnc">
-                    <a class="menuText" href="encyclopedia.html">Encyclopedia</a>
-                </div>-->
+                <div id="gameEnc" class="menuButton" onclick="location.href='encyclopedia.html';">
+                    <p class="menuText">Encyclopedia</p>
+                </div>
+                <div id="sqfa" class="menuButton" onclick="location.href='sqfa.html';">
+                    <p class="menuText">SQFA</p>
+                </div>
+                <div id="about" class="menuButton" onclick="location.href='about.html';">
+                    <p class="menuText">About</p>
+                </div>
+            </div>  
+            <img class="sliderImg" src="images/image1" id="slideshow">
+            <div id="preload">
             </div>
-            <div id="sliderFrame">
-        <div id="slider">
-            <img src="images/slide.jpg"/>
-            <img src="images/slide.jpg"/>
-            <img src="images/slide.jpg"/>
-            <img src="images/slide.jpg"/>
-        </div>
-    </div>
         </div>
     </body>
 </html>
