@@ -38,10 +38,12 @@ body {
 #loginButton a {
     text-decoration: none;
     color: #000000;
+    cursor: pointer;
 }
 #registerButton {
     float: right;
     margin-right: 50px;
+    cursor: pointer;
 }
 #registerButton a {
     text-decoration: none;
@@ -160,4 +162,22 @@ body {
     font-size: 12px;
     font-family: Arial, Helvetica, sans-serif;
     color: #ffffff;
+}
+
+.loginText {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.loginRegister {
+    height: auto + 50px;;
+}
+#loginForm {
+    margin-top: 100px;
+}
+.formButton {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
