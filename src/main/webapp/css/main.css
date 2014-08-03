@@ -164,7 +164,7 @@ body {
     color: #ffffff;
 }
 
-.loginText {
+.loginRegisterText {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     font-weight: bold;
@@ -172,7 +172,7 @@ body {
 }
 
 .loginRegister {
-    height: auto + 50px;;
+    height: auto;
 }
 #loginForm {
     margin-top: 100px;
@@ -180,4 +180,10 @@ body {
 .formButton {
     margin-top: 20px;
     margin-bottom: 20px;
+}
+.logRegHeadline {
+    color: #0050c9;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: auto;    
 }
