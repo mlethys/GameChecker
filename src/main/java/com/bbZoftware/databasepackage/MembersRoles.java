@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.bbZoftware.databasepackage;
+package com.bbzoftware.databasepackage;
 
-import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,57 +18,56 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Damian Le≈õniak
+ * @author Damian Leúniak
  * @version 1.0
  */
-
-@Entity
-@Table(name = "MEMBERS_ROLES")
-public class MembersRoles implements Serializable {
-    private long membersRolesId;
-    private Members membersMemberId;
-    private long rolesRoleId;
-    
-    public MembersRoles(){
-        
-    }
-
-    public MembersRoles(long membersRolesId, Members membersMemberId, long rolesRoleId) {
-        this.membersRolesId = membersRolesId;
-        this.membersMemberId = membersMemberId;
-        this.rolesRoleId = rolesRoleId;
-    }
+@Entity(name="MEMBERS_ROLES")
+@Table(name="MEMBERS_ROLES")
+public class MembersRoles {
 
     @Id
-    @Column(name = "MEMBERS_ROLES_ID", unique = true, nullable = false, updatable = false, precision = 5)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    public long getMembersRolesId() {
-        return membersRolesId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MEMBERS_ROLES_ID")
+    protected int id;
+    
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="MEMBERS_MEMBER_ID")
+    protected Member member;
+    
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="ROLES_ROLE_ID")
+    protected Role role;
+    
+    public MembersRoles(){};
+    
+    public MembersRoles(Member member, Role role) {
+        this.member = member;
+        this.role = role;
     }
 
-    public void setMembersRolesId(long membersRolesId) {
-        this.membersRolesId = membersRolesId;
-    }
-    
-    @ManyToOne
-    @JoinColumn(name = "MEMBERS_MEMBER_ID")
-    public Members getMembersMemberId() {
-        return membersMemberId;
+    public int getId() {
+        return id;
     }
 
-    public void setMembersMemberId(Members membersMemberId) {
-        this.membersMemberId = membersMemberId;
-    }
-    
-    
-    @JoinColumn(name = "ROLES_ROLE_ID")
-    public long getRolesRoleId() {
-        return rolesRoleId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setRolesRoleId(long rolesRoleId) {
-        this.rolesRoleId = rolesRoleId;
+    public Member getMember() {
+        return member;
     }
-    
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     
 }

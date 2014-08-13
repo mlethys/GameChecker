@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="hibernate.dialect">org.hibernate.dialect.DerbyDialect</property>
-    <property name="hibernate.connection.driver_class">org.apache.derby.jdbc.ClientDriver</property>
-    <property name="hibernate.connection.url">jdbc:derby://localhost:1527/GameCheckerDB</property>
-    <property name="hibernate.connection.username">bbZ</property>
-    <property name="hibernate.connection.password">bbZ</property>
-    <property name="current_session_context_class">thread</property>
-    <property name="show_sql">true</property>
-    <property name="hbm2ddl.auto">update</property>
-    <mapping resource="../../hibernate.hbm.xml"/>
-    <mapping resource="../java/com/bbZoftware/databasepackage/hibernate.hbm.xml"/>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/gamecheckerdb?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">haslo3</property>
+    <property name="hibernate.show_sql">false</property>
+    <property name="hibernate.hbm2ddl.auto">create-drop</property>
+    
+    <mapping class="com.bbzoftware.databasepackage.Member"/>
+    <mapping class="com.bbzoftware.databasepackage.Role"/>
+    <mapping class="com.bbzoftware.databasepackage.MembersRoles"/>
   </session-factory>
 </hibernate-configuration>
