@@ -11,19 +11,19 @@
     <property name="hibernate.show_sql">false</property>
     <property name="hibernate.hbm2ddl.auto">create-drop</property>
     
-    <mapping class="com.bbzoftware.hibernateEntities.Member"/>             <!-- DONE -->   <!-- DONE -->
-    <mapping class="com.bbzoftware.hibernateEntities.Role"/>               <!-- DONE -->   <!-- DONE -->
-    <mapping class="com.bbzoftware.hibernateEntities.MembersRoles"/>       <!-- DONE -->   <!-- DONE -->
-    <mapping class="com.bbzoftware.hibernateEntities.Library"/>            <!-- DONE -->   <!-- DONE -->
-    <mapping class="com.bbzoftware.hibernateEntities.Game"/>               <!-- DONE -->   <!-- DONE -->
-    <mapping class="com.bbzoftware.hibernateEntities.Gametype"/>           <!-- DONE -->   <!-- DONE -->
-    <mapping class="com.bbzoftware.hibernateEntities.SqfaComment"/>        <!-- DONE -->   <!-- DONE -->
-    <mapping class="com.bbzoftware.hibernateEntities.SqfaQuestion"/>       <!-- DONE -->   <!-- DONE -->
-    <mapping class="com.bbzoftware.hibernateEntities.SqfaAnswer"/>         <!-- DONE -->   <!-- DONE -->
-    <mapping class="com.bbzoftware.hibernateEntities.Company"/>            <!-- DONE -->   <!-- DONE -->
-    <mapping class="com.bbzoftware.hibernateEntities.MembersPC"/>          <!-- DONE -->   <!-- DONE -->    
-    <mapping class="com.bbzoftware.hibernateEntities.MembersCPU"/>         <!-- DONE -->   <!-- DONE -->         
-    <mapping class="com.bbzoftware.hibernateEntities.MembersGPU"/>         <!-- DONE -->   <!-- DONE -->   
-    <mapping class="com.bbzoftware.hibernateEntities.GamesLibraries"/>     <!-- DONE -->   <!-- DONE -->
+    <mapping class="com.bbzoftware.hibernateEntities.Member"/>
+    <mapping class="com.bbzoftware.hibernateEntities.Role"/>
+    <mapping class="com.bbzoftware.hibernateEntities.MembersRoles"/>
+    <mapping class="com.bbzoftware.hibernateEntities.Library"/>
+    <mapping class="com.bbzoftware.hibernateEntities.Game"/>
+    <mapping class="com.bbzoftware.hibernateEntities.Gametype"/>
+    <mapping class="com.bbzoftware.hibernateEntities.SqfaComment"/>
+    <mapping class="com.bbzoftware.hibernateEntities.SqfaQuestion"/>
+    <mapping class="com.bbzoftware.hibernateEntities.SqfaAnswer"/>
+    <mapping class="com.bbzoftware.hibernateEntities.Company"/>
+    <mapping class="com.bbzoftware.hibernateEntities.MembersPC"/>
+    <mapping class="com.bbzoftware.hibernateEntities.MembersCPU"/>
+    <mapping class="com.bbzoftware.hibernateEntities.MembersGPU"/>
+    <mapping class="com.bbzoftware.hibernateEntities.GamesLibraries"/>
   </session-factory>
 </hibernate-configuration>
