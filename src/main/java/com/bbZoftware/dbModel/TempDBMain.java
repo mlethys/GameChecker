@@ -4,10 +4,12 @@
  * and open the template in the editor.
  */
 
-package com.bbZoftware.databasepackage;
+package com.bbZoftware.dbModel;
 
+import com.bbZoftware.hibernateEntities.Member;
+import com.bbZoftware.hibernateEntities.MembersRoles;
+import com.bbZoftware.hibernateEntities.Role;
 import java.sql.Date;
-import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -23,33 +25,26 @@ import org.hibernate.service.ServiceRegistryBuilder;
 public class TempDBMain {
     
     public static void main(String[] args) {
-        Configuration config = new Configuration();
-        config.configure();
-        ServiceRegistryBuilder srBuilder = new ServiceRegistryBuilder();
-        srBuilder.applySettings(config.getProperties());
-        ServiceRegistry serviceRegistry = srBuilder.buildServiceRegistry();
-        SessionFactory factory = config.buildSessionFactory(serviceRegistry);
-        
-        Session session = factory.openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         
         Transaction transaction = session.beginTransaction();
         
-        Member me = new Member("bbZ", new Date(new java.util.Date().getTime()), "gamemajster@gmail.com", 22, 100);
         Role myRole3 = new Role("Administrator");
         Role myRole2 = new Role("Junior Admin");
         Role myRole1 = new Role("Moderator");
         Role myRole0 = new Role("User");
-        MembersRoles membersRole = new MembersRoles(me, myRole3);
+        //MembersRoles membersRole = new MembersRoles(me, myRole3);
         
         session.save(myRole0);
         session.save(myRole1);
         session.save(myRole2);
-        //session.save(myRole3);
-        session.save(membersRole);
+        session.save(myRole3);
 
         transaction.commit();
-        
         session.close();
+        
+        DatabaseModel dbm = new DatabaseModel();
+        dbm.addNewMember("bbZ", "tempPassword", "gamemajster@gmail.com", 22, 11, 1991);
     }
 
 }

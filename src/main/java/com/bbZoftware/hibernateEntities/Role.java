@@ -2,10 +2,11 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ */ 
 
-package com.bbzoftware.databasepackage;
+package com.bbZoftware.hibernateEntities;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +23,7 @@ import javax.persistence.Table;
  */
 @Entity(name="ROLES")
 @Table(name="ROLES")
-public class Role {
+public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="ROLE_ID")
@@ -33,6 +34,8 @@ public class Role {
 
     @OneToMany(mappedBy = "role")
     protected List<MembersRoles> membersRoles;
+
+    public Role(){}
     
     public Role(String name) {
         this.name = name;
@@ -61,7 +64,6 @@ public class Role {
     public void setMembersRoles(List<MembersRoles> membersRoles) {
         this.membersRoles = membersRoles;
     }
-    
     
     
 }

@@ -11,8 +11,19 @@
     <property name="hibernate.show_sql">false</property>
     <property name="hibernate.hbm2ddl.auto">create-drop</property>
     
-    <mapping class="com.bbzoftware.databasepackage.Member"/>
-    <mapping class="com.bbzoftware.databasepackage.Role"/>
-    <mapping class="com.bbzoftware.databasepackage.MembersRoles"/>
+    <mapping class="com.bbzoftware.hibernateEntities.Member"/>             <!-- DONE -->   <!-- DONE -->
+    <mapping class="com.bbzoftware.hibernateEntities.Role"/>               <!-- DONE -->   <!-- DONE -->
+    <mapping class="com.bbzoftware.hibernateEntities.MembersRoles"/>       <!-- DONE -->   <!-- DONE -->
+    <mapping class="com.bbzoftware.hibernateEntities.Library"/>            <!-- DONE -->   <!-- DONE -->
+    <mapping class="com.bbzoftware.hibernateEntities.Game"/>               <!-- DONE -->   <!-- DONE -->
+    <mapping class="com.bbzoftware.hibernateEntities.Gametype"/>           <!-- DONE -->   <!-- DONE -->
+    <mapping class="com.bbzoftware.hibernateEntities.SqfaComment"/>        <!-- DONE -->   <!-- DONE -->
+    <mapping class="com.bbzoftware.hibernateEntities.SqfaQuestion"/>       <!-- DONE -->   <!-- DONE -->
+    <mapping class="com.bbzoftware.hibernateEntities.SqfaAnswer"/>         <!-- DONE -->   <!-- DONE -->
+    <mapping class="com.bbzoftware.hibernateEntities.Company"/>            <!-- DONE -->   <!-- DONE -->
+    <mapping class="com.bbzoftware.hibernateEntities.MembersPC"/>          <!-- DONE -->   <!-- DONE -->    
+    <mapping class="com.bbzoftware.hibernateEntities.MembersCPU"/>         <!-- DONE -->   <!-- DONE -->         
+    <mapping class="com.bbzoftware.hibernateEntities.MembersGPU"/>         <!-- DONE -->   <!-- DONE -->   
+    <mapping class="com.bbzoftware.hibernateEntities.GamesLibraries"/>     <!-- DONE -->   <!-- DONE -->
   </session-factory>
 </hibernate-configuration>

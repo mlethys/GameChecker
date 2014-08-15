@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package com.bbzoftware.databasepackage;
+package com.bbZoftware.hibernateEntities;
 
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,17 +19,17 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Damian Leúniak
+ * @author Damian Le≈õniak
  * @version 1.0
  */
-@Entity(name="MEMBERS_ROLES")
+@Entity(name = "MEMBERS_ROLES")
 @Table(name="MEMBERS_ROLES")
-public class MembersRoles {
-
+public class MembersRoles implements Serializable{
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBERS_ROLES_ID")
-    protected int id;
+    private int id;
     
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="MEMBERS_MEMBER_ID")
@@ -38,19 +39,11 @@ public class MembersRoles {
     @JoinColumn(name="ROLES_ROLE_ID")
     protected Role role;
     
-    public MembersRoles(){};
+    public MembersRoles(){}
     
     public MembersRoles(Member member, Role role) {
         this.member = member;
         this.role = role;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Member getMember() {
@@ -67,6 +60,14 @@ public class MembersRoles {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     
