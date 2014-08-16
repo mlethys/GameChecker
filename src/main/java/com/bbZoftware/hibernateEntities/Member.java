@@ -24,26 +24,29 @@ public class Member implements Serializable  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
-    @Column(name = "MEMBER_NAME")
+    @Column(name = "MEMBER_NAME", unique = true, nullable = false, length = 15)
     protected String name;
     
-    @Column(name = "MEMBER_PASSWORD")
+    @Column(name = "MEMBER_PASSWORD", nullable = false)
     protected String password;
     
-    @Column(name = "MEMBER_REGISTER_DATE")
+    @Column(name = "MEMBER_REGISTER_DATE", nullable = false)
     protected Date registerDate;
     
-    @Column(name = "MEMBER_MAIL")
+    @Column(name = "MEMBER_MAIL", unique = true, nullable = false, length = 45)
     protected String mail;
     
-    @Column(name = "MEMBER_BIRTHDATE")
+    @Column(name = "MEMBER_BIRTHDATE", nullable = false)
     protected Date birthDate;
     
-    @Column(name = "MEMBER_POINTS")
+    @Column(name = "MEMBER_POINTS", nullable = false)
     protected int points;
     
     @OneToMany(mappedBy = "member")
     protected List<MembersRoles> membersRoles;
+    
+    @OneToMany(mappedBy = "member")
+    protected List<MembersPC> membersPCs;
     
     @OneToOne
     @JoinColumn(name = "MEMBERS_LIBRARIES_LIBRARY_ID")

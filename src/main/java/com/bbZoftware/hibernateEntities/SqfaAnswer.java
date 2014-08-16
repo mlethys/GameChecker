@@ -18,27 +18,27 @@ import javax.persistence.*;
 @Entity(name="SQFA_ANSWERS")
 @Table(name="SQFA_ANSWERS")
 public class SqfaAnswer implements Serializable {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="SQFA_ANSWER_ID")
+    @Column(name="SQFA_ANSWER_ID", unique = true, nullable = false)
     protected int id;
     
-    @Column(name="SQFA_ANSWER_CONTENT")
+    @Column(name="SQFA_ANSWER_CONTENT", unique = true, nullable = false, length = Integer.MAX_VALUE)
     protected String content;
     
-    @Column(name="SQFA_ANSWER_POINTS")
+    @Column(name="SQFA_ANSWER_POINTS", nullable = false)
     protected int points;
     
     @OneToMany(mappedBy = "sqfaAnswer")
     protected List<SqfaComment> sqfaComments;
     
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "MEMBERS_MEMBER_ID")
+    @JoinColumn(name = "MEMBERS_MEMBER_ID", nullable = false)
     protected Member member;
     
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "SQFA_QUESTIONS_QUESTION_ID")
+    @JoinColumn(name = "SQFA_QUESTIONS_QUESTION_ID", nullable = false)
     protected SqfaQuestion sqfaQuestion;
     
     public SqfaAnswer() {}

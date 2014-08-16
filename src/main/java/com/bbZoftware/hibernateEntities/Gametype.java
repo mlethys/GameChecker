@@ -21,16 +21,20 @@ public class Gametype implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="GAMETYPE_ID")
+    @Column(name="GAMETYPE_ID", unique = true, nullable = false)
     protected int id;
     
-    @Column(name="GAMETYPE_NAME")
+    @Column(name="GAMETYPE_NAME", unique = true, nullable = false, length = 45)
     protected String name;
     
     @OneToMany(mappedBy = "gametype")
     protected List<Game> games;
 
     public Gametype() {}
+    
+    public Gametype(String name) {
+        this.name = name;
+    }
 
     public int getId() {
         return id;

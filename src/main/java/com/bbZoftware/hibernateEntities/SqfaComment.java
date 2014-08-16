@@ -20,22 +20,22 @@ public class SqfaComment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="SQFA_COMMENT_ID")
+    @Column(name="SQFA_COMMENT_ID", unique = true, nullable = false)
     protected int id;
     
-    @Column(name="SQFA_COMMENT_CONTENT")
+    @Column(name="SQFA_COMMENT_CONTENT", nullable = false, length = Integer.MAX_VALUE)
     protected String content;
     
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="MEMBERS_MEMBER_ID")
+    @JoinColumn(name="MEMBERS_MEMBER_ID", nullable = false)
     protected Member member;
     
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="SQFA_QUESTIONS_QUESTION_ID")
+    @JoinColumn(name="SQFA_QUESTIONS_QUESTION_ID", nullable = false)
     protected SqfaQuestion sqfaQuestion;
     
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="SQFA_ANSWERS_ANSWER_ID")
+    @JoinColumn(name="SQFA_ANSWERS_ANSWER_ID", nullable = false)
     protected SqfaAnswer sqfaAnswer;
 
     public SqfaComment() {}

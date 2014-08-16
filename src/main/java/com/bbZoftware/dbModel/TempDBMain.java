@@ -6,16 +6,11 @@
 
 package com.bbZoftware.dbModel;
 
+import com.bbZoftware.hibernateEntities.Game;
 import com.bbZoftware.hibernateEntities.Member;
-import com.bbZoftware.hibernateEntities.MembersRoles;
 import com.bbZoftware.hibernateEntities.Role;
-import java.sql.Date;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
 
 /**
  *
@@ -45,6 +40,18 @@ public class TempDBMain {
         
         DatabaseModel dbm = new DatabaseModel();
         dbm.addNewMember("bbZ", "tempPassword", "gamemajster@gmail.com", 22, 11, 1991);
+        dbm.addNewGame("Jedi Academy", true, true, false, 5, 4, 2005, "Action");
+        
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        Member member = (Member) session.get(Member.class, 1);
+        Game game = (Game) session.get(Game.class, 1);
+
+        transaction.commit();
+        session.close();
+        
+        dbm.addGameToMembersLibrary(member, game);
     }
 
 }
