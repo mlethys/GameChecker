@@ -6,7 +6,7 @@
 
 package pl.gameChecker.model.hibernateEntities;
 
-import com.bbZoftware.hibernateEntities.*;
+
 import java.io.Serializable;
 import javax.persistence.*;
 
