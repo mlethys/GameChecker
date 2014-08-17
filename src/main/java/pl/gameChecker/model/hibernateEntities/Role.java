@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */ 
 
-package com.bbZoftware.hibernateEntities;
+package pl.gameChecker.model.hibernateEntities;
 
+import com.bbZoftware.hibernateEntities.*;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;

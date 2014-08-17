@@ -1,4 +1,4 @@
-package com.bbZoftware.hibernateEntities;
+package pl.gameChecker.model.hibernateEntities;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -7,6 +7,7 @@ package com.bbZoftware.hibernateEntities;
  */
 
 
+import com.bbZoftware.hibernateEntities.*;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;

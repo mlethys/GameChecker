@@ -4,18 +4,18 @@
  * and open the template in the editor.
  */
 
-package com.bbZoftware.dbModel;
+package pl.gameChecker.model.database;
 
-import com.bbZoftware.hibernateEntities.Library;
-import com.bbZoftware.hibernateEntities.Member;
-import com.bbZoftware.hibernateEntities.MembersRoles;
-import com.bbZoftware.hibernateEntities.Role;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.TimeZone;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import pl.gameChecker.model.hibernateEntities.Library;
+import pl.gameChecker.model.hibernateEntities.Member;
+import pl.gameChecker.model.hibernateEntities.MembersRoles;
+import pl.gameChecker.model.hibernateEntities.Role;
 
 /**
  *

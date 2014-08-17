@@ -4,18 +4,12 @@
  * and open the template in the editor.
  */
 
-package com.bbZoftware.dbModel;
+package pl.gameChecker.model.database;
 
-import com.bbZoftware.hibernateEntities.Member;
-import com.bbZoftware.hibernateEntities.MembersRoles;
-import com.bbZoftware.hibernateEntities.Role;
-import java.sql.Date;
+
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
+import pl.gameChecker.model.hibernateEntities.Role;
 
 /**
  *

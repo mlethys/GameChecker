@@ -1,4 +1,4 @@
-package com.bbZoftware.hibernateEntities;
+package pl.gameChecker.model.hibernateEntities;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -8,6 +8,7 @@ package com.bbZoftware.hibernateEntities;
 
 
 
+import com.bbZoftware.hibernateEntities.*;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.*;
@@ -17,23 +18,20 @@ import javax.persistence.*;
  * @author Damian Leśniak
  * @version 1.0
  */
-@Entity(name = "MEMBERS_GPUS")
-@Table(name="MEMBERS_GPUS")
-public class MembersGPU implements Serializable {
+@Entity(name = "MEMBERS_CPUS")
+@Table(name = "MEMBERS_CPUS")
+public class MembersCPU implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="MEMBERS_GPU_ID")
+    @Column(name="MEMBERS_CPU_ID")
     protected int id;
     
-    @Column(name = "MEMBERS_GPU_NAME")
+    @Column(name = "MEMBERS_CPU_NAME")
     protected String name;
     
-    @Column(name = "MEMBERS_GPU_RELEASE_DATE")
+    @Column(name = "MEMBERS_CPU_RELEASE_DATE")
     protected Date releaseDate;
-    
-    @Column(name = "MEMBERS_GPU_MEMORY")
-    protected int memory;
     
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "COMPANIES_COMPANY_ID")
@@ -43,7 +41,7 @@ public class MembersGPU implements Serializable {
     @JoinColumn(name = "MEMBERS_PCS_MEMBERS_PC_ID")
     protected MembersPC membersPC;
 
-    public MembersGPU() {}
+    public MembersCPU() {}
 
     public int getId() {
         return id;
@@ -67,14 +65,6 @@ public class MembersGPU implements Serializable {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
-    }
-
-    public int getMemory() {
-        return memory;
-    }
-
-    public void setMemory(int memory) {
-        this.memory = memory;
     }
 
     public Company getCompany() {
