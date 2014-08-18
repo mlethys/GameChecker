@@ -42,6 +42,13 @@ public class SqfaAnswer implements Serializable {
     protected SqfaQuestion sqfaQuestion;
     
     public SqfaAnswer() {}
+    
+    public SqfaAnswer(Member member, SqfaQuestion sqfaQuestion, String content) {
+        this.member = member;
+        this.sqfaQuestion = sqfaQuestion;
+        this.content = content;
+        this.points = 0;
+    }
 
     public int getId() {
         return id;
@@ -90,6 +97,4 @@ public class SqfaAnswer implements Serializable {
     public void setSqfaQuestion(SqfaQuestion sqfaQuestion) {
         this.sqfaQuestion = sqfaQuestion;
     }
-    
-    
 }

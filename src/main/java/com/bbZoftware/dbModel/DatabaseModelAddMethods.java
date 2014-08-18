@@ -16,6 +16,9 @@ import com.bbZoftware.hibernateEntities.MembersGPU;
 import com.bbZoftware.hibernateEntities.MembersPC;
 import com.bbZoftware.hibernateEntities.MembersRoles;
 import com.bbZoftware.hibernateEntities.Role;
+import com.bbZoftware.hibernateEntities.SqfaAnswer;
+import com.bbZoftware.hibernateEntities.SqfaComment;
+import com.bbZoftware.hibernateEntities.SqfaQuestion;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -30,11 +33,11 @@ import org.hibernate.criterion.Restrictions;
  * @author Damian Leśniak
  * @version 1.0
  */
-public class DatabaseModel {
-
-    Session session;
-    Transaction transaction;
+public class DatabaseModelAddMethods {
     
+    private Session session;
+    private Transaction transaction;
+
     public void addNewMember(String name, String password, String mail, int birthDay, int birthMonth, int birthYear) {
         
         password = DigestUtils.sha256Hex(password);
@@ -82,6 +85,19 @@ public class DatabaseModel {
         session.close();
     }
     
+    public void addGameToMembersLibrary(Member member, Game game) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        Library library = (Library) session.get(Library.class, member.getLibrary().getId());
+        GamesLibraries gamesLibraries = new GamesLibraries(game, library);
+        
+        session.save(gamesLibraries);
+        
+        transaction.commit();
+        session.close();
+    }
+    
     public void addNewMembersPC(Member member, String namePC, int memoryPC, MembersCPU membersCPU, MembersGPU membersGPU) {
         session = HibernateUtil.getSessionFactory().openSession();
         transaction = session.beginTransaction();
@@ -94,14 +110,37 @@ public class DatabaseModel {
         session.close();
     }
     
-    public void addGameToMembersLibrary(Member member, Game game) {
+    public void addNewSqfaQuestion(Member member, String questionContent) {
+        SqfaQuestion sqfaQuestion = new SqfaQuestion(member, questionContent);
+        
         session = HibernateUtil.getSessionFactory().openSession();
         transaction = session.beginTransaction();
         
-        Library library = (Library) session.get(Library.class, member.getLibrary().getId());
-        GamesLibraries gamesLibraries = new GamesLibraries(game, library);
+        session.save(sqfaQuestion);
         
-        session.save(gamesLibraries);
+        transaction.commit();
+        session.close();
+    }
+    
+    public void addNewSqfaAnswer(Member member, SqfaQuestion sqfaQuestion, String answerContent) {
+        SqfaAnswer sqfaAnswer = new SqfaAnswer(member, sqfaQuestion, answerContent);
+        
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        session.save(sqfaAnswer);
+        
+        transaction.commit();
+        session.close();
+    }
+    
+    public void addNewSqfaComment(Member member, SqfaQuestion sqfaQuestion, SqfaAnswer sqfaAnswer, String commentContent) {
+        SqfaComment sqfaComment = new SqfaComment(member, sqfaQuestion, sqfaAnswer, commentContent);
+        
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        session.save(sqfaComment);
         
         transaction.commit();
         session.close();

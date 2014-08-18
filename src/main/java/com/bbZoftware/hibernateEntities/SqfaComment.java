@@ -31,14 +31,23 @@ public class SqfaComment implements Serializable {
     protected Member member;
     
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="SQFA_QUESTIONS_QUESTION_ID", nullable = false)
+    @JoinColumn(name="SQFA_QUESTIONS_QUESTION_ID", nullable = true)
     protected SqfaQuestion sqfaQuestion;
     
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="SQFA_ANSWERS_ANSWER_ID", nullable = false)
+    @JoinColumn(name="SQFA_ANSWERS_ANSWER_ID", nullable = true)
     protected SqfaAnswer sqfaAnswer;
 
     public SqfaComment() {}
+
+    public SqfaComment(Member member, SqfaQuestion sqfaQuestion, SqfaAnswer sqfaAnswer, String content) {
+        this.content = content;
+        this.member = member;
+        this.sqfaQuestion = sqfaQuestion;
+        this.sqfaAnswer = sqfaAnswer;
+    }
+    
+
 
     public int getId() {
         return id;

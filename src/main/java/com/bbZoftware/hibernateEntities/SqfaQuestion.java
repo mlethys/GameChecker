@@ -22,22 +22,27 @@ public class SqfaQuestion implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SQFA_QUESTION_ID", unique = true, nullable = false)
     protected int id;
-    
+
     @Column(name = "SQFA_QUESTION_CONTENT", nullable = false)
     protected String content;
-    
+
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="MEMBERS_MEMBER_ID", nullable = false)
     protected Member member;
-    
+
     @OneToMany(mappedBy = "sqfaQuestion")
     protected List<SqfaAnswer> sqfaAnswers;
-    
+
     @OneToMany(mappedBy = "sqfaQuestion")
     protected List<SqfaComment> sqfaComments;
 
     public SqfaQuestion() {}
-    
+
+    public SqfaQuestion(Member member, String content) {
+        this.member = member;
+        this.content = content;
+    }
+
     public int getId() {
         return id;
     }
