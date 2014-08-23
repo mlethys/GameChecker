@@ -1,10 +1,11 @@
-package com.bbZoftware.hibernateEntities;
+package pl.gameChecker.model.hibernateEntities;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 
 
 
@@ -17,20 +18,23 @@ import javax.persistence.*;
  * @author Damian Leśniak
  * @version 1.0
  */
-@Entity(name = "MEMBERS_CPUS")
-@Table(name = "MEMBERS_CPUS")
-public class MembersCPU implements Serializable {
+@Entity(name = "MEMBERS_GPUS")
+@Table(name="MEMBERS_GPUS")
+public class MembersGPU implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="MEMBERS_CPU_ID", unique = true, nullable = false)
+    @Column(name="MEMBERS_GPU_ID", unique = true, nullable = false)
     protected int id;
     
-    @Column(name = "MEMBERS_CPU_NAME", unique = true, nullable = false, length = 45)
+    @Column(name = "MEMBERS_GPU_NAME", unique = true, nullable = false, length = 45)
     protected String name;
     
-    @Column(name = "MEMBERS_CPU_RELEASE_DATE", nullable = false)
+    @Column(name = "MEMBERS_GPU_RELEASE_DATE", nullable = false)
     protected Date releaseDate;
+    
+    @Column(name = "MEMBERS_GPU_MEMORY", nullable = false)
+    protected int memory;
     
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "COMPANIES_COMPANY_ID", nullable = false)
@@ -40,7 +44,7 @@ public class MembersCPU implements Serializable {
     @JoinColumn(name = "MEMBERS_PCS_MEMBERS_PC_ID", nullable = false)
     protected MembersPC membersPC;
 
-    public MembersCPU() {}
+    public MembersGPU() {}
 
     public int getId() {
         return id;
@@ -64,6 +68,14 @@ public class MembersCPU implements Serializable {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public int getMemory() {
+        return memory;
+    }
+
+    public void setMemory(int memory) {
+        this.memory = memory;
     }
 
     public Company getCompany() {
