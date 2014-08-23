@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.bbZoftware.hibernateEntities;
+package pl.gameChecker.model.hibernateEntities;
+
 
 import java.io.Serializable;
 import java.sql.Date;

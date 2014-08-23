@@ -4,40 +4,43 @@
  * and open the template in the editor.
  */
 
-package com.bbZoftware.hibernateEntities;
+package pl.gameChecker.model.hibernateEntities;
+
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.*;
+
 /**
  *
  * @author Damian Leśniak
  * @version 1.0
  */
-@Entity(name="SQFA_QUESTIONS")
-@Table(name="SQFA_QUESTIONS")
-public class SqfaQuestion implements Serializable {
+@Entity(name="SQFA_COMMENTS")
+@Table(name="SQFA_COMMENTS")
+public class SqfaComment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SQFA_QUESTION_ID", unique = true, nullable = false)
+    @Column(name="SQFA_COMMENT_ID", unique = true, nullable = false)
     protected int id;
     
-    @Column(name = "SQFA_QUESTION_CONTENT", nullable = false)
+    @Column(name="SQFA_COMMENT_CONTENT", nullable = false, length = Integer.MAX_VALUE)
     protected String content;
     
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="MEMBERS_MEMBER_ID", nullable = false)
     protected Member member;
     
-    @OneToMany(mappedBy = "sqfaQuestion")
-    protected List<SqfaAnswer> sqfaAnswers;
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="SQFA_QUESTIONS_QUESTION_ID", nullable = false)
+    protected SqfaQuestion sqfaQuestion;
     
-    @OneToMany(mappedBy = "sqfaQuestion")
-    protected List<SqfaComment> sqfaComments;
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="SQFA_ANSWERS_ANSWER_ID", nullable = false)
+    protected SqfaAnswer sqfaAnswer;
 
-    public SqfaQuestion() {}
-    
+    public SqfaComment() {}
+
     public int getId() {
         return id;
     }
@@ -62,22 +65,21 @@ public class SqfaQuestion implements Serializable {
         this.member = member;
     }
 
-    public List<SqfaAnswer> getSqfaAnswers() {
-        return sqfaAnswers;
+    public SqfaQuestion getSqfaQuestion() {
+        return sqfaQuestion;
     }
 
-    public void setSqfaAnswers(List<SqfaAnswer> sqfaAnswers) {
-        this.sqfaAnswers = sqfaAnswers;
+    public void setSqfaQuestion(SqfaQuestion sqfaQuestion) {
+        this.sqfaQuestion = sqfaQuestion;
     }
 
-    public List<SqfaComment> getSqfaComments() {
-        return sqfaComments;
+    public SqfaAnswer getSqfaAnswer() {
+        return sqfaAnswer;
     }
 
-    public void setSqfaComments(List<SqfaComment> sqfaComments) {
-        this.sqfaComments = sqfaComments;
+    public void setSqfaAnswer(SqfaAnswer sqfaAnswer) {
+        this.sqfaAnswer = sqfaAnswer;
     }
-    
     
     
 }

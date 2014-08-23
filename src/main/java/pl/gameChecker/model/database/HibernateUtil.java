@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.bbZoftware.dbModel;
+package pl.gameChecker.model.database;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
