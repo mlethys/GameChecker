@@ -5,7 +5,10 @@
  */
 
 package pl.gameChecker.model.hibernateEntities;
+<<<<<<< HEAD:src/main/java/pl/gameChecker/model/hibernateEntities/MembersRoles.java
 
+=======
+>>>>>>> bbZ_workspace:src/main/java/pl/gameChecker/model/hibernateEntities/MembersRoles.java
 
 import java.io.Serializable;
 import javax.persistence.CascadeType;

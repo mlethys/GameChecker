@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package pl.gameChecker.model.hibernateEntities;
+<<<<<<< HEAD:src/main/java/pl/gameChecker/model/hibernateEntities/Member.java
 
+=======
+>>>>>>> bbZ_workspace:src/main/java/pl/gameChecker/model/hibernateEntities/Member.java
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -60,7 +63,10 @@ public class Member implements Serializable  {
     protected List<SqfaAnswer> sqfaAnswers;
     
     @OneToMany(mappedBy = "member")
-    protected List<SqfaComment> sqfaComments;
+    protected List<SqfaQuestionComment> sqfaQuestionComments;
+    
+    @OneToMany(mappedBy = "member")
+    protected List<SqfaAnswerComment> sqfaAnswerComments;
 
     public Member(){}
     
@@ -70,6 +76,7 @@ public class Member implements Serializable  {
         this.registerDate = registerDate;
         this.mail = mail;
         this.birthDate = birthDate;
+        this.points = 0;
     }
 
     public int getId() {
@@ -169,14 +176,27 @@ public class Member implements Serializable  {
         this.sqfaAnswers = sqfaAnswers;
     }
 
-    public List<SqfaComment> getSqfaComments() {
-        return sqfaComments;
+    public List<MembersPC> getMembersPCs() {
+        return membersPCs;
     }
 
-    public void setSqfaComments(List<SqfaComment> sqfaComments) {
-        this.sqfaComments = sqfaComments;
+    public void setMembersPCs(List<MembersPC> membersPCs) {
+        this.membersPCs = membersPCs;
     }
-    
-    
-    
+
+    public List<SqfaQuestionComment> getSqfaQuestionComments() {
+        return sqfaQuestionComments;
+    }
+
+    public void setSqfaQuestionComments(List<SqfaQuestionComment> sqfaQuestionComments) {
+        this.sqfaQuestionComments = sqfaQuestionComments;
+    }
+
+    public List<SqfaAnswerComment> getSqfaAnswerComments() {
+        return sqfaAnswerComments;
+    }
+
+    public void setSqfaAnswerComments(List<SqfaAnswerComment> sqfaAnswerComments) {
+        this.sqfaAnswerComments = sqfaAnswerComments;
+    }
 }
