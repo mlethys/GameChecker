@@ -5,10 +5,6 @@
  */
 
 package pl.gameChecker.model.hibernateEntities;
-<<<<<<< HEAD:src/main/java/pl/gameChecker/model/hibernateEntities/SqfaAnswer.java
-
-=======
->>>>>>> bbZ_workspace:src/main/java/pl/gameChecker/model/hibernateEntities/SqfaAnswer.java
 
 import java.io.Serializable;
 import java.sql.Date;

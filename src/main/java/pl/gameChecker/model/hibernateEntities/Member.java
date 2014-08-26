@@ -4,10 +4,6 @@
  * and open the template in the editor.
  */
 package pl.gameChecker.model.hibernateEntities;
-<<<<<<< HEAD:src/main/java/pl/gameChecker/model/hibernateEntities/Member.java
-
-=======
->>>>>>> bbZ_workspace:src/main/java/pl/gameChecker/model/hibernateEntities/Member.java
 
 import java.io.Serializable;
 import java.sql.Date;

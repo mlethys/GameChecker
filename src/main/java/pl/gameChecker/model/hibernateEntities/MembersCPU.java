@@ -8,7 +8,6 @@ package pl.gameChecker.model.hibernateEntities;
 
 
 
-
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.*;
