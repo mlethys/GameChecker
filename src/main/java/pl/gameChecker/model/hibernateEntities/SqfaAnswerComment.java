@@ -8,49 +8,46 @@ package pl.gameChecker.model.hibernateEntities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 import javax.persistence.*;
+
 /**
  *
  * @author Damian Leśniak
  * @version 1.0
  */
-@Entity(name="SQFA_QUESTIONS")
-@Table(name="SQFA_QUESTIONS")
-public class SqfaQuestion implements Serializable {
+@Entity(name="SQFA_ANSWER_COMMENTS")
+@Table(name="SQFA_ANSWER_COMMENTS")
+public class SqfaAnswerComment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SQFA_QUESTION_ID", unique = true, nullable = false)
+    @Column(name="SQFA_ANSWER_COMMENT_ID", unique = true, nullable = false)
     protected int id;
     
-    @Column(name = "SQFA_QUESTION_TITLE", unique = true, nullable = false)
-    protected String title;
-
-    @Column(name = "SQFA_QUESTION_CONTENT", nullable = false)
+    @Column(name="SQFA_ANSWER_COMMENT_CONTENT", nullable = false, length = Integer.MAX_VALUE)
     protected String content;
     
     @Column(name = "SQFA_ANSWER_ADDITION_DATE", nullable = false)
     protected Timestamp additionDate;
-
+   
     @ManyToOne
     @JoinColumn(name="MEMBERS_MEMBER_ID", nullable = false)
     protected Member member;
+    
+    @ManyToOne
+    @JoinColumn(name="SQFA_ANSWERS_ANSWER_ID", nullable = false)
+    protected SqfaAnswer sqfaAnswer;
+        
+    public SqfaAnswerComment() {}
 
-    @OneToMany(mappedBy = "sqfaQuestion")
-    protected List<SqfaAnswer> sqfaAnswers;
-
-    @OneToMany(mappedBy = "sqfaQuestion")
-    protected List<SqfaQuestionComment> sqfaQuestionComments;
-
-    public SqfaQuestion() {}
-
-    public SqfaQuestion(Member member, String title, String content, Timestamp additionDate) {
-        this.member = member;
+    public SqfaAnswerComment(Member member, SqfaAnswer sqfaAnswer, String content, Timestamp additionDate) {
         this.content = content;
+        this.member = member;
         this.additionDate = additionDate;
-        this.title = title;
+        this.sqfaAnswer = sqfaAnswer;
     }
+    
+
 
     public int getId() {
         return id;
@@ -76,29 +73,13 @@ public class SqfaQuestion implements Serializable {
         this.member = member;
     }
 
-    public List<SqfaAnswer> getSqfaAnswers() {
-        return sqfaAnswers;
+    public SqfaAnswer getSqfaAnswer() {
+        return sqfaAnswer;
     }
 
-    public void setSqfaAnswers(List<SqfaAnswer> sqfaAnswers) {
-        this.sqfaAnswers = sqfaAnswers;
-    }
-
-    public List<SqfaQuestionComment> getSqfaQuestionComments() {
-        return sqfaQuestionComments;
-    }
-
-    public void setSqfaQuestionComments(List<SqfaQuestionComment> sqfaQuestionComments) {
-        this.sqfaQuestionComments = sqfaQuestionComments;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }    
+    public void SqfaAnswer(SqfaAnswer sqfaAnswer) {
+        this.sqfaAnswer = sqfaAnswer;
+    }       
 
     public Timestamp getAdditionDate() {
         return additionDate;

@@ -6,7 +6,6 @@
 
 package pl.gameChecker.model.hibernateEntities;
 
-
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;

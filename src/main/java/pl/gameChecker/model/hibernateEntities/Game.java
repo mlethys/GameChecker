@@ -5,7 +5,6 @@
  */
 
 package pl.gameChecker.model.hibernateEntities;
-
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
@@ -40,6 +39,9 @@ public class Game implements Serializable {
     @Column(name = "GAME_FREE", nullable = false)
     protected boolean freeToPlay;
     
+    @Column(name = "GAME_STARS", nullable = false, length = 1)
+    protected int stars;
+    
     @OneToMany(mappedBy = "game")
     protected List<GamesLibraries> gamesLibraries;
     
@@ -48,14 +50,6 @@ public class Game implements Serializable {
     protected Gametype gametype;
 
     public Game() {}
-
-    public Game(String name, Date releaseDate, boolean singleplayer, boolean multiplayer, boolean freeToPlay) {
-        this.name = name;
-        this.releaseDate = releaseDate;
-        this.singleplayer = singleplayer;
-        this.multiplayer = multiplayer;
-        this.freeToPlay = freeToPlay;
-    }
     
     public Game(String name, Date releaseDate, boolean singleplayer, boolean multiplayer, boolean freeToPlay, Gametype gametype) {
         this.name = name;
@@ -64,6 +58,7 @@ public class Game implements Serializable {
         this.multiplayer = multiplayer;
         this.freeToPlay = freeToPlay;
         this.gametype = gametype;
+        this.stars = 0;
     }
     
     public int getId() {
@@ -130,5 +125,11 @@ public class Game implements Serializable {
         this.gametype = gametype;
     }
 
-    
+    public int getStars() {
+        return stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
+    }
 }

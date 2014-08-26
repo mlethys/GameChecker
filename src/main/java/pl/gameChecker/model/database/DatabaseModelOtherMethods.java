@@ -4,16 +4,16 @@
  * and open the template in the editor.
  */
 
-package com.bbZoftware.dbModel;
+package pl.gameChecker.model.database;
 
-import com.bbZoftware.hibernateEntities.Member;
-import com.bbZoftware.hibernateEntities.SqfaAnswer;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import pl.gameChecker.model.hibernateEntities.Member;
+import pl.gameChecker.model.hibernateEntities.SqfaAnswer;
 
 /**
  *

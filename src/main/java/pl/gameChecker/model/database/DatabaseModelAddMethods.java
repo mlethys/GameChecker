@@ -4,22 +4,10 @@
  * and open the template in the editor.
  */
 
-package com.bbZoftware.dbModel;
+package pl.gameChecker.model.database;
 
-import com.bbZoftware.hibernateEntities.Game;
-import com.bbZoftware.hibernateEntities.GamesLibraries;
-import com.bbZoftware.hibernateEntities.Gametype;
-import com.bbZoftware.hibernateEntities.Library;
-import com.bbZoftware.hibernateEntities.Member;
-import com.bbZoftware.hibernateEntities.MembersCPU;
-import com.bbZoftware.hibernateEntities.MembersGPU;
-import com.bbZoftware.hibernateEntities.MembersPC;
-import com.bbZoftware.hibernateEntities.MembersRoles;
-import com.bbZoftware.hibernateEntities.Role;
-import com.bbZoftware.hibernateEntities.SqfaAnswer;
-import com.bbZoftware.hibernateEntities.SqfaComment;
-import com.bbZoftware.hibernateEntities.SqfaQuestion;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.TimeZone;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -27,6 +15,20 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import pl.gameChecker.model.hibernateEntities.Game;
+import pl.gameChecker.model.hibernateEntities.GamesLibraries;
+import pl.gameChecker.model.hibernateEntities.Gametype;
+import pl.gameChecker.model.hibernateEntities.Library;
+import pl.gameChecker.model.hibernateEntities.Member;
+import pl.gameChecker.model.hibernateEntities.MembersCPU;
+import pl.gameChecker.model.hibernateEntities.MembersGPU;
+import pl.gameChecker.model.hibernateEntities.MembersPC;
+import pl.gameChecker.model.hibernateEntities.MembersRoles;
+import pl.gameChecker.model.hibernateEntities.Role;
+import pl.gameChecker.model.hibernateEntities.SqfaAnswer;
+import pl.gameChecker.model.hibernateEntities.SqfaAnswerComment;
+import pl.gameChecker.model.hibernateEntities.SqfaQuestion;
+import pl.gameChecker.model.hibernateEntities.SqfaQuestionComment;
 
 /**
  *
@@ -67,7 +69,7 @@ public class DatabaseModelAddMethods {
         
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         calendar.clear();
-        calendar.set(releaseDay, releaseMonth - 1, releaseYear);
+        calendar.set(releaseYear, releaseMonth - 1, releaseDay);
         long secondsSinceEpoch = calendar.getTimeInMillis();
         
         session = HibernateUtil.getSessionFactory().openSession();
@@ -86,11 +88,14 @@ public class DatabaseModelAddMethods {
     }
     
     public void addGameToMembersLibrary(Member member, Game game) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        
         session = HibernateUtil.getSessionFactory().openSession();
         transaction = session.beginTransaction();
         
         Library library = (Library) session.get(Library.class, member.getLibrary().getId());
-        GamesLibraries gamesLibraries = new GamesLibraries(game, library);
+        GamesLibraries gamesLibraries = new GamesLibraries(game, library, new Date(secondsSinceEpoch));
         
         session.save(gamesLibraries);
         
@@ -110,8 +115,11 @@ public class DatabaseModelAddMethods {
         session.close();
     }
     
-    public void addNewSqfaQuestion(Member member, String questionContent) {
-        SqfaQuestion sqfaQuestion = new SqfaQuestion(member, questionContent);
+    public void addNewSqfaQuestion(Member member, String title, String questionContent) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        
+        SqfaQuestion sqfaQuestion = new SqfaQuestion(member, title, questionContent, new Timestamp(secondsSinceEpoch));
         
         session = HibernateUtil.getSessionFactory().openSession();
         transaction = session.beginTransaction();
@@ -123,7 +131,10 @@ public class DatabaseModelAddMethods {
     }
     
     public void addNewSqfaAnswer(Member member, SqfaQuestion sqfaQuestion, String answerContent) {
-        SqfaAnswer sqfaAnswer = new SqfaAnswer(member, sqfaQuestion, answerContent);
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        
+        SqfaAnswer sqfaAnswer = new SqfaAnswer(member, sqfaQuestion, answerContent, new Timestamp(secondsSinceEpoch));
         
         session = HibernateUtil.getSessionFactory().openSession();
         transaction = session.beginTransaction();
@@ -134,13 +145,31 @@ public class DatabaseModelAddMethods {
         session.close();
     }
     
-    public void addNewSqfaComment(Member member, SqfaQuestion sqfaQuestion, SqfaAnswer sqfaAnswer, String commentContent) {
-        SqfaComment sqfaComment = new SqfaComment(member, sqfaQuestion, sqfaAnswer, commentContent);
+    public void addNewSqfaAnswerComment(Member member, SqfaAnswer sqfaAnswer, String commentContent) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        
+        SqfaAnswerComment sqfaAnswerComment = new SqfaAnswerComment(member, sqfaAnswer, commentContent, new Timestamp(secondsSinceEpoch));
         
         session = HibernateUtil.getSessionFactory().openSession();
         transaction = session.beginTransaction();
         
-        session.save(sqfaComment);
+        session.save(sqfaAnswerComment);
+        
+        transaction.commit();
+        session.close();
+    }
+    
+    public void addNewSqfaQuestionComment(Member member, SqfaQuestion sqfaQuestion, String commentContent) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        
+        SqfaQuestionComment sqfaQuestionComment = new SqfaQuestionComment(member, sqfaQuestion, commentContent, new Timestamp(secondsSinceEpoch));
+        
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        session.save(sqfaQuestionComment);
         
         transaction.commit();
         session.close();

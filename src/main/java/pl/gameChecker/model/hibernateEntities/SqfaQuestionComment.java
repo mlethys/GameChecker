@@ -6,8 +6,8 @@
 
 package pl.gameChecker.model.hibernateEntities;
 
-
 import java.io.Serializable;
+import java.sql.Timestamp;
 import javax.persistence.*;
 
 /**
@@ -15,37 +15,36 @@ import javax.persistence.*;
  * @author Damian Leśniak
  * @version 1.0
  */
-@Entity(name="SQFA_COMMENTS")
-@Table(name="SQFA_COMMENTS")
-public class SqfaComment implements Serializable {
+@Entity(name="SQFA_QUESTION_COMMENTS")
+@Table(name="SQFA_QUESTION_COMMENTS")
+public class SqfaQuestionComment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="SQFA_COMMENT_ID", unique = true, nullable = false)
+    @Column(name="SQFA_QUESTION_COMMENT_ID", unique = true, nullable = false)
     protected int id;
     
-    @Column(name="SQFA_COMMENT_CONTENT", nullable = false, length = Integer.MAX_VALUE)
+    @Column(name="SQFA_QUESTION_COMMENT_CONTENT", nullable = false, length = Integer.MAX_VALUE)
     protected String content;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @Column(name = "SQFA_ANSWER_ADDITION_DATE", nullable = false)
+    protected Timestamp additionDate;
+    
+    @ManyToOne
     @JoinColumn(name="MEMBERS_MEMBER_ID", nullable = false)
     protected Member member;
     
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="SQFA_QUESTIONS_QUESTION_ID", nullable = true)
+    @ManyToOne
+    @JoinColumn(name="SQFA_QUESTIONS_QUESTION_ID", nullable = false)
     protected SqfaQuestion sqfaQuestion;
-    
-    @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="SQFA_ANSWERS_ANSWER_ID", nullable = true)
-    protected SqfaAnswer sqfaAnswer;
+        
+    public SqfaQuestionComment() {}
 
-    public SqfaComment() {}
-
-    public SqfaComment(Member member, SqfaQuestion sqfaQuestion, SqfaAnswer sqfaAnswer, String content) {
+    public SqfaQuestionComment(Member member, SqfaQuestion sqfaQuestion, String content, Timestamp additionDate) {
         this.content = content;
         this.member = member;
+        this.additionDate = additionDate;
         this.sqfaQuestion = sqfaQuestion;
-        this.sqfaAnswer = sqfaAnswer;
     }
     
 
@@ -80,15 +79,13 @@ public class SqfaComment implements Serializable {
 
     public void setSqfaQuestion(SqfaQuestion sqfaQuestion) {
         this.sqfaQuestion = sqfaQuestion;
+    }       
+
+    public Timestamp getAdditionDate() {
+        return additionDate;
     }
 
-    public SqfaAnswer getSqfaAnswer() {
-        return sqfaAnswer;
+    public void setAdditionDate(Timestamp additionDate) {
+        this.additionDate = additionDate;
     }
-
-    public void setSqfaAnswer(SqfaAnswer sqfaAnswer) {
-        this.sqfaAnswer = sqfaAnswer;
-    }
-    
-    
 }
