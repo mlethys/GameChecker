@@ -5,7 +5,6 @@
  */
 package pl.gameChecker.model.hibernateEntities;
 
-
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
@@ -25,26 +24,29 @@ public class Member implements Serializable  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
-    @Column(name = "MEMBER_NAME")
+    @Column(name = "MEMBER_NAME", unique = true, nullable = false, length = 15)
     protected String name;
     
-    @Column(name = "MEMBER_PASSWORD")
+    @Column(name = "MEMBER_PASSWORD", nullable = false)
     protected String password;
     
-    @Column(name = "MEMBER_REGISTER_DATE")
+    @Column(name = "MEMBER_REGISTER_DATE", nullable = false)
     protected Date registerDate;
     
-    @Column(name = "MEMBER_MAIL")
+    @Column(name = "MEMBER_MAIL", unique = true, nullable = false, length = 45)
     protected String mail;
     
-    @Column(name = "MEMBER_BIRTHDATE")
+    @Column(name = "MEMBER_BIRTHDATE", nullable = false)
     protected Date birthDate;
     
-    @Column(name = "MEMBER_POINTS")
+    @Column(name = "MEMBER_POINTS", nullable = false)
     protected int points;
     
     @OneToMany(mappedBy = "member")
     protected List<MembersRoles> membersRoles;
+    
+    @OneToMany(mappedBy = "member")
+    protected List<MembersPC> membersPCs;
     
     @OneToOne
     @JoinColumn(name = "MEMBERS_LIBRARIES_LIBRARY_ID")
@@ -57,7 +59,10 @@ public class Member implements Serializable  {
     protected List<SqfaAnswer> sqfaAnswers;
     
     @OneToMany(mappedBy = "member")
-    protected List<SqfaComment> sqfaComments;
+    protected List<SqfaQuestionComment> sqfaQuestionComments;
+    
+    @OneToMany(mappedBy = "member")
+    protected List<SqfaAnswerComment> sqfaAnswerComments;
 
     public Member(){}
     
@@ -67,6 +72,7 @@ public class Member implements Serializable  {
         this.registerDate = registerDate;
         this.mail = mail;
         this.birthDate = birthDate;
+        this.points = 0;
     }
 
     public int getId() {
@@ -166,14 +172,27 @@ public class Member implements Serializable  {
         this.sqfaAnswers = sqfaAnswers;
     }
 
-    public List<SqfaComment> getSqfaComments() {
-        return sqfaComments;
+    public List<MembersPC> getMembersPCs() {
+        return membersPCs;
     }
 
-    public void setSqfaComments(List<SqfaComment> sqfaComments) {
-        this.sqfaComments = sqfaComments;
+    public void setMembersPCs(List<MembersPC> membersPCs) {
+        this.membersPCs = membersPCs;
     }
-    
-    
-    
+
+    public List<SqfaQuestionComment> getSqfaQuestionComments() {
+        return sqfaQuestionComments;
+    }
+
+    public void setSqfaQuestionComments(List<SqfaQuestionComment> sqfaQuestionComments) {
+        this.sqfaQuestionComments = sqfaQuestionComments;
+    }
+
+    public List<SqfaAnswerComment> getSqfaAnswerComments() {
+        return sqfaAnswerComments;
+    }
+
+    public void setSqfaAnswerComments(List<SqfaAnswerComment> sqfaAnswerComments) {
+        this.sqfaAnswerComments = sqfaAnswerComments;
+    }
 }

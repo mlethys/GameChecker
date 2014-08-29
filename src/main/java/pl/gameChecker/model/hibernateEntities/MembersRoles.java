@@ -6,7 +6,6 @@
 
 package pl.gameChecker.model.hibernateEntities;
 
-
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -29,11 +28,11 @@ public class MembersRoles implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MEMBERS_ROLES_ID")
+    @Column(name = "MEMBERS_ROLES_ID", nullable = false)
     private int id;
     
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="MEMBERS_MEMBER_ID")
+    @JoinColumn(name="MEMBERS_MEMBER_ID", nullable = false)
     protected Member member;
     
     @ManyToOne(cascade=CascadeType.ALL)

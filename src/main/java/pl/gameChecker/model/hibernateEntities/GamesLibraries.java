@@ -7,6 +7,7 @@
 package pl.gameChecker.model.hibernateEntities;
 
 import java.io.Serializable;
+import java.sql.Date;
 import javax.persistence.*;
 
 /**
@@ -20,18 +21,27 @@ public class GamesLibraries implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "GAMES_LIBRARIES_ID")
-    private int id;
+    @Column(name = "GAMES_LIBRARIES_ID", unique = true, nullable = false)
+    protected int id;
+    
+    @Column(name = "GAMES_LIBRARIES_ADDITION_DATE")
+    protected Date additionDate;
 
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="GAMES_GAME_ID")
+    @JoinColumn(name="GAMES_GAME_ID", nullable = false)
     protected Game game;
     
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="LIBRARIES_LIBRARY_ID")
+    @JoinColumn(name="LIBRARIES_LIBRARY_ID", nullable = false)
     protected Library library;
     
     public GamesLibraries() {}
+    
+    public GamesLibraries(Game game, Library library, Date additionDate) {
+        this.game = game;
+        this.library = library;
+        this.additionDate = additionDate;
+    }
 
     public int getId() {
         return id;
@@ -56,6 +66,12 @@ public class GamesLibraries implements Serializable{
     public void setLibrary(Library library) {
         this.library = library;
     }
-    
-    
+
+    public Date getAdditionDate() {
+        return additionDate;
+    }
+
+    public void setAdditionDate(Date additionDate) {
+        this.additionDate = additionDate;
+    }
 }
