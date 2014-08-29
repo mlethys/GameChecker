@@ -112,6 +112,12 @@ public class TempDBMain {
         dbmOther.incrementSqfaAnswerPoints(dbmGet.getSqfaAnswerById(2));
         dbmOther.incrementSqfaAnswerPoints(dbmGet.getSqfaAnswerById(3));
         
+        dbmOther.rateGame(dbmGet.getGameById(1), 5);
+        dbmOther.rateGame(dbmGet.getGameById(1), 4);
+        dbmOther.rateGame(dbmGet.getGameById(1), 3);
+        dbmOther.rateGame(dbmGet.getGameById(1), 2);
+        dbmOther.rateGame(dbmGet.getGameById(1), 1);
+        
 //        dbmUpdate.updateMemberProfile(dbmGet.getMemberById(1), "bbZ", "newPassword", "dspoko2@interia.pl", 22, 11, 1991);
 //        dbmUpdate.updateGameInfo(dbmGet.getGameById(1), "JK3", true, true, true, 22, 11, 1991, "Simulator");
         
@@ -122,7 +128,7 @@ public class TempDBMain {
         long secondsTillNow = calendar.getTimeInMillis();
         Date dateTo = new Date(secondsTillNow);
         calendar.clear();
-        calendar.set(2013, 10, 22);
+        calendar.set(1999, 10, 22);
         long secondsSinceEpoch = calendar.getTimeInMillis();
         Date dateFrom = new Date(secondsSinceEpoch);
         
@@ -132,6 +138,8 @@ public class TempDBMain {
             System.err.println("dateFrom is after dateTo");
         }
                 
+        dbmGet.getSearchResults(null, null, null, false, false, false, -1);
+        
         try {
             PdfModel pdf = new PdfModel();
             pdf.createNewMembersRaport(dateFrom, dateTo);

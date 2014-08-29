@@ -274,4 +274,81 @@ public class DatabaseModelGetMethods {
         int result = 100 * membersWithGameCount / totalMembersCount;
         return result;
     }
+
+    public List<Game> getSearchResults(String name, Date releasedBeforeDate, Date releasedAfterDate, boolean singleplayer, boolean multiplayer, boolean freeToPlay, double gameStarsGreaterThan) {
+        boolean firstCriteria = true;
+        String preparedQuery = "from GAMES g ";
+        if(name != null) {
+            if(!firstCriteria) 
+                preparedQuery += "and "; 
+            else 
+                preparedQuery += "where ";
+            preparedQuery += "g.name like %" + name + "% ";
+            firstCriteria = false;
+        }
+        if(releasedBeforeDate != null) {
+            if(!firstCriteria) 
+                preparedQuery += "and "; 
+            else 
+                preparedQuery += "where ";
+            preparedQuery += "g.releaseDate <='" + releasedBeforeDate + "' ";
+            firstCriteria = false;
+        }
+        if(releasedAfterDate != null) {
+            if(!firstCriteria) 
+                preparedQuery += "and "; 
+            else 
+                preparedQuery += "where ";
+            preparedQuery += "g.releaseDate >='" + releasedAfterDate + "' ";
+            firstCriteria = false;
+        }
+        if(singleplayer) {
+            if(!firstCriteria) 
+                preparedQuery += "and "; 
+            else 
+                preparedQuery += "where ";
+            preparedQuery += "g.singleplayer=" + singleplayer + " ";
+            firstCriteria = false;
+        }
+        if(multiplayer) {
+            if(!firstCriteria) 
+                preparedQuery += "and "; 
+            else 
+                preparedQuery += "where ";
+            preparedQuery += "g.multiplayer=" + multiplayer + " ";
+            firstCriteria = false;
+        }
+        if(freeToPlay) {
+            if(!firstCriteria) 
+                preparedQuery += "and "; 
+            else 
+                preparedQuery += "where ";
+            preparedQuery += "g.freeToPlay=" + freeToPlay + " ";
+            firstCriteria = false;
+        }
+        if(gameStarsGreaterThan >= 0 && gameStarsGreaterThan <= 5) {
+            if(!firstCriteria) 
+                preparedQuery += "and "; 
+            else 
+                preparedQuery += "where ";
+            preparedQuery += "g.stars>=" + freeToPlay + " ";
+        }
+    
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        Query query = session.createQuery(preparedQuery);
+
+        System.out.println(query.toString());
+
+        List<Game> games = query.list();
+        
+        transaction.commit();
+        session.close();
+        
+        for(Game g : games) {
+            System.out.println(g.getName());
+        }
+        return games;
+    }
 }

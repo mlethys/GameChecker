@@ -40,7 +40,10 @@ public class Game implements Serializable {
     protected boolean freeToPlay;
     
     @Column(name = "GAME_STARS", nullable = false, length = 1)
-    protected int stars;
+    protected double stars;
+    
+    @Column(name = "GAME_RATES", nullable = false)
+    protected int rates;
     
     @OneToMany(mappedBy = "game")
     protected List<GamesLibraries> gamesLibraries;
@@ -59,6 +62,7 @@ public class Game implements Serializable {
         this.freeToPlay = freeToPlay;
         this.gametype = gametype;
         this.stars = 0;
+        this.rates = 0;
     }
     
     public int getId() {
@@ -125,11 +129,19 @@ public class Game implements Serializable {
         this.gametype = gametype;
     }
 
-    public int getStars() {
+    public double getStars() {
         return stars;
     }
 
-    public void setStars(int stars) {
+    public void setStars(double stars) {
         this.stars = stars;
+    }
+
+    public int getRates() {
+        return rates;
+    }
+
+    public void setRates(int rates) {
+        this.rates = rates;
     }
 }

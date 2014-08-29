@@ -12,6 +12,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import pl.gameChecker.model.hibernateEntities.Game;
 import pl.gameChecker.model.hibernateEntities.Member;
 import pl.gameChecker.model.hibernateEntities.SqfaAnswer;
 
@@ -67,5 +68,23 @@ public class DatabaseModelOtherMethods {
             System.err.println(ex);
             return false;
         }
+    }
+
+    public void rateGame(Game game, int rating) {
+        double stars = game.getStars();
+        int rates = game.getRates();
+        int newRates = rates + 1;
+        game.setRates(newRates);
+        
+        double average = (stars * rates + rating) / newRates;
+        game.setStars(average);
+        
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        session.update(game);
+        
+        transaction.commit();
+        session.close();
     }
 }
