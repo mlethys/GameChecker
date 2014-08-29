@@ -4,26 +4,18 @@
  * and open the template in the editor.
  */
 
-package com.bbZoftware.dbModel;
+package pl.gameChecker.model.database;
 
-import com.bbZoftware.hibernateEntities.Game;
-import com.bbZoftware.hibernateEntities.GamesLibraries;
-import com.bbZoftware.hibernateEntities.Gametype;
-import com.bbZoftware.hibernateEntities.Library;
-import com.bbZoftware.hibernateEntities.Member;
-import com.bbZoftware.hibernateEntities.MembersCPU;
-import com.bbZoftware.hibernateEntities.MembersGPU;
-import com.bbZoftware.hibernateEntities.MembersPC;
-import com.bbZoftware.hibernateEntities.MembersRoles;
-import com.bbZoftware.hibernateEntities.Role;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.TimeZone;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
+import pl.gameChecker.model.hibernateEntities.Library;
+import pl.gameChecker.model.hibernateEntities.Member;
+import pl.gameChecker.model.hibernateEntities.MembersRoles;
+import pl.gameChecker.model.hibernateEntities.Role;
 
 /**
  *
@@ -55,53 +47,6 @@ public class DatabaseModel {
         
         session.save(membersRoles);
         session.save(library);
-        
-        transaction.commit();
-        session.close();
-    }
-    
-    public void addNewGame(String name, boolean isSingleplayer, boolean isMultiplayer, boolean isFreeToPlay, int releaseDay, int releaseMonth, int releaseYear, String gametypeName) {
-        
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-        calendar.clear();
-        calendar.set(releaseDay, releaseMonth - 1, releaseYear);
-        long secondsSinceEpoch = calendar.getTimeInMillis();
-        
-        session = HibernateUtil.getSessionFactory().openSession();
-        transaction = session.beginTransaction();
-        
-        Criteria criteria = session.createCriteria(Gametype.class);
-        criteria.add(Restrictions.eq("name", gametypeName));
-        Gametype gametype = (Gametype) criteria.uniqueResult();
-        
-        Game game = new Game(name, new Date(secondsSinceEpoch), isSingleplayer, isMultiplayer, isFreeToPlay, gametype);
-        
-        session.save(game);
-        
-        transaction.commit();
-        session.close();
-    }
-    
-    public void addNewMembersPC(Member member, String namePC, int memoryPC, MembersCPU membersCPU, MembersGPU membersGPU) {
-        session = HibernateUtil.getSessionFactory().openSession();
-        transaction = session.beginTransaction();
-        
-        MembersPC membersPC = new MembersPC(member, namePC, memoryPC, membersCPU, membersGPU);
-        
-        session.save(membersPC);
-        
-        transaction.commit();
-        session.close();
-    }
-    
-    public void addGameToMembersLibrary(Member member, Game game) {
-        session = HibernateUtil.getSessionFactory().openSession();
-        transaction = session.beginTransaction();
-        
-        Library library = (Library) session.get(Library.class, member.getLibrary().getId());
-        GamesLibraries gamesLibraries = new GamesLibraries(game, library);
-        
-        session.save(gamesLibraries);
         
         transaction.commit();
         session.close();

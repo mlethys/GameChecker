@@ -4,13 +4,12 @@
  * and open the template in the editor.
  */
 
-package com.bbZoftware.dbModel;
+package pl.gameChecker.model.database;
 
-import com.bbZoftware.hibernateEntities.Game;
-import com.bbZoftware.hibernateEntities.Member;
-import com.bbZoftware.hibernateEntities.Role;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import pl.gameChecker.model.hibernateEntities.Role;
 
 /**
  *
@@ -38,28 +37,8 @@ public class TempDBMain {
         transaction.commit();
         session.close();
         
-        DatabaseModelAddMethods dbmAdd = new DatabaseModelAddMethods();
-        DatabaseModelUpdateMethods dbmUpdate = new DatabaseModelUpdateMethods();
-        DatabaseModelGetMethods dbmGet = new DatabaseModelGetMethods();
-        DatabaseModelOtherMethods dbmOther = new DatabaseModelOtherMethods();
-        dbmAdd.addNewMember("bbZ", "tempPassword", "gamemajster@gmail.com", 22, 11, 1991);
-        dbmAdd.addNewGame("Jedi Academy", true, true, false, 5, 4, 2005, "Action");
-        
-        session = HibernateUtil.getSessionFactory().openSession();
-        transaction = session.beginTransaction();
-        
-        Member member = (Member) session.get(Member.class, 1);
-        Game game = (Game) session.get(Game.class, 1);
-        
-        transaction.commit();
-        session.close();
-        
-        dbmOther.isLoginMatchPassword("bbZ", "wrongPass");
-        dbmOther.isLoginMatchPassword("wrongUser", "wrongPass");
-        dbmOther.isLoginMatchPassword("bbZ", "tempPassword");
-        dbmAdd.addGameToMembersLibrary(member, game);
-        dbmUpdate.updateMemberProfile(dbmGet.getMemberById(1), "bbZ", "newPassword", "dspoko@interia.pl", 22, 11, 1991);
-        dbmUpdate.updateGameInfo(dbmGet.getGameById(1), "JK3", true, true, true, 22, 11, 1991, "Simulator");
+        DatabaseModel dbm = new DatabaseModel();
+        dbm.addNewMember("bbZ", "tempPassword", "gamemajster@gmail.com", 22, 11, 1991);
     }
 
 }
