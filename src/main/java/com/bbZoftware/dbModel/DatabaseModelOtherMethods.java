@@ -6,14 +6,15 @@
 
 package com.bbZoftware.dbModel;
 
-import com.bbZoftware.hibernateEntities.Member;
-import com.bbZoftware.hibernateEntities.SqfaAnswer;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import pl.gameChecker.model.database.HibernateUtil;
+import pl.gameChecker.model.hibernateEntities.Member;
+import pl.gameChecker.model.hibernateEntities.SqfaAnswer;
 
 /**
  *

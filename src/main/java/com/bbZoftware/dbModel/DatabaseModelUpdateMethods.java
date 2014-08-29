@@ -6,9 +6,6 @@
 
 package com.bbZoftware.dbModel;
 
-import com.bbZoftware.hibernateEntities.Game;
-import com.bbZoftware.hibernateEntities.Gametype;
-import com.bbZoftware.hibernateEntities.Member;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -17,6 +14,10 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import pl.gameChecker.model.database.HibernateUtil;
+import pl.gameChecker.model.hibernateEntities.Game;
+import pl.gameChecker.model.hibernateEntities.Gametype;
+import pl.gameChecker.model.hibernateEntities.Member;
 
 /**
  *
