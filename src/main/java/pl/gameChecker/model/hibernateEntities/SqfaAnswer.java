@@ -6,8 +6,9 @@
 
 package pl.gameChecker.model.hibernateEntities;
 
-
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.*;
 
@@ -19,30 +20,41 @@ import javax.persistence.*;
 @Entity(name="SQFA_ANSWERS")
 @Table(name="SQFA_ANSWERS")
 public class SqfaAnswer implements Serializable {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="SQFA_ANSWER_ID")
+    @Column(name="SQFA_ANSWER_ID", unique = true, nullable = false)
     protected int id;
     
-    @Column(name="SQFA_ANSWER_CONTENT")
+    @Column(name="SQFA_ANSWER_CONTENT", unique = true, nullable = false, length = Integer.MAX_VALUE)
     protected String content;
     
-    @Column(name="SQFA_ANSWER_POINTS")
+    @Column(name="SQFA_ANSWER_POINTS", nullable = false)
     protected int points;
     
-    @OneToMany(mappedBy = "sqfaAnswer")
-    protected List<SqfaComment> sqfaComments;
+    @Column(name = "SQFA_ANSWER_ADDITION_DATE", nullable = false)
+    protected Timestamp additionDate;
     
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "MEMBERS_MEMBER_ID")
+    @OneToMany(mappedBy = "sqfaAnswer")
+    protected List<SqfaAnswerComment> sqfaAnswerComments;
+    
+    @ManyToOne
+    @JoinColumn(name = "MEMBERS_MEMBER_ID", nullable = false)
     protected Member member;
     
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "SQFA_QUESTIONS_QUESTION_ID")
+    @ManyToOne
+    @JoinColumn(name = "SQFA_QUESTIONS_QUESTION_ID", nullable = false)
     protected SqfaQuestion sqfaQuestion;
     
     public SqfaAnswer() {}
+    
+    public SqfaAnswer(Member member, SqfaQuestion sqfaQuestion, String content, Timestamp additionDate) {
+        this.member = member;
+        this.sqfaQuestion = sqfaQuestion;
+        this.content = content;
+        this.additionDate = additionDate;
+        this.points = 0;
+    }
 
     public int getId() {
         return id;
@@ -68,12 +80,12 @@ public class SqfaAnswer implements Serializable {
         this.points = points;
     }
 
-    public List<SqfaComment> getSqfaComments() {
-        return sqfaComments;
+    public List<SqfaAnswerComment> getSqfaAnswerComments() {
+        return sqfaAnswerComments;
     }
 
-    public void setSqfaComments(List<SqfaComment> sqfaComments) {
-        this.sqfaComments = sqfaComments;
+    public void setSqfaAnswerComments(List<SqfaAnswerComment> sqfaAnswerComments) {
+        this.sqfaAnswerComments = sqfaAnswerComments;
     }
 
     public Member getMember() {
@@ -91,6 +103,12 @@ public class SqfaAnswer implements Serializable {
     public void setSqfaQuestion(SqfaQuestion sqfaQuestion) {
         this.sqfaQuestion = sqfaQuestion;
     }
-    
-    
+
+    public Timestamp getAdditionDate() {
+        return additionDate;
+    }
+
+    public void setAdditionDate(Timestamp additionDate) {
+        this.additionDate = additionDate;
+    }
 }

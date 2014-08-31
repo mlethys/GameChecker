@@ -6,7 +6,6 @@
 
 package pl.gameChecker.model.hibernateEntities;
 
-
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
@@ -23,10 +22,10 @@ public class Company implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="COMPANY_ID")
+    @Column(name="COMPANY_ID", unique = true, nullable = false)
     protected int id;
     
-    @Column(name = "COMPANY_NAME")
+    @Column(name = "COMPANY_NAME", unique = true, nullable = false, length = 45)
     protected String name;
     
     @OneToMany(mappedBy = "company")

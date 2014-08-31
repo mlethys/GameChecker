@@ -8,7 +8,6 @@ package pl.gameChecker.model.hibernateEntities;
 
 
 
-
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.*;
@@ -24,24 +23,24 @@ public class MembersGPU implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="MEMBERS_GPU_ID")
+    @Column(name="MEMBERS_GPU_ID", unique = true, nullable = false)
     protected int id;
     
-    @Column(name = "MEMBERS_GPU_NAME")
+    @Column(name = "MEMBERS_GPU_NAME", unique = true, nullable = false, length = 45)
     protected String name;
     
-    @Column(name = "MEMBERS_GPU_RELEASE_DATE")
+    @Column(name = "MEMBERS_GPU_RELEASE_DATE", nullable = false)
     protected Date releaseDate;
     
-    @Column(name = "MEMBERS_GPU_MEMORY")
+    @Column(name = "MEMBERS_GPU_MEMORY", nullable = false)
     protected int memory;
     
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "COMPANIES_COMPANY_ID")
+    @JoinColumn(name = "COMPANIES_COMPANY_ID", nullable = false)
     protected Company company;
     
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "MEMBERS_PCS_MEMBERS_PC_ID")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "MEMBERS_PCS_MEMBERS_PC_ID", nullable = false)
     protected MembersPC membersPC;
 
     public MembersGPU() {}

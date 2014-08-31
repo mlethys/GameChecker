@@ -7,7 +7,6 @@ package pl.gameChecker.model.hibernateEntities;
  */
 
 
-
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
@@ -23,7 +22,7 @@ public class Library implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LIBRARY_ID")
+    @Column(name = "LIBRARY_ID", unique = true, nullable = false)
     private int id;
     
     @OneToOne(mappedBy = "library")
