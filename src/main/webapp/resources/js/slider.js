@@ -2,9 +2,9 @@
     Created on : 2014-07-27, 14:54:13
     Author     : mlethys
 */
-var images = ["images/image1.jpg", 
-                "images/image2.jpg",
-                "images/image3.jpg"];
+var images = ["resources/images/image1.jpg", 
+                "resources/images/image2.jpg",
+                "resources/images/image3.jpg"];
 var imgNum = 0;
 var imgLength = images.length - 1;
 

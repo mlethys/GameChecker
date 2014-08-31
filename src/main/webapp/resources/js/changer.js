@@ -3,6 +3,9 @@ $(document).ready(function(){
         $("#newsContainer").load("login.html #loginContainer");
     });
     $("#registerButton").click(function() {
-        $("#newsContainer").load("register.html #registerContainer");
+        $("#newsContainer").load("register.jsp #registerContainer");
+    });
+    $("#about").click(function() {
+       $("#newsContainer").load("about.html #aboutContainer");
     });
 });
