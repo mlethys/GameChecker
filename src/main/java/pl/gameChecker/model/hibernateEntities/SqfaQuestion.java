@@ -34,7 +34,7 @@ public class SqfaQuestion implements Serializable {
     protected Timestamp additionDate;
 
     @ManyToOne
-    @JoinColumn(name="MEMBERS_MEMBER_ID", nullable = false)
+    @JoinColumn(name="MEMBERS_MEMBER_ID", nullable = true)
     protected Member member;
 
     @OneToMany(mappedBy = "sqfaQuestion")

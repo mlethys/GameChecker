@@ -27,11 +27,11 @@ public class GamesLibraries implements Serializable{
     @Column(name = "GAMES_LIBRARIES_ADDITION_DATE")
     protected Date additionDate;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="GAMES_GAME_ID", nullable = false)
     protected Game game;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="LIBRARIES_LIBRARY_ID", nullable = false)
     protected Library library;
     

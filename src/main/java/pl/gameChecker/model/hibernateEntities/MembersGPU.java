@@ -10,6 +10,7 @@ package pl.gameChecker.model.hibernateEntities;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -35,15 +36,23 @@ public class MembersGPU implements Serializable {
     @Column(name = "MEMBERS_GPU_MEMORY", nullable = false)
     protected int memory;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "COMPANIES_COMPANY_ID", nullable = false)
     protected Company company;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "MEMBERS_PCS_MEMBERS_PC_ID", nullable = false)
-    protected MembersPC membersPC;
+    @OneToMany(mappedBy = "membersGPU")
+    protected List<MembersPC> membersPCs;
 
     public MembersGPU() {}
+
+    public MembersGPU(String name, Date releaseDate, int memory, Company company) {
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.memory = memory;
+        this.company = company;
+    }
+    
+    
 
     public int getId() {
         return id;
@@ -85,13 +94,14 @@ public class MembersGPU implements Serializable {
         this.company = company;
     }
 
-    public MembersPC getMembersPC() {
-        return membersPC;
+    public List<MembersPC> getMembersPCs() {
+        return membersPCs;
     }
 
-    public void setMembersPC(MembersPC membersPC) {
-        this.membersPC = membersPC;
+    public void setMembersPCs(List<MembersPC> membersPCs) {
+        this.membersPCs = membersPCs;
     }
-    
+
+
     
 }

@@ -33,7 +33,7 @@ public class Role implements Serializable {
     protected String name;
 
     @OneToMany(mappedBy = "role")
-    protected List<MembersRoles> membersRoles;
+    protected List<Member> members;
 
     public Role(){}
     
@@ -57,13 +57,11 @@ public class Role implements Serializable {
         this.name = name;
     }
 
-    public List<MembersRoles> getMembersRoles() {
-        return membersRoles;
+    public List<Member> getMembers() {
+        return members;
     }
 
-    public void setMembersRoles(List<MembersRoles> membersRoles) {
-        this.membersRoles = membersRoles;
+    public void setMembers(List<Member> members) {
+        this.members = members;
     }
-    
-    
 }

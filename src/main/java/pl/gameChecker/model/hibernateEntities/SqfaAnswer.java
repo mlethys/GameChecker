@@ -39,7 +39,7 @@ public class SqfaAnswer implements Serializable {
     protected List<SqfaAnswerComment> sqfaAnswerComments;
     
     @ManyToOne
-    @JoinColumn(name = "MEMBERS_MEMBER_ID", nullable = false)
+    @JoinColumn(name = "MEMBERS_MEMBER_ID", nullable = true)
     protected Member member;
     
     @ManyToOne

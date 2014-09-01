@@ -16,7 +16,9 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import pl.gameChecker.model.hibernateEntities.Company;
 import pl.gameChecker.model.hibernateEntities.Game;
+import pl.gameChecker.model.hibernateEntities.GamesLibraries;
 import pl.gameChecker.model.hibernateEntities.Gametype;
+import pl.gameChecker.model.hibernateEntities.Library;
 import pl.gameChecker.model.hibernateEntities.Member;
 import pl.gameChecker.model.hibernateEntities.MembersCPU;
 import pl.gameChecker.model.hibernateEntities.MembersGPU;
@@ -121,6 +123,33 @@ public class DatabaseModelGetMethods {
         return membersPC;
     }
     
+    public Library getLibraryById(int librarysId) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        Library library = (Library) session.get(Library.class, librarysId);
+        
+        transaction.commit();
+        session.close();
+        
+        return library;
+    }
+    
+    public List<MembersPC> getMembersPCByMember(Member member) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        Criteria criteria = session.createCriteria(MembersPC.class);
+        criteria.add(Restrictions.eq("member", member));
+        
+        List<MembersPC> membersPCs = criteria.list();
+        
+        transaction.commit();
+        session.close();
+        
+        return membersPCs;
+    }
+    
     public MembersCPU getMembersCPUById(int membersPCUId) {
         session = HibernateUtil.getSessionFactory().openSession();
         transaction = session.beginTransaction();
@@ -155,6 +184,81 @@ public class DatabaseModelGetMethods {
         session.close();
         
         return role;
+    }
+    
+    public List<SqfaAnswer> getSqfaAnswersFromMember(Member member) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        Criteria criteria =  session.createCriteria(SqfaAnswer.class);
+        criteria.add(Restrictions.eq("member", member));
+        
+        List<SqfaAnswer> answers = criteria.list();
+        
+        transaction.commit();
+        session.close();
+        
+        return answers;
+    }
+    
+    public List<SqfaQuestion> getSqfaQuestionsFromMember(Member member) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        Criteria criteria =  session.createCriteria(SqfaQuestion.class);
+        criteria.add(Restrictions.eq("member", member));
+        
+        List<SqfaQuestion> questions = criteria.list();
+        
+        transaction.commit();
+        session.close();
+        
+        return questions;
+    }
+    
+    public List<SqfaQuestionComment> getSqfaQuestionCommentsFromMember(Member member) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        Criteria criteria =  session.createCriteria(SqfaQuestionComment.class);
+        criteria.add(Restrictions.eq("member", member));
+        
+        List<SqfaQuestionComment> questionComments = criteria.list();
+        
+        transaction.commit();
+        session.close();
+        
+        return questionComments;
+    }
+    
+    public List<SqfaAnswerComment> getSqfaAnswerCommentsFromMember(Member member) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        Criteria criteria =  session.createCriteria(SqfaAnswerComment.class);
+        criteria.add(Restrictions.eq("member", member));
+        
+        List<SqfaAnswerComment> answerComments = criteria.list();
+        
+        transaction.commit();
+        session.close();
+        
+        return answerComments;
+    }
+    
+    public List<GamesLibraries> getGamesLibrariesByLibrary(Library library) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        Criteria criteria =  session.createCriteria(GamesLibraries.class);
+        criteria.add(Restrictions.eq("library", library));
+        
+        List<GamesLibraries> gamesLibraries = criteria.list();
+        
+        transaction.commit();
+        session.close();
+        
+        return gamesLibraries;
     }
     
     public Company getCompanyById(int companyId) {
@@ -194,6 +298,21 @@ public class DatabaseModelGetMethods {
         session.close();
         
         return games;
+    }
+    
+    public Member getMemberByName(String name) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        Criteria query = session.createCriteria(Member.class);
+        query.add(Restrictions.eq("name", name));
+
+        Member member = (Member) query.uniqueResult();
+        
+        transaction.commit();
+        session.close();
+        
+        return member;
     }
     
     public List<Member> getMembersWhereRegisterDateBetween(Date dateFrom, Date dateTo) {

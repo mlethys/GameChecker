@@ -18,7 +18,7 @@ import javax.persistence.*;
 @Entity(name = "MEMBERS")
 @Table(name = "MEMBERS")
 public class Member implements Serializable  {
-
+    
     @Id
     @Column(name = "MEMBER_ID", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,14 +42,15 @@ public class Member implements Serializable  {
     @Column(name = "MEMBER_POINTS", nullable = false)
     protected int points;
     
-    @OneToMany(mappedBy = "member")
-    protected List<MembersRoles> membersRoles;
+    @ManyToOne
+    @JoinColumn(name = "ROLES_ROLE_ID")
+    protected Role role;
     
     @OneToMany(mappedBy = "member")
     protected List<MembersPC> membersPCs;
     
     @OneToOne
-    @JoinColumn(name = "MEMBERS_LIBRARIES_LIBRARY_ID")
+    @JoinColumn(name = "LIBRARIES_LIBRARY_ID")
     protected Library library;
     
     @OneToMany(mappedBy = "member")
@@ -94,14 +95,6 @@ public class Member implements Serializable  {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public List<MembersRoles> getMembersRoles() {
-        return membersRoles;
-    }
-
-    public void setMembersRoles(List<MembersRoles> membersRoles) {
-        this.membersRoles = membersRoles;
-    }
     
     public void setName(String name) {
         this.name = name;
@@ -138,14 +131,6 @@ public class Member implements Serializable  {
 
     public void setPoints(int points) {
         this.points = points;
-    }
-
-    public List<MembersRoles> getRoles() {
-        return membersRoles;
-    }
-
-    public void setRoles(List<MembersRoles> roles) {
-        this.membersRoles = roles;
     }
 
     public Library getLibrary() {
@@ -194,5 +179,13 @@ public class Member implements Serializable  {
 
     public void setSqfaAnswerComments(List<SqfaAnswerComment> sqfaAnswerComments) {
         this.sqfaAnswerComments = sqfaAnswerComments;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

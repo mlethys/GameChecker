@@ -36,8 +36,10 @@ public class TempDBMain {
         Role myRole3 = new Role("Administrator");
         Role myRole2 = new Role("Junior Admin");
         Role myRole1 = new Role("Moderator");
-        Role myRole0 = new Role("User");
+        Role myRole0 = new Role("Member");
+        Role myRole = new Role("User");
 
+        session.save(myRole);
         session.save(myRole0);
         session.save(myRole1);
         session.save(myRole2);
@@ -89,6 +91,16 @@ public class TempDBMain {
             System.out.println("Found: " + game.getName());
         }
         
+        dbmAdd.addNewCompany("Radeon");
+        dbmAdd.addNewCompany("GeForce");
+        dbmAdd.addNewCompany("Intel");
+        dbmAdd.addNewCompany("AMD");
+        
+        dbmAdd.addNewMembersCPU("Core i3-3120M", 22, 11, 2012, dbmGet.getCompanyById(3));
+        dbmAdd.addNewMembersCPU("Athlon II x4 640", 5, 10, 2010, dbmGet.getCompanyById(4));
+        dbmAdd.addNewMembersGPU("GTX 460", 12, 4, 2010, 1024, dbmGet.getCompanyById(2));
+        dbmAdd.addNewMembersGPU("7770", 9, 1, 2012, 1024, dbmGet.getCompanyById(1));
+        
         dbmOther.isLoginMatchPassword("bbZ", "wrongPass");
         dbmOther.isLoginMatchPassword("wrongUser", "wrongPass");
         dbmOther.isLoginMatchPassword("bbZ", "tempPassword");
@@ -122,6 +134,11 @@ public class TempDBMain {
 //        dbmUpdate.updateMemberProfile(dbmGet.getMemberById(1), "bbZ", "newPassword", "dspoko2@interia.pl", 22, 11, 1991);
 //        dbmUpdate.updateGameInfo(dbmGet.getGameById(1), "JK3", true, true, true, 22, 11, 1991, "Simulator");
         
+        if(dbmGet.getMemberByName("bbZ") != null)
+            System.out.println("Member znaleziony: " + dbmGet.getMemberByName("bbZ").getMail());
+        
+        if(dbmGet.getMemberByName("asd") == null)
+            System.out.println("Member nieznaleziony");
         System.out.println("Popularność game1: " + dbmGet.getGamePopularityProcent(dbmGet.getGameById(1)) + "%");
         System.out.println("Popularność game2: " + dbmGet.getGamePopularityProcent(dbmGet.getGameById(2)) + "%");
         
@@ -149,6 +166,24 @@ public class TempDBMain {
         } catch (DocumentException | IOException ex) {
             Logger.getLogger(TempDBMain.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        dbmAdd.addNewMembersPC(dbmGet.getMemberById(1), "New bbZ PC", 4096, dbmGet.getMembersCPUById(2), dbmGet.getMembersGPUById(2));
+        
+        DatabaseModelRemoveMethods dbmRemove = new DatabaseModelRemoveMethods();
+        dbmRemove.removeMember(dbmGet.getMemberById(1));
+        if(dbmGet.getMemberByName("bbZ") != null)
+            System.out.println("Member znaleziony: " + dbmGet.getMemberByName("bbZ").getMail());
+        else
+            System.out.println("Member nieznaleziony");
+        
+        if(dbmGet.getMemberById(1) != null)
+            System.out.println("Member z id 1: " + dbmGet.getMemberById(1).getName());
+        else
+            System.out.println("Member jest nullem");
+        
+        dbmAdd.addNewMember("bbZ2", "pass", "asd@asd.pl", 22, 11, 1991);
+        System.out.println(dbmGet.getMemberByName("bbZ2").getId() + " ");
+     
+        dbmAdd.addNewMembersPC(dbmGet.getMemberById(4), "New PC", 4096, dbmGet.getMembersCPUById(1), dbmGet.getMembersGPUById(1));
     }
-
 }

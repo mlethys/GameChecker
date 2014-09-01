@@ -36,6 +36,10 @@ public class Company implements Serializable {
 
     public Company() {}
 
+    public Company(String name) {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }

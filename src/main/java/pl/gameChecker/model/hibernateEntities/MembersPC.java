@@ -32,15 +32,17 @@ public class MembersPC implements Serializable {
     @Column(name="MEMBERS_PC_MEMORY", nullable = false)
     protected int memory;
     
-    @OneToOne(mappedBy = "membersPC")
-    protected MembersCPU membersCPUs;
-    
-    @OneToOne(mappedBy = "membersPC")
-    protected MembersGPU membersGPUs;
-    
     @ManyToOne
     @JoinColumn(name = "MEMBERS_MEMBER_ID", nullable = false)
     protected Member member;
+    
+    @ManyToOne
+    @JoinColumn(name = "MEMBERS_CPUS_ID", nullable = false)
+    protected MembersCPU membersCPU;
+    
+    @ManyToOne
+    @JoinColumn(name = "MEMBERS_GPUS_ID", nullable = false)
+    protected MembersGPU membersGPU;
 
     public MembersPC() {}
 
@@ -48,8 +50,8 @@ public class MembersPC implements Serializable {
         this.member = member;
         this.name = name;
         this.memory = memory;
-        this.membersCPUs = membersCPU;
-        this.membersGPUs = membersGPU;
+        this.membersCPU = membersCPU;
+        this.membersGPU = membersGPU;
     }
 
     public int getId() {
@@ -76,22 +78,22 @@ public class MembersPC implements Serializable {
         this.memory = memory;
     }
 
-    public MembersCPU getMembersCPUs() {
-        return membersCPUs;
+    public MembersCPU getMembersCPU() {
+        return membersCPU;
     }
 
-    public void setMembersCPUs(MembersCPU membersCPUs) {
-        this.membersCPUs = membersCPUs;
+    public void setMembersCPU(MembersCPU membersCPU) {
+        this.membersCPU = membersCPU;
     }
 
-    public MembersGPU getMembersGPUs() {
-        return membersGPUs;
+    public MembersGPU getMembersGPU() {
+        return membersGPU;
     }
 
-    public void setMembersGPUs(MembersGPU membersGPUs) {
-        this.membersGPUs = membersGPUs;
+    public void setMembersGPU(MembersGPU membersGPU) {
+        this.membersGPU = membersGPU;
     }
- 
+
 
     public Member getMember() {
         return member;

@@ -15,6 +15,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import pl.gameChecker.model.hibernateEntities.Company;
 import pl.gameChecker.model.hibernateEntities.Game;
 import pl.gameChecker.model.hibernateEntities.GamesLibraries;
 import pl.gameChecker.model.hibernateEntities.Gametype;
@@ -23,8 +24,6 @@ import pl.gameChecker.model.hibernateEntities.Member;
 import pl.gameChecker.model.hibernateEntities.MembersCPU;
 import pl.gameChecker.model.hibernateEntities.MembersGPU;
 import pl.gameChecker.model.hibernateEntities.MembersPC;
-import pl.gameChecker.model.hibernateEntities.MembersRoles;
-import pl.gameChecker.model.hibernateEntities.Role;
 import pl.gameChecker.model.hibernateEntities.SqfaAnswer;
 import pl.gameChecker.model.hibernateEntities.SqfaAnswerComment;
 import pl.gameChecker.model.hibernateEntities.SqfaQuestion;
@@ -55,10 +54,8 @@ public class DatabaseModelAddMethods {
         
         session = HibernateUtil.getSessionFactory().openSession();
         transaction = session.beginTransaction();
-        
-        MembersRoles membersRoles = new MembersRoles(newMember, (Role) session.get(Role.class, 1));
-        
-        session.save(membersRoles);
+                
+        session.save(newMember);
         session.save(library);
         
         transaction.commit();
@@ -110,6 +107,52 @@ public class DatabaseModelAddMethods {
         MembersPC membersPC = new MembersPC(member, namePC, memoryPC, membersCPU, membersGPU);
         
         session.save(membersPC);
+        
+        transaction.commit();
+        session.close();
+    }
+    
+    public void addNewMembersCPU(String name, int releaseDay, int releaseMonth, int releaseYear, Company company) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        calendar.clear();
+        calendar.set(releaseYear, releaseMonth - 1, releaseDay);
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        MembersCPU membersCPU = new MembersCPU(name, new Date(secondsSinceEpoch), company);
+        
+        session.save(membersCPU);
+        
+        transaction.commit();
+        session.close();
+    }
+    
+    public void addNewMembersGPU(String name, int releaseDay, int releaseMonth, int releaseYear, int memory, Company company) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        calendar.clear();
+        calendar.set(releaseYear, releaseMonth - 1, releaseDay);
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        MembersGPU membersGPU = new MembersGPU(name, new Date(secondsSinceEpoch), memory, company);
+        
+        session.save(membersGPU);
+        
+        transaction.commit();
+        session.close();
+    }
+    
+    public void addNewCompany(String name) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+        
+        Company company = new Company(name);
+        
+        session.save(company);
         
         transaction.commit();
         session.close();
