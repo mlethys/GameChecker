@@ -49,6 +49,7 @@ public class RegisterController {
             Member newMember = new Member(login, password, sqlRegisterDate, email, sqlBDay);
         } catch (ParseException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+            return "registerFailed";
         }
         
         model.addAttribute("username", login);
