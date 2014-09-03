@@ -8,6 +8,8 @@ package pl.gameChecker.model.hibernateEntities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.TimeZone;
 import javax.persistence.*;
 
 /**
@@ -40,10 +42,13 @@ public class SqfaAnswerComment implements Serializable {
         
     public SqfaAnswerComment() {}
 
-    public SqfaAnswerComment(Member member, SqfaAnswer sqfaAnswer, String content, Timestamp additionDate) {
+    public SqfaAnswerComment(Member member, SqfaAnswer sqfaAnswer, String content) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        
         this.content = content;
         this.member = member;
-        this.additionDate = additionDate;
+        this.additionDate = new Timestamp(secondsSinceEpoch);
         this.sqfaAnswer = sqfaAnswer;
     }
     

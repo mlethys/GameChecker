@@ -28,7 +28,7 @@ public class Library implements Serializable {
     @OneToOne(mappedBy = "library")
     protected Member member;
     
-    @OneToMany(mappedBy = "library")
+    @OneToMany(mappedBy = "library", cascade = CascadeType.ALL)
     protected List<GamesLibraries> gamesLibraries;
 
     public Library(){}

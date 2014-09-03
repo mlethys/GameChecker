@@ -1,8 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
 
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-">
-
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+     
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/gamecheckerdb?zeroDateTimeBehavior=convertToNull" />
+        <property name="username" value="root" />
+        <property name="password" value="haslo3" />
+    </bean>
+ 
+    <tx:annotation-driven />
+    
+    <!-- Hibernate 3 SessionFactory Bean definition -->
+    <bean id="sessionFactory"
+        class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="annotatedClasses">
+            <list>
+                <value>pl.gameChecker.model.hibernateEntities.Company</value>
+                <value>pl.gameChecker.model.hibernateEntities.Member</value>             <!-- DONE -->   <!-- DONE -->
+                <value>pl.gameChecker.model.hibernateEntities.Role</value>               <!-- DONE -->   <!-- DONE -->
+                <value>pl.gameChecker.model.hibernateEntities.Library</value>            <!-- DONE -->   <!-- DONE -->
+                <value>pl.gameChecker.model.hibernateEntities.Game</value>               <!-- DONE -->   <!-- DONE -->
+                <value>pl.gameChecker.model.hibernateEntities.Gametype</value>           <!-- DONE -->   <!-- DONE -->
+                <value>pl.gameChecker.model.hibernateEntities.SqfaQuestionComment</value>      <!-- DONE -->   <!-- DONE -->
+                <value>pl.gameChecker.model.hibernateEntities.SqfaAnswerComment</value>        <!-- DONE -->   <!-- DONE -->
+                <value>pl.gameChecker.model.hibernateEntities.SqfaQuestion</value>      <!-- DONE -->   <!-- DONE -->
+                <value>pl.gameChecker.model.hibernateEntities.SqfaAnswer</value>         <!-- DONE -->   <!-- DONE -->
+                <value>pl.gameChecker.model.hibernateEntities.Company</value>            <!-- DONE -->   <!-- DONE -->
+                <value>pl.gameChecker.model.hibernateEntities.MembersPC</value>          <!-- DONE -->   <!-- DONE -->    
+                <value>pl.gameChecker.model.hibernateEntities.MembersCPU</value>         <!-- DONE -->   <!-- DONE -->         
+                <value>pl.gameChecker.model.hibernateEntities.MembersGPU</value>         <!-- DONE -->   <!-- DONE -->   
+                <value>pl.gameChecker.model.hibernateEntities.GamesLibraries</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+     
+    <bean id="company" class="pl.gameChecker.model.hibernateEntities.CompanyDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="game" class="pl.gameChecker.model.hibernateEntities.GameDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="gametype" class="pl.gameChecker.model.hibernateEntities.GametypeDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="library" class="pl.gameChecker.model.hibernateEntities.LibraryDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="gamesLibraries" class="pl.gameChecker.model.hibernateEntities.GamesLibrariesDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="member" class="pl.gameChecker.model.hibernateEntities.MemberDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="membersCPU" class="pl.gameChecker.model.hibernateEntities.MembersCPUDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="membersGPU" class="pl.gameChecker.model.hibernateEntities.MembersGPUDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="membersPC" class="pl.gameChecker.model.hibernateEntities.MembersPCDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="role" class="pl.gameChecker.model.hibernateEntities.RoleDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="sqfaAnswer" class="pl.gameChecker.model.hibernateEntities.SqfaAnswerDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="sqfaAnswerComment" class="pl.gameChecker.model.hibernateEntities.SqfaAnswerCommentDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="sqfaQuestion" class="pl.gameChecker.model.hibernateEntities.SqfaQuestionDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="sqfaQuestionComment" class="pl.gameChecker.model.hibernateEntities.SqfaQuestionCommentDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="pdfModel" class="pl.gameChecker.model.pdf.PdfModel"/>
 </beans>

@@ -7,8 +7,11 @@ package pl.gameChecker.model.hibernateEntities;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import javax.persistence.*;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -46,10 +49,10 @@ public class Member implements Serializable  {
     @JoinColumn(name = "ROLES_ROLE_ID")
     protected Role role;
     
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     protected List<MembersPC> membersPCs;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "LIBRARIES_LIBRARY_ID")
     protected Library library;
     
@@ -67,10 +70,32 @@ public class Member implements Serializable  {
 
     public Member(){}
     
-    public Member(String name, String password, Date registerDate, String mail, Date birthDate) {
+    public Member(String name, String password, String mail, int birthDay, int birthMonth, int birthYear) {
+        password = DigestUtils.sha256Hex(password);
+        
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        calendar.clear();
+        calendar.set(birthYear, birthMonth - 1, birthDay);
+        long secondsSinceEpochToBirthday = calendar.getTimeInMillis();
+        
         this.name = name;
         this.password = password;
-        this.registerDate = registerDate;
+        this.registerDate = new Date(secondsSinceEpoch);
+        this.mail = mail;
+        this.birthDate = new Date(secondsSinceEpochToBirthday);
+        this.points = 0;
+    }
+    
+    public Member(String name, String password, String mail, Date birthDate) {
+        password = DigestUtils.sha256Hex(password);
+        
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        
+        this.name = name;
+        this.password = password;
+        this.registerDate = new Date(secondsSinceEpoch);
         this.mail = mail;
         this.birthDate = birthDate;
         this.points = 0;

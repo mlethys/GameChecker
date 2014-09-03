@@ -24,21 +24,28 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.util.List;
-import pl.gameChecker.model.database.DatabaseModelGetMethods;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import pl.gameChecker.model.hibernateEntities.Game;
+import pl.gameChecker.model.hibernateEntities.GameDao;
 import pl.gameChecker.model.hibernateEntities.GamesLibraries;
 import pl.gameChecker.model.hibernateEntities.Member;
+import pl.gameChecker.model.hibernateEntities.MemberDao;
+import pl.gameChecker.model.hibernateEntities.SqfaAnswerDao;
 
 /**
  *
  * @author Damian Leśniak
  * @version 1.0
  */
-public class PdfModel {
+public class PdfModel implements ApplicationContextAware {
     private final String pdfPath;
     private DateFormat dateFormat;
     private java.util.Date date;
     private final double totalTablePayment[] = new double[11];
+    
+    private static ApplicationContext applicationContext;
 
     public PdfModel() throws DocumentException, FileNotFoundException, BadElementException, IOException {
         pdfPath = "Wystawiono.pdf";
@@ -154,8 +161,8 @@ public class PdfModel {
         newSqfaSummaryTable.addCell(memberNameCell);
         newSqfaSummaryTable.addCell(sqfaAnswersCountCell);
         
-        DatabaseModelGetMethods dbmGet = new DatabaseModelGetMethods();
-        List<Object[]> objects = dbmGet.getSqfaSummaryBetween(dateFrom, dateTo);
+        SqfaAnswerDao companyDao = applicationContext.getBean("sqfaAnswer", SqfaAnswerDao.class);
+        List<Object[]> objects = companyDao.getSqfaSummaryBetween(dateFrom, dateTo);
         if(objects != null) {
             for (Object[] obj : objects) {
                 for (int i = 0; i < obj.length; i++) {
@@ -208,8 +215,8 @@ public class PdfModel {
         newGamesAdditionsTable.addCell(gameAdditionDateCell);
 
         
-        DatabaseModelGetMethods dbmGet = new DatabaseModelGetMethods();
-        List<Object[]> objects = dbmGet.getGamesAdditionAfterDate(afterThisDate);
+        GameDao gameDao = applicationContext.getBean("game", GameDao.class);
+        List<Object[]> objects = gameDao.getGamesAdditionAfterDate(afterThisDate);
         if(objects != null) {
             for (Object[] obj : objects) {
                 for (int i = 0; i < obj.length; i++) {
@@ -280,8 +287,8 @@ public class PdfModel {
         newMembersTable.addCell(memberBirthdayCell);
         newMembersTable.addCell(memberPointsCell);
         
-        DatabaseModelGetMethods dbmGet = new DatabaseModelGetMethods();
-        List<Member> members = dbmGet.getMembersWhereRegisterDateBetween(dateFrom, dateTo);
+        MemberDao memberDao = applicationContext.getBean("member", MemberDao.class);
+        List<Member> members = memberDao.getMembersWhereRegisterDateBetween(dateFrom, dateTo);
         if(members != null) {
             for(Member member : members) {
                 memberIdCell = new PdfPCell(new Phrase(member.getId() + ""));
@@ -314,5 +321,10 @@ public class PdfModel {
         }
         
         return newMembersTable;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext ac) throws BeansException {
+        applicationContext = ac;
     }
 }

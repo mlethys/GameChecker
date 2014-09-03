@@ -7,7 +7,9 @@
 package pl.gameChecker.model.hibernateEntities;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import javax.persistence.*;
 
 /**
@@ -57,6 +59,22 @@ public class Game implements Serializable {
     public Game(String name, Date releaseDate, boolean singleplayer, boolean multiplayer, boolean freeToPlay, Gametype gametype) {
         this.name = name;
         this.releaseDate = releaseDate;
+        this.singleplayer = singleplayer;
+        this.multiplayer = multiplayer;
+        this.freeToPlay = freeToPlay;
+        this.gametype = gametype;
+        this.stars = 0;
+        this.rates = 0;
+    }
+    
+    public Game(String name, boolean singleplayer, boolean multiplayer, boolean freeToPlay, int releaseDay, int releaseMonth, int releaseYear, Gametype gametype) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        calendar.clear();
+        calendar.set(releaseYear, releaseMonth - 1, releaseDay);
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        
+        this.name = name;
+        this.releaseDate = new Date(secondsSinceEpoch);
         this.singleplayer = singleplayer;
         this.multiplayer = multiplayer;
         this.freeToPlay = freeToPlay;

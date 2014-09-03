@@ -47,6 +47,8 @@ public class RegisterController {
             java.sql.Date sqlRegisterDate = new java.sql.Date(registerDate.getTime());
             java.sql.Date sqlBDay = new java.sql.Date(bDay.getTime());
             Member newMember = new Member(login, password, sqlRegisterDate, email, sqlBDay);
+            //RegisterDate zmieniłem w każdej metodzie że ustawia sie w konstruktorze
+            //Mozesz se to wyjebac z argumentów, albo dopisac konstruktor jak wolisz zeby tak było
         } catch (ParseException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
             return "registerFailed";

@@ -7,9 +7,10 @@
 package pl.gameChecker.model.hibernateEntities;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import javax.persistence.*;
 
 /**
@@ -35,7 +36,7 @@ public class SqfaAnswer implements Serializable {
     @Column(name = "SQFA_ANSWER_ADDITION_DATE", nullable = false)
     protected Timestamp additionDate;
     
-    @OneToMany(mappedBy = "sqfaAnswer")
+    @OneToMany(mappedBy = "sqfaAnswer", cascade = CascadeType.ALL)
     protected List<SqfaAnswerComment> sqfaAnswerComments;
     
     @ManyToOne
@@ -48,11 +49,14 @@ public class SqfaAnswer implements Serializable {
     
     public SqfaAnswer() {}
     
-    public SqfaAnswer(Member member, SqfaQuestion sqfaQuestion, String content, Timestamp additionDate) {
+    public SqfaAnswer(Member member, SqfaQuestion sqfaQuestion, String content) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        
         this.member = member;
         this.sqfaQuestion = sqfaQuestion;
         this.content = content;
-        this.additionDate = additionDate;
+        this.additionDate = new Timestamp(secondsSinceEpoch);
         this.points = 0;
     }
 
