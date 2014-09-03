@@ -101,7 +101,9 @@ public class SqfaAnswerDaoImpl extends HibernateDaoSupport implements SqfaAnswer
     @Transactional
     public void incrementSqfaAnswerPoints(SqfaAnswer sqfaAnswer) {
         sqfaAnswer.setPoints(sqfaAnswer.getPoints() + 1);
-                
+        sqfaAnswer.getMember().setPoints(sqfaAnswer.getMember().getPoints() + 1);
+        
+        getHibernateTemplate().update(sqfaAnswer.getMember());
         getHibernateTemplate().update(sqfaAnswer);
     }
 }

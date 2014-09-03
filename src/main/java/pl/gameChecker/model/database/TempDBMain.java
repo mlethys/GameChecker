@@ -14,7 +14,6 @@ import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jboss.jandex.Main;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import pl.gameChecker.model.hibernateEntities.Company;
 import pl.gameChecker.model.hibernateEntities.CompanyDao;
@@ -24,7 +23,6 @@ import pl.gameChecker.model.hibernateEntities.GamesLibrariesDao;
 import pl.gameChecker.model.hibernateEntities.Gametype;
 import pl.gameChecker.model.hibernateEntities.GametypeDao;
 import pl.gameChecker.model.hibernateEntities.LibraryDao;
-import pl.gameChecker.model.hibernateEntities.Member;
 import pl.gameChecker.model.hibernateEntities.MemberDao;
 import pl.gameChecker.model.hibernateEntities.SqfaAnswer;
 import pl.gameChecker.model.hibernateEntities.SqfaAnswerComment;
@@ -151,6 +149,10 @@ public class TempDBMain {
         sqfaAnswerDao.create(sa2);
         sqfaAnswerCommentDao.create(sac2);
         sqfaAnswerCommentDao.create(sac3);
+        
+        sqfaAnswerDao.incrementSqfaAnswerPoints(sa);
+        sqfaAnswerDao.incrementSqfaAnswerPoints(sa2);
+        sqfaAnswerDao.incrementSqfaAnswerPoints(sa2);
                 
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         long secondsTillNow = calendar.getTimeInMillis();
