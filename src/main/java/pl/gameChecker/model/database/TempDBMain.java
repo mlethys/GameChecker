@@ -42,7 +42,7 @@ import pl.gameChecker.model.pdf.PdfModel;
 public class TempDBMain {
     
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans-hibernate.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         
         //<editor-fold defaultstate="collapsed" desc="Company Test Methods. Click on the + sign on the left to edit the code.">
         CompanyDao companyDao = context.getBean("company", CompanyDao.class);
