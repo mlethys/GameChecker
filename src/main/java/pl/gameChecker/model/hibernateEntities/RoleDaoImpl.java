@@ -63,7 +63,7 @@ public class RoleDaoImpl extends HibernateDaoSupport implements RoleDao{
         DetachedCriteria.forClass(Role.class)
         .add(Restrictions.eq("name", name)));
 
-        if(roles != null)
+        if(roles.size() > 0)
         {
             return roles.get(0);
         }

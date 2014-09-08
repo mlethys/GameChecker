@@ -27,7 +27,7 @@ public class SqfaAnswer implements Serializable {
     @Column(name="SQFA_ANSWER_ID", unique = true, nullable = false)
     protected int id;
     
-    @Column(name="SQFA_ANSWER_CONTENT", unique = true, nullable = false, length = Integer.MAX_VALUE)
+    @Column(name="SQFA_ANSWER_CONTENT", nullable = false, length = Integer.MAX_VALUE)
     protected String content;
     
     @Column(name="SQFA_ANSWER_POINTS", nullable = false)

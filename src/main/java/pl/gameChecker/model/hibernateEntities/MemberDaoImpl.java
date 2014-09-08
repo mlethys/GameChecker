@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.TimeZone;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -51,7 +50,7 @@ public class MemberDaoImpl extends HibernateDaoSupport implements MemberDao {
         DetachedCriteria.forClass(Member.class)
         .add(Restrictions.eq("name", name)));
 
-        if(members != null)
+        if(members.size() > 0)
         {
             return members.get(0);
         }
@@ -61,11 +60,14 @@ public class MemberDaoImpl extends HibernateDaoSupport implements MemberDao {
     @Override
     @Transactional
     public List<Member> getMembersWhereRegisterDateBetween(Date dateFrom, Date dateTo) {
-        Criteria query = getSessionFactory().getCurrentSession().createCriteria(Member.class);
-        query.add(Restrictions.between("registerDate", dateFrom, dateTo));
+        List<Member> members = (List<Member>) getHibernateTemplate().findByCriteria(
+        DetachedCriteria.forClass(Member.class)
+        .add(Restrictions.between("registerDate", dateFrom, dateTo)));
 
-        List<Member> members = query.list();
-
+        for(Member m : members) {
+            System.out.println("tabela members: " +m.getName());
+        }
+        
         return members;
     }
 
@@ -119,11 +121,12 @@ public class MemberDaoImpl extends HibernateDaoSupport implements MemberDao {
     public boolean isMemberLoginMatchPassword(String login, String password) {
         String pass = DigestUtils.sha256Hex(password);
                         
-        Criteria criteria = getSessionFactory().getCurrentSession().createCriteria(Member.class)
-        .add(Restrictions.and(Restrictions.eq("password", pass), Restrictions.eq("name", login)));
         
-        Member member = (Member) criteria.uniqueResult();
-        if (member != null){
+        List<Member> members = (List<Member>) getHibernateTemplate().findByCriteria(
+        DetachedCriteria.forClass(Member.class)
+        .add(Restrictions.and(Restrictions.eq("password", pass), Restrictions.eq("name", login))));
+        
+        if (members.size() >0){
             System.out.println("Zalogowano.");
             return true;
         }

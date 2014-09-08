@@ -68,4 +68,18 @@ public class GamesLibrariesDaoImpl extends HibernateDaoSupport implements GamesL
         getHibernateTemplate().delete(gamesLibraries);
     }
 
+    @Override
+    public boolean isMemberGotGameInLibrary(Member member, Game game) {
+        List<GamesLibraries> games = (List<GamesLibraries>) getHibernateTemplate().findByCriteria(
+        DetachedCriteria.forClass(GamesLibraries.class)
+        .add(Restrictions.eq("library", member.getLibrary()))
+        .add(Restrictions.eq("game", game)));
+        
+        if(games.size() > 0)
+        {
+            return true;
+        }
+        else return false;
+    }
+
 }

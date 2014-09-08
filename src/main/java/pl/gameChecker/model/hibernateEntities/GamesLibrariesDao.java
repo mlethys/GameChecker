@@ -20,4 +20,6 @@ public interface GamesLibrariesDao {
     public void create(GamesLibraries gamesLibraries);
     public void update(GamesLibraries gamesLibraries);
     public void delete(GamesLibraries gamesLibraries);
+    public boolean isMemberGotGameInLibrary(Member member, Game game);
+    
 }

@@ -9,6 +9,7 @@ package pl.gameChecker.model.hibernateEntities;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,16 @@ public class SqfaQuestionDaoImpl extends HibernateDaoSupport implements SqfaQues
     public SqfaQuestion getById(int id) {
         SqfaQuestion sqfaQuestion = (SqfaQuestion) getHibernateTemplate().get(SqfaQuestion.class, id);
         return sqfaQuestion;
+    }
+    
+    @Override
+    @Transactional
+    public List<SqfaQuestion> getWhereTitleLike(String title) {
+        List<SqfaQuestion> sqfaQuestions = (List<SqfaQuestion>) getHibernateTemplate().findByCriteria(
+        DetachedCriteria.forClass(SqfaQuestion.class)
+        .add(Restrictions.like("title", title, MatchMode.ANYWHERE)));
+
+        return sqfaQuestions;
     }
 
     @Override

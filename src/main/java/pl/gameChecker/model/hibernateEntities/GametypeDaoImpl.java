@@ -45,7 +45,7 @@ public class GametypeDaoImpl extends HibernateDaoSupport implements GametypeDao{
         DetachedCriteria.forClass(Gametype.class)
         .add(Restrictions.eq("name", name)));
         
-        if(gametypes != null)
+        if(gametypes.size() > 0)
         {
             return gametypes.get(0);
         }

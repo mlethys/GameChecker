@@ -45,7 +45,7 @@ public class CompanyDaoImpl extends HibernateDaoSupport implements CompanyDao {
         DetachedCriteria.forClass(Company.class)
         .add(Restrictions.eq("name", name)));
         
-        if(companies != null)
+        if(companies.size() > 0)
         {
             return companies.get(0);
         }

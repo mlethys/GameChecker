@@ -45,6 +45,9 @@ public class Member implements Serializable  {
     @Column(name = "MEMBER_POINTS", nullable = false)
     protected int points;
     
+    @Column(name = "MEMBER_AVATAR", nullable = true)
+    protected String avatarURL;
+    
     @ManyToOne
     @JoinColumn(name = "ROLES_ROLE_ID")
     protected Role role;
@@ -84,20 +87,6 @@ public class Member implements Serializable  {
         this.registerDate = new Date(secondsSinceEpoch);
         this.mail = mail;
         this.birthDate = new Date(secondsSinceEpochToBirthday);
-        this.points = 0;
-    }
-    
-    public Member(String name, String password, String mail, Date birthDate) {
-        password = DigestUtils.sha256Hex(password);
-        
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-        long secondsSinceEpoch = calendar.getTimeInMillis();
-        
-        this.name = name;
-        this.password = password;
-        this.registerDate = new Date(secondsSinceEpoch);
-        this.mail = mail;
-        this.birthDate = birthDate;
         this.points = 0;
     }
 

@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.Vector;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -54,7 +55,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
         DetachedCriteria.forClass(Game.class)
         .add(Restrictions.eq("name", name)));
         
-        if(games != null)
+        if(games.size() > 0)
         {
             return games.get(0);
         }
@@ -220,6 +221,31 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
             game.setReleaseDate(new Date(secondsSinceEpoch));
             getHibernateTemplate().update(game);
         }
+    }
+
+    @Override
+    @Transactional
+    public List<Game> getGamesFromMember(Member member) {
+        List<Object[]> objects;
+        List<Game> games = new Vector<Game>();
+        
+        Query query = getSessionFactory().getCurrentSession().createQuery("from GAMES_LIBRARIES gl, GAMES g where "
+                + "g.id=gl.game and gl.library = :memberLibrary group by gl.id");
+        query.setParameter("memberLibrary", member.getLibrary());
+
+        objects = query.list();
+        
+        
+        if(objects != null) {
+            games.clear();
+            for(Object[] obj : objects){
+                games.add((Game) obj[1]);
+            }
+        }
+        if(games.size() > 0)
+            return games;
+        else
+            return null;
     }
 
 }
