@@ -28,7 +28,7 @@ public class MemberDaoImpl extends HibernateDaoSupport implements MemberDao {
     public MemberDaoImpl (SessionFactory sessionFactory) {
         setSessionFactory(sessionFactory);
     }
-
+    
     @Override
     @Transactional
     public List<Member> getList() {
@@ -55,6 +55,19 @@ public class MemberDaoImpl extends HibernateDaoSupport implements MemberDao {
             return members.get(0);
         }
         else return null;
+    }
+    
+    @Override
+    @Transactional
+    public boolean exists(Member member) {
+        List<Member> members = (List<Member>) getHibernateTemplate().findByCriteria(
+        DetachedCriteria.forClass(Member.class)
+        .add(Restrictions.eq("name", member.getName())));
+        
+        if(!members.isEmpty()) {
+            return true;
+        }
+        return false;
     }
 
     @Override

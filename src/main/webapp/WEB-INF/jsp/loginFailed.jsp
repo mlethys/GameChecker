@@ -1,6 +1,12 @@
 <%-- 
-    Document   : login
-    Created on : 2014-08-31, 13:07:22
+    Document   : loginFailed
+    Created on : 2014-09-09, 20:25:58
+    Author     : mlethys
+--%>
+
+<%-- 
+    Document   : registerSuccess
+    Created on : 2014-08-31, 13:35:21
     Author     : mlethys
 --%>
 
@@ -47,18 +53,8 @@
             </div>
             <div id="mainBody">
                 <div id="newsContainer" class="mainBody">
-                    <div id="registerContainer" class="loginRegister" align="center">
-                        <h1 class="logRegHeadline">Login</h1>
-                        <form id="registerForm" method="POST" action="tryLogin">
-                            <p class="loginRegisterText">Username</p>
-                            <input type="text" name="login"/>
-                            <br>
-                            <p class="loginRegisterText">Password</p>
-                            <input type="password" name="password"/>
-                            <br>
-                            <input class="formButton" type="submit" value="Login"/>
-                        </form>
-                    </div>
+                    <h1 class="headline" align="center">Login failed!</h1>
+                    <h2 align="center">Given username and/or password is incorrect or user doesn't exist.</h2>
                 </div>
                 <div id="addsContainer" class="mainBody">
                     <img src="<c:url value="/resources/images/sampleAdd.jpg"/>" alt="add" class="add"/>
@@ -70,3 +66,4 @@
         </footer>
     </body>
 </html>
+

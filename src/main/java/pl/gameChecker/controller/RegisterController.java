@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import pl.gameChecker.model.hibernateEntities.Member;
+import pl.gameChecker.model.hibernateEntities.MemberDao;
 
 /**
  *
@@ -37,21 +39,29 @@ public class RegisterController {
             @RequestParam(value = "email", required = true) String email, 
             ModelMap model) {
         
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            Date registerDate = dateFormat.parse(dateFormat.format(date.getTime()));
-            Date bDay = dateFormat.parse(dateOfBirth);
-            java.sql.Date sqlRegisterDate = new java.sql.Date(registerDate.getTime());
-            java.sql.Date sqlBDay = new java.sql.Date(bDay.getTime());
-            Member newMember = new Member(login, password, sqlRegisterDate, email, sqlBDay);
-            //RegisterDate zmieniłem w każdej metodzie że ustawia sie w konstruktorze
-            //Mozesz se to wyjebac z argumentów, albo dopisac konstruktor jak wolisz zeby tak było
+            calendar.setTime(dateFormat.parse(dateOfBirth));
+            MemberDao memberDao = context.getBean("member", MemberDao.class);
+            Member newMeber = new Member(login, 
+                                            password, 
+                                            email, 
+                                            calendar.get(Calendar.DAY_OF_MONTH), 
+                                            calendar.get(Calendar.MONTH), 
+                                            calendar.get(Calendar.YEAR));
+            if(memberDao.exists(newMeber)) {
+                return "registerFailed";
+            }
+            memberDao.create(newMeber);
         } catch (ParseException ex) {
             Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
             return "registerFailed";
+        }
+        finally {
+            context.close();
         }
         
         model.addAttribute("username", login);

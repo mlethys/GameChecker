@@ -80,6 +80,10 @@ body {
     float: left;
     margin-left: 480px;
 }
+#library {
+    float: left;
+    margin-left: 600px;
+}
 .menuText {
     color: #ffffff;
     text-align: center;

@@ -1,6 +1,11 @@
 <%-- 
-    Document   : login
-    Created on : 2014-08-31, 13:07:22
+    Document   : loginSuccess
+    Created on : 2014-09-09, 20:25:49
+    Author     : mlethys
+--%>
+<%-- 
+    Document   : registerSuccess
+    Created on : 2014-08-31, 13:35:21
     Author     : mlethys
 --%>
 
@@ -19,15 +24,15 @@
         <div id="container">
             <div id="loginBar">
                 <div id="registerButton" class="loginRegButton">
-                    <a href="<c:url value="register"/>">Register</a>
+                    <a href="<c:url value="logout"/>">Logout</a>
                 </div>
                 <div id="loginButton" class="loginRegButton">
-                    <a href="<c:url value="login"/>">Login</a>
+                    <a href="<c:url value="profile"/>">Profile</a>
                 </div>
             </div>
             <div id="menuBar">
                 <div id="home">
-                    <a href="<c:url value="/"/>"><img src="<c:url value="/resources/images/logo1.png"/>" alt="logo" 
+                    <a href="<c:url value="loggedIndex"/>"><img src="<c:url value="/resources/images/logo1.png"/>" alt="logo" 
                                               onmouseover="this.src='<c:url value="/resources/images/logo2.png"/>'"
                                               onmouseout="this.src='<c:url value="/resources/images/logo1.png"/>'"/></a>
                 </div>
@@ -40,6 +45,9 @@
                 <div id="about" class="menuButton">
                     <p class="menuText">About</p>
                 </div>
+                <div id="library" class="menuButton">
+                    <p class="menuText">My library</p>
+                </div>
             </div>  
             <img class="sliderImg" alt="img" src="<c:url value="/resources/images/image1.jpg"/>" id="slideshow">
             <div id="preload">
@@ -47,18 +55,8 @@
             </div>
             <div id="mainBody">
                 <div id="newsContainer" class="mainBody">
-                    <div id="registerContainer" class="loginRegister" align="center">
-                        <h1 class="logRegHeadline">Login</h1>
-                        <form id="registerForm" method="POST" action="tryLogin">
-                            <p class="loginRegisterText">Username</p>
-                            <input type="text" name="login"/>
-                            <br>
-                            <p class="loginRegisterText">Password</p>
-                            <input type="password" name="password"/>
-                            <br>
-                            <input class="formButton" type="submit" value="Login"/>
-                        </form>
-                    </div>
+                    <h1 class="headline" align="center">Login success!</h1>
+                    <h2 align="center"><c:out value="${username}"/> welcome!</h2>
                 </div>
                 <div id="addsContainer" class="mainBody">
                     <img src="<c:url value="/resources/images/sampleAdd.jpg"/>" alt="add" class="add"/>
@@ -70,3 +68,4 @@
         </footer>
     </body>
 </html>
+

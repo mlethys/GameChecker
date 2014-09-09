@@ -26,4 +26,5 @@ public interface MemberDao {
     public boolean isMemberLoginMatchPassword(String login, String password);
     public void updateMemberProfile(Member member, String name, String password, String mail, int birthDay, int birthMonth, int birthYear);
     public void deleteMemberHelper(Member member);
+    public boolean exists(Member member);
 }
