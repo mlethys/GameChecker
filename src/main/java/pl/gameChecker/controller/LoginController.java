@@ -7,6 +7,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.gameChecker.model.hibernateEntities.Game;
+import pl.gameChecker.model.hibernateEntities.GameDao;
 import pl.gameChecker.model.hibernateEntities.MemberDao;
 
 /**
@@ -16,7 +18,7 @@ import pl.gameChecker.model.hibernateEntities.MemberDao;
 @Controller
 public class LoginController {
     
-    private static ClassPathXmlApplicationContext CONTEXT = new ClassPathXmlApplicationContext("beans.xml");
+    private static final ClassPathXmlApplicationContext CONTEXT = new ClassPathXmlApplicationContext("beans.xml");
     
     @RequestMapping("/login")
     public String displayLogin() {
@@ -50,5 +52,15 @@ public class LoginController {
     public String logout(HttpServletRequest request) {
         request.getSession().removeAttribute("loggedUser");
         return "index";
+    }
+    
+    @RequestMapping("encyclopedia.html")
+    public String encyclopedia(HttpServletRequest request, ModelMap model) {
+        if(request.getSession().getAttribute("loggedUser") == null) {
+            return "login";
+        }
+        GameDao games = CONTEXT.getBean("game", GameDao.class);
+        model.addAllAttributes(games.getList());
+        return "encyclopedia";
     }
 }

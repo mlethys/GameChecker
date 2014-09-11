@@ -191,3 +191,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     margin: auto;    
 }
+.game {
+    margin-left: 100px;
+    loat: left;
+}

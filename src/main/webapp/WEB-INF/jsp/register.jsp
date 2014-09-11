@@ -32,7 +32,7 @@
                                               onmouseover="this.src='<c:url value="/resources/images/logo2.png"/>'"
                                               onmouseout="this.src='<c:url value="/resources/images/logo1.png"/>'"/></a>
                 </div>
-                <div id="gameEnc" class="menuButton" onclick="location.href='encyclopedia.html';">
+                <div id="gameEnc" class="menuButton" onclick="location.href='<c:url value="encyclopedia"/>';">
                     <p class="menuText">Encyclopedia</p>
                 </div>
                 <div id="sqfa" class="menuButton" onclick="location.href='sqfa.html';">
