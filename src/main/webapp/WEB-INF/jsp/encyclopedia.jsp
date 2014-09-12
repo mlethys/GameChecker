@@ -4,7 +4,7 @@
     Author     : mlethys
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,10 +53,14 @@
             <div id="mainBody">
                 <div id="newsContainer" class="mainBody">
                     <h1 class="headline">Games</h1>
-                    <div class=""game><p style="float: left;"><img src="<c:url value="resources/images/game_miniature_default.jpg"/>" height="150px" width="150px" border="1px"/></p>
+                    <% for(int i = 0; i < 4; i++) { %>
+                    <div class="game"> 
+                        <img src="<c:url value="resources/images/game_miniature_default.jpg"/>" align="left"/>
                         <h2>Game name</h2>
-                        <p>Game description</p>
+                        <p>Game description</p><br/><br/>
                     </div>
+                    <br/>
+                    <% } %>
                 </div>
                 <div id="addsContainer" class="mainBody">
                     <img src="<c:url value="/resources/images/sampleAdd.jpg"/>" alt="add" class="add"/>

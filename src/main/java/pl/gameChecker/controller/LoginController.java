@@ -56,11 +56,11 @@ public class LoginController {
     
     @RequestMapping("encyclopedia.html")
     public String encyclopedia(HttpServletRequest request, ModelMap model) {
-        if(request.getSession().getAttribute("loggedUser") == null) {
-            return "login";
-        }
-        GameDao games = CONTEXT.getBean("game", GameDao.class);
-        model.addAllAttributes(games.getList());
+//        if(request.getSession().getAttribute("loggedUser") == null) {
+//            return "login";
+//        }
+//        GameDao games = CONTEXT.getBean("game", GameDao.class);
+//        model.addAllAttributes(games.getList());
         return "encyclopedia";
     }
 }

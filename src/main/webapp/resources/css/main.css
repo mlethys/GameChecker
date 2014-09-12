@@ -192,6 +192,5 @@ body {
     margin: auto;    
 }
 .game {
-    margin-left: 100px;
-    loat: left;
+    position: relative; 
 }
