@@ -1,6 +1,6 @@
 <%-- 
-    Document   : encyclopedia
-    Created on : 2014-09-10, 20:04:04
+    Document   : game
+    Created on : 2014-09-13, 12:16:03
     Author     : mlethys
 --%>
 
@@ -54,16 +54,12 @@
             <div id="mainBody">
                 <div id="newsContainer" class="mainBody">
                     <h1 class="headline">Games</h1>
-                    <c:forEach items="${games}" varStatus="i">
-                        <div class="game"> 
-                            <img src="<c:url value="resources/images/game_miniature_default.jpg"/>" align="left"/>
-                            <h2><a href="<c:url value="games?game=${games[i.index].name}"/>">${games[i.index].name}</a></h2>
-                            <div class="example-2"></div>
-                            <p>Game description</p><br/><br/>
-                        </div>
-                        <br/>
-                        <br/>
-                    </c:forEach>
+                    <div class="game"> 
+                        <img src="<c:url value="resources/images/game_miniature_default.jpg"/>" align="left"/>
+                        <h2>${gameTitle}</h2>
+                        <div class="example-2"></div>
+                        <p>Game description</p><br/><br/>
+                    </div>
                 </div>
                 <div id="addsContainer" class="mainBody">
                     <img src="<c:url value="/resources/images/sampleAdd.jpg"/>" alt="add" class="add"/>

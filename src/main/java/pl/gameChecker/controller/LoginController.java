@@ -7,7 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.gameChecker.model.hibernateEntities.Game;
+import org.springframework.web.bind.annotation.ResponseBody;
 import pl.gameChecker.model.hibernateEntities.GameDao;
 import pl.gameChecker.model.hibernateEntities.MemberDao;
 
@@ -56,11 +56,20 @@ public class LoginController {
     
     @RequestMapping("encyclopedia.html")
     public String encyclopedia(HttpServletRequest request, ModelMap model) {
-//        if(request.getSession().getAttribute("loggedUser") == null) {
-//            return "login";
-//        }
-//        GameDao games = CONTEXT.getBean("game", GameDao.class);
-//        model.addAllAttributes(games.getList());
+        if(request.getSession().getAttribute("loggedUser") == null) {
+            return "login";
+        }
+        GameDao games = CONTEXT.getBean("game", GameDao.class);
+        model.addAttribute("games", games.getList());
         return "encyclopedia";
+    }
+    
+    @RequestMapping("games")
+    public String byGame(@RequestParam("game") String game, 
+                                        ModelMap model) {
+        GameDao games = CONTEXT.getBean("game", GameDao.class);
+        model.addAttribute("gameTitle", games.getByName(game).getName());
+        //model.addAttribute("gameDesc", games.getByName(game).getDescription);
+        return "game";
     }
 }
