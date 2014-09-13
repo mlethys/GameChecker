@@ -7,8 +7,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import pl.gameChecker.model.hibernateEntities.GameDao;
+import pl.gameChecker.model.hibernateEntities.GametypeDao;
 import pl.gameChecker.model.hibernateEntities.MemberDao;
 
 /**
@@ -59,6 +59,8 @@ public class LoginController {
         if(request.getSession().getAttribute("loggedUser") == null) {
             return "login";
         }
+        GametypeDao gametypeDao = CONTEXT.getBean("gametype", GametypeDao.class);
+        model.addAttribute("gameTypes", gametypeDao.getList());
         GameDao games = CONTEXT.getBean("game", GameDao.class);
         model.addAttribute("games", games.getList());
         return "encyclopedia";
@@ -72,4 +74,10 @@ public class LoginController {
         //model.addAttribute("gameDesc", games.getByName(game).getDescription);
         return "game";
     }
+    
+//    @RequestMapping(value = "/filter", method = RequestMethod.POST)
+//    public String filter(@RequestParam(value = "login", required = false, defaultValue = "") String name, 
+//                        @RequestParam(value = "login", required = false, defaultValue = "") String name, ) {
+//        return "";
+//    }
 }

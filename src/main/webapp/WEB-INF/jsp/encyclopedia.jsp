@@ -17,6 +17,7 @@
         <script src="<c:url value="/resources/js/slider.js" />"></script>
         <script src="<c:url value="/resources/js/jquery.ratings.js" />"></script>
         <script src="<c:url value="/resources/js/example.js" />"></script>
+        <script src="<c:url value="/resources/js/filter.js" />"></script>
     </head>
     <body bgcolor="e5e5e5">
         <div id="container">
@@ -53,7 +54,48 @@
             </div>
             <div id="mainBody">
                 <div id="newsContainer" class="mainBody">
-                    <h1 class="headline">Games</h1>
+                     <div id="filtersContainer">
+                        <form id="registerForm" method="POST" action="filter">
+                            <p>Game name</p>
+                            <input type="text" name="gameName"/>
+                            <p>Popularity</p>
+                            <input type="radio" name="popularity" value="low"/>Low
+                            <input type="radio" name="popularity" value="medium"/>Medium
+                            <input type="radio" name="popularity" value="high"/>High
+                            <p>Rate</p>
+                            <select type="text" name="rate">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <label for="rate" >-</label>
+                            <select type="text" name="rate">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                            <p>Release day</p>
+                            <label for="from">From</label>
+                            <input type="text" maxlength="4" name="from" class="datesInput" onkeypress="return isNumber(event)"/>
+                            <label for="to">To</label>
+                            <input type="text" maxlength="4" name="to" class="datesInput" onkeypress="return isNumber(event)"/>
+                            <p>Type</p>
+                            <select type="text" name="types">
+                                <c:forEach items="${gameTypes}" varStatus="i">
+                                    <option>${gameTypes[i.index].name}</option>
+                                </c:forEach>
+                            </select>
+                            <p>Others</p>
+                            <input type="radio" name="others" value="singleplayer"/>Singleplayer<br/>
+                            <input type="radio" name="others2" value="multiplayer"/>Multiplayer<br/>
+                            <input type="radio" name="others3" value="free2play"/>Free2Play<br/>
+                            <input class="formButton" type="submit" value="Filter!"/>
+                    </div>
+                    <h1 id="gameLibraryHeadline">Games</h1>
                     <c:forEach items="${games}" varStatus="i">
                         <div class="game"> 
                             <img src="<c:url value="resources/images/game_miniature_default.jpg"/>" align="left"/>

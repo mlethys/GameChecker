@@ -194,10 +194,28 @@ body {
 }
 .game {
     position: relative; 
-    margin-left: 150px;
+    margin-left: 250px;
 }
 .game a {
     color: #000000;
     text-decoration: none;
+}
+#filtersContainer {
+    margin: 1px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+    background: #ffffff;
+    float: left;
+}
+#gameLibraryHeadline {
+    color: #0050c9;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 230px;
+}
+.datesInput {
+    width: 50px;
 }
 //-------------------------------------------------------
