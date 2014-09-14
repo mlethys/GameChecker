@@ -59,11 +59,11 @@
                             <p>Game name</p>
                             <input type="text" name="gameName"/>
                             <p>Popularity</p>
-                            <input type="radio" name="popularity" value="low"/>Low
-                            <input type="radio" name="popularity" value="medium"/>Medium
-                            <input type="radio" name="popularity" value="high"/>High
+                            <input type="radio" name="popularity[]" value="low"/>Low
+                            <input type="radio" name="popularity[]" value="medium"/>Medium
+                            <input type="radio" name="popularity[]" value="high"/>High
                             <p>Rate</p>
-                            <select type="text" name="rate">
+                            <select type="text" name="rateFrom">
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -71,7 +71,7 @@
                                 <option>5</option>
                             </select>
                             <label for="rate" >-</label>
-                            <select type="text" name="rate">
+                            <select type="text" name="rateTo">
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -94,6 +94,7 @@
                             <input type="radio" name="others2" value="multiplayer"/>Multiplayer<br/>
                             <input type="radio" name="others3" value="free2play"/>Free2Play<br/>
                             <input class="formButton" type="submit" value="Filter!"/>
+                        </form>
                     </div>
                     <h1 id="gameLibraryHeadline">Games</h1>
                     <c:forEach items="${games}" varStatus="i">

@@ -7,6 +7,7 @@ package pl.gameChecker.model.hibernateEntities;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -92,6 +93,18 @@ public class Member implements Serializable  {
 
     public int getId() {
         return id;
+    }
+    
+    public int getAge() {
+        Calendar calendar=Calendar.getInstance();
+        Calendar calendarnow=Calendar.getInstance();    
+        calendarnow.getTimeZone();
+        calendar.setTime(birthDate);
+        int getmonth= calendar.get(Calendar.MONTH);
+        int getyears= calendar.get(Calendar.YEAR);
+        int currentmonth= calendarnow.get(Calendar.MONTH);
+        int currentyear= calendarnow.get(Calendar.YEAR);
+        return ((currentyear*12+currentmonth)-(getyears*12+getmonth))/12;
     }
 
     public void setId(int id) {

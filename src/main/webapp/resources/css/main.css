@@ -218,4 +218,28 @@ body {
 .datesInput {
     width: 50px;
 }
+.profile {
+    margin: 30px;
+    position: relative;
+    width: 500px;
+}
+.profile p {
+    margin-left: 5px;
+}
+.profile a {
+    color: #358bff;
+    text-decoration: none;
+}
+#editProfilPanel {
+    margin: 1px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+    background: #ffffff;
+    float: right;
+}
+#editProfileForm {
+    position: relative;
+}
 //-------------------------------------------------------

@@ -1,9 +1,8 @@
 <%-- 
-    Document   : loginSuccess
-    Created on : 2014-09-09, 20:25:49
+    Document   : myProfile
+    Created on : 2014-09-14, 11:39:33
     Author     : mlethys
 --%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -50,8 +49,33 @@
             </div>
             <div id="mainBody">
                 <div id="newsContainer" class="mainBody">
-                    <h1 class="headline" align="center">Login success!</h1>
-                    <h2 align="center"><c:out value="${username}"/> welcome!</h2>
+                    <div id="editProfilPanel">
+                        <form id="editProfileForm" method="POST" action="editProfile">
+                            <label for="newUsername">New username</label><br/>
+                            <input type="text" name="newUsername"/><br/>
+                            <label for="newUsername">New Email</label><br/>
+                            <input type="text" name="newEmail"/><br/>
+                            <input class="formButton" type="submit" value="Change"/>
+                        </form>
+                    </div>
+                    <div class="profile"> 
+                        <h1>${myLogin}</h1>
+                        <img src="<c:url value="${usersAvatar}"/>" align="left"/>
+                        <p>&#160;&#160;Email: ${myEmail}</p>
+                        <p>&#160;&#160;Register date: ${myRegisterDate}</p>
+                        <p>&#160;&#160;Age: ${myAge}</p>
+                        <p>&#160;&#160;Points: ${myPoints}</p>
+                        <br/>
+                        <br/>
+                        <h2>Hardware:</h2>
+                        <p>&#160;&#160;CPU: TODO</p>
+                        <p>&#160;&#160;GPU: TODO</p>
+                        <p>&#160;&#160;Memory:: TODO</p>
+                        <br/>
+                        <br/>
+                        <h3>${myLogin} games library:</h3>
+                        <a href="<c:url value="library?user=${myLogin}"/>">&#160;&#160;Library</a>
+                    </div>
                 </div>
                 <div id="addsContainer" class="mainBody">
                     <img src="<c:url value="/resources/images/sampleAdd.jpg"/>" alt="add" class="add"/>
