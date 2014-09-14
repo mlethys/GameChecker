@@ -24,7 +24,7 @@ public interface GameDao {
     public void create(Game game);
     public void update(Game game);
     public void delete(Game game);
-    public List<Game> getSearchGameResults(String name, Date releasedBeforeDate, Date releasedAfterDate, boolean singleplayer, boolean multiplayer, boolean freeToPlay, double gameStarsGreaterThan);
+    public List<Game> getSearchGameResults(String name, Date releasedDateBetweenLow, Date releasedDateBetweenHigh, boolean singleplayer, boolean multiplayer, boolean freeToPlay, double gameStarsBeetweenLow, double gameStarsBeetweenHigh, Gametype gametype, int gamePopularityBetweenLow, int gamePopularityBetweenHigh);
     public void updateGameInfo(Game game, String name, boolean isSingleplayer, boolean isMultiplayer, boolean isFreeToPlay, int releaseDay, int releaseMonth, int releaseYear, String gametypeName);
     public List<Game> getGamesFromMember(Member member);
 }

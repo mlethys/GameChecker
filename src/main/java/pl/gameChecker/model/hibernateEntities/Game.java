@@ -47,6 +47,12 @@ public class Game implements Serializable {
     @Column(name = "GAME_RATES", nullable = false)
     protected int rates;
     
+    @Column(name = "GAME_DESCRIPTION")
+    protected String description;
+    
+    @Column(name = "GAME_POPULARITY", nullable = false, length = 3)
+    protected int popularity;
+    
     @OneToMany(mappedBy = "game")
     protected List<GamesLibraries> gamesLibraries;
     
@@ -56,6 +62,7 @@ public class Game implements Serializable {
 
     public Game() {}
     
+    @Deprecated
     public Game(String name, Date releaseDate, boolean singleplayer, boolean multiplayer, boolean freeToPlay, Gametype gametype) {
         this.name = name;
         this.releaseDate = releaseDate;
@@ -65,8 +72,10 @@ public class Game implements Serializable {
         this.gametype = gametype;
         this.stars = 0;
         this.rates = 0;
+        this.popularity = 0;
     }
     
+    @Deprecated
     public Game(String name, boolean singleplayer, boolean multiplayer, boolean freeToPlay, int releaseDay, int releaseMonth, int releaseYear, Gametype gametype) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         calendar.clear();
@@ -81,6 +90,38 @@ public class Game implements Serializable {
         this.gametype = gametype;
         this.stars = 0;
         this.rates = 0;
+        this.popularity = 0;
+    } 
+    
+    public Game(String name, Date releaseDate, boolean singleplayer, boolean multiplayer, boolean freeToPlay, String description, Gametype gametype) {
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.singleplayer = singleplayer;
+        this.multiplayer = multiplayer;
+        this.freeToPlay = freeToPlay;
+        this.gametype = gametype;
+        this.stars = 0;
+        this.rates = 0;
+        this.description = description;
+        this.popularity = 0;
+    }
+    
+    public Game(String name, boolean singleplayer, boolean multiplayer, boolean freeToPlay, int releaseDay, int releaseMonth, int releaseYear, String description, Gametype gametype) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        calendar.clear();
+        calendar.set(releaseYear, releaseMonth - 1, releaseDay);
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        
+        this.name = name;
+        this.releaseDate = new Date(secondsSinceEpoch);
+        this.singleplayer = singleplayer;
+        this.multiplayer = multiplayer;
+        this.freeToPlay = freeToPlay;
+        this.gametype = gametype;
+        this.stars = 0;
+        this.rates = 0;
+        this.description = description;
+        this.popularity = 0;
     }
     
     public int getId() {
@@ -162,4 +203,22 @@ public class Game implements Serializable {
     public void setRates(int rates) {
         this.rates = rates;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
+    
+    
 }

@@ -74,6 +74,7 @@ public class Member implements Serializable  {
 
     public Member(){}
     
+    @Deprecated
     public Member(String name, String password, String mail, int birthDay, int birthMonth, int birthYear) {
         password = DigestUtils.sha256Hex(password);
         
@@ -89,6 +90,24 @@ public class Member implements Serializable  {
         this.mail = mail;
         this.birthDate = new Date(secondsSinceEpochToBirthday);
         this.points = 0;
+    }
+    
+    public Member(String name, String password, String mail, int birthDay, int birthMonth, int birthYear, Role role) {
+        password = DigestUtils.sha256Hex(password);
+        
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        calendar.clear();
+        calendar.set(birthYear, birthMonth - 1, birthDay);
+        long secondsSinceEpochToBirthday = calendar.getTimeInMillis();
+        
+        this.name = name;
+        this.password = password;
+        this.registerDate = new Date(secondsSinceEpoch);
+        this.mail = mail;
+        this.birthDate = new Date(secondsSinceEpochToBirthday);
+        this.points = 0;
+        this.role = role;
     }
 
     public int getId() {

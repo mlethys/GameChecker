@@ -25,6 +25,8 @@ import pl.gameChecker.model.hibernateEntities.GametypeDao;
 import pl.gameChecker.model.hibernateEntities.LibraryDao;
 import pl.gameChecker.model.hibernateEntities.Member;
 import pl.gameChecker.model.hibernateEntities.MemberDao;
+import pl.gameChecker.model.hibernateEntities.Role;
+import pl.gameChecker.model.hibernateEntities.RoleDao;
 import pl.gameChecker.model.hibernateEntities.SqfaAnswer;
 import pl.gameChecker.model.hibernateEntities.SqfaAnswerComment;
 import pl.gameChecker.model.hibernateEntities.SqfaAnswerCommentDao;
@@ -51,20 +53,6 @@ public class TempDBMain {
         companyDao.create(new Company("Radeon"));
         companyDao.create(new Company("Intel"));
         companyDao.create(new Company("AMD"));
-        
-        System.out.println(companyDao.getById(1).getName() + " getById(1)");
-        System.out.println(companyDao.getByName("AMD").getName() + " getById(1)");
-        for(Company c : companyDao.getList()){
-            System.out.println("Lista: " + c.getName());
-        }
-        
-        for(Company c : companyDao.getList()){
-            System.out.println("Lista updated: " + c.getName());
-        }
-
-        for(Company c : companyDao.getList()){
-            System.out.println("Lista deleted: " + c.getName());
-        }
         //</editor-fold>
         
         //<editor-fold defaultstate="collapsed" desc="Gametype additions. Click on the + sign on the left to edit the code."> 
@@ -127,6 +115,20 @@ public class TempDBMain {
         libraryDao.addGameToMembersLibrary(memberDao.getById(1), gameDao.getById(4));
         //</editor-fold>
         
+        //<editor-fold defaultstate="collapsed" desc="Roles additions. Click on the + sign on the left to edit the code."> 
+        RoleDao roleDao = context.getBean("role", RoleDao.class);
+        Role admin = new Role("Admin");
+        Role juniorAdmin = new Role("Junior Admin");
+        Role moderator = new Role("Moderator");
+        Role premiumMember = new Role("Premium Member");
+        Role member = new Role("Member");
+        roleDao.create(admin);
+        roleDao.create(juniorAdmin);
+        roleDao.create(moderator);
+        roleDao.create(premiumMember);
+        roleDao.create(member);
+        //</editor-fold>
+        
         SqfaAnswerDao sqfaAnswerDao = context.getBean("sqfaAnswer", SqfaAnswerDao.class);
         SqfaQuestionDao sqfaQuestionDao = context.getBean("sqfaQuestion", SqfaQuestionDao.class);
         SqfaAnswerCommentDao sqfaAnswerCommentDao = context.getBean("sqfaAnswerComment", SqfaAnswerCommentDao.class);
@@ -140,17 +142,17 @@ public class TempDBMain {
         SqfaAnswerComment sac2 = new SqfaAnswerComment(memberDao.getById(1), sa, "To JEST to");
         SqfaAnswerComment sac3 = new SqfaAnswerComment(memberDao.getById(3), sa, "not to fest");
         
-//        sqfaQuestionDao.create(sq);
-//        sqfaQuestionCommentDao.create(sqc);
-//        sqfaAnswerDao.create(sa);
-//        sqfaAnswerCommentDao.create(sac);
-//        sqfaAnswerDao.create(sa2);
-//        sqfaAnswerCommentDao.create(sac2);
-//        sqfaAnswerCommentDao.create(sac3);
-//        
-//        sqfaAnswerDao.incrementSqfaAnswerPoints(sa);
-//        sqfaAnswerDao.incrementSqfaAnswerPoints(sa2);
-//        sqfaAnswerDao.incrementSqfaAnswerPoints(sa2);
+        sqfaQuestionDao.create(sq);
+        sqfaQuestionCommentDao.create(sqc);
+        sqfaAnswerDao.create(sa);
+        sqfaAnswerCommentDao.create(sac);
+        sqfaAnswerDao.create(sa2);
+        sqfaAnswerCommentDao.create(sac2);
+        sqfaAnswerCommentDao.create(sac3);
+        
+        sqfaAnswerDao.incrementSqfaAnswerPoints(sa);
+        sqfaAnswerDao.incrementSqfaAnswerPoints(sa2);
+        sqfaAnswerDao.incrementSqfaAnswerPoints(sa2);
                 
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         long secondsTillNow = calendar.getTimeInMillis();

@@ -19,4 +19,5 @@ public interface LibraryDao {
     public void update(Library library);
     public void delete(Library library);
     public void addGameToMembersLibrary(Member member, Game game);
+    public void removeGameFromMembersLibrary(Member member, Game game);
 }

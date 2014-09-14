@@ -169,7 +169,7 @@ public class LoginController {
 //        }
         return "myProfile";
     }
-    
+    /*
     @RequestMapping("games")
     public String byGame(@RequestParam("game") String game, 
                                         ModelMap model) {
@@ -178,4 +178,5 @@ public class LoginController {
         //model.addAttribute("gameDesc", games.getByName(game).getDescription);
         return "game";
     }
+    */
 }

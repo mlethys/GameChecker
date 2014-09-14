@@ -129,7 +129,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
 
     @Override
     @Transactional
-    public List<Game> getSearchGameResults(String name, Date releasedBeforeDate, Date releasedAfterDate, boolean singleplayer, boolean multiplayer, boolean freeToPlay, double gameStarsGreaterThan) {
+    public List<Game> getSearchGameResults(String name, Date releasedDateBetweenLow, Date releasedDateBetweenHigh, boolean singleplayer, boolean multiplayer, boolean freeToPlay, double gameStarsBeetweenLow, double gameStarsBeetweenHigh, Gametype gametype, int gamePopularityBetweenLow, int gamePopularityBetweenHigh) {
         boolean firstCriteria = true;
         String preparedQuery = "from GAMES g ";
         if(name != null) {
@@ -140,20 +140,20 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
             preparedQuery += "g.name like %" + name + "% ";
             firstCriteria = false;
         }
-        if(releasedBeforeDate != null) {
+        if(releasedDateBetweenLow != null) {
             if(!firstCriteria) 
                 preparedQuery += "and "; 
             else 
                 preparedQuery += "where ";
-            preparedQuery += "g.releaseDate <='" + releasedBeforeDate + "' ";
+            preparedQuery += "g.releaseDate <='" + releasedDateBetweenLow + "' ";
             firstCriteria = false;
         }
-        if(releasedAfterDate != null) {
+        if(releasedDateBetweenHigh != null) {
             if(!firstCriteria) 
                 preparedQuery += "and "; 
             else 
                 preparedQuery += "where ";
-            preparedQuery += "g.releaseDate >='" + releasedAfterDate + "' ";
+            preparedQuery += "g.releaseDate >='" + releasedDateBetweenHigh + "' ";
             firstCriteria = false;
         }
         if(singleplayer) {
@@ -180,12 +180,33 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
             preparedQuery += "g.freeToPlay=" + freeToPlay + " ";
             firstCriteria = false;
         }
-        if(gameStarsGreaterThan >= 0 && gameStarsGreaterThan <= 5) {
+        if(gameStarsBeetweenHigh >= gameStarsBeetweenLow && gameStarsBeetweenLow >= 0 && gameStarsBeetweenLow <= 5) {
             if(!firstCriteria) 
                 preparedQuery += "and "; 
             else 
                 preparedQuery += "where ";
-            preparedQuery += "g.stars>=" + freeToPlay + " ";
+            preparedQuery += "g.stars>=" + gameStarsBeetweenLow + " ";
+        }
+        if(gameStarsBeetweenHigh >= gameStarsBeetweenLow && gameStarsBeetweenHigh >= 0 && gameStarsBeetweenLow <= 5) {
+            if(!firstCriteria) 
+                preparedQuery += "and "; 
+            else 
+                preparedQuery += "where ";
+            preparedQuery += "g.stars<=" + gameStarsBeetweenHigh + " ";
+        }
+        if(gamePopularityBetweenHigh >= gamePopularityBetweenLow && gamePopularityBetweenLow >= 0) {
+            if(!firstCriteria) 
+                preparedQuery += "and "; 
+            else 
+                preparedQuery += "where ";
+            preparedQuery += "g.popularity>=" + gamePopularityBetweenLow + " ";
+        }
+        if(gamePopularityBetweenHigh >= gamePopularityBetweenLow && gamePopularityBetweenHigh <= 100) {
+            if(!firstCriteria) 
+                preparedQuery += "and "; 
+            else 
+                preparedQuery += "where ";
+            preparedQuery += "g.popularity<=" + gamePopularityBetweenHigh + " ";
         }
             
         Query query = getSessionFactory().getCurrentSession().createQuery(preparedQuery);

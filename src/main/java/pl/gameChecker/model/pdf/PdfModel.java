@@ -44,7 +44,7 @@ public class PdfModel implements ApplicationContextAware {
     private DateFormat dateFormat;
     private java.util.Date date;
     private final double totalTablePayment[] = new double[11];
-    
+    //private Image logo = Image.getInstance("src/main/webapp/resources/images/logo1.png");
     private static ApplicationContext applicationContext;
 
     public PdfModel() throws DocumentException, FileNotFoundException, BadElementException, IOException {
@@ -65,14 +65,13 @@ public class PdfModel implements ApplicationContextAware {
         Paragraph tittle = new Paragraph("GAME CHECKER");
         tittle.setAlignment(Element.ALIGN_CENTER);
 
-        Image logo = Image.getInstance("logo1.png");
-        logo.setAlignment(Element.ALIGN_RIGHT);
+        //logo.setAlignment(Element.ALIGN_RIGHT);
 
         Paragraph headerParagraph = new Paragraph("Summary of new members registred between " + dateFrom + " and " + dateTo);
         headerParagraph.setAlignment(Element.ALIGN_CENTER);
 
         pdf.open();
-        pdf.add(logo);
+        //pdf.add(logo);
         pdf.add(tittle);
         pdf.add(new Paragraph(" "));
         pdf.add(headerParagraph);
@@ -92,14 +91,13 @@ public class PdfModel implements ApplicationContextAware {
         Paragraph tittle = new Paragraph("GAME CHECKER");
         tittle.setAlignment(Element.ALIGN_CENTER);
 
-        Image logo = Image.getInstance("logo1.png");
-        logo.setAlignment(Element.ALIGN_RIGHT);
+        //logo.setAlignment(Element.ALIGN_RIGHT);
 
         Paragraph headerParagraph = new Paragraph("Summary of games added to members libraries after" + afterThisDate);
         headerParagraph.setAlignment(Element.ALIGN_CENTER);
 
         pdf.open();
-        pdf.add(logo);
+        //pdf.add(logo);
         pdf.add(tittle);
         pdf.add(new Paragraph(" "));
         pdf.add(headerParagraph);
@@ -119,14 +117,13 @@ public class PdfModel implements ApplicationContextAware {
         Paragraph tittle = new Paragraph("GAME CHECKER");
         tittle.setAlignment(Element.ALIGN_CENTER);
 
-        Image logo = Image.getInstance("logo1.png");
-        logo.setAlignment(Element.ALIGN_RIGHT);
+        //logo.setAlignment(Element.ALIGN_RIGHT);
 
         Paragraph headerParagraph = new Paragraph("Summary of SQFA points earned between " + dateFrom + " and " + dateTo);
         headerParagraph.setAlignment(Element.ALIGN_CENTER);
 
         pdf.open();
-        pdf.add(logo);
+        //pdf.add(logo);
         pdf.add(tittle);
         pdf.add(new Paragraph(" "));
         pdf.add(headerParagraph);

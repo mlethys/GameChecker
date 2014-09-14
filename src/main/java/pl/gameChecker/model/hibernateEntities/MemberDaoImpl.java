@@ -11,7 +11,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -62,7 +61,7 @@ public class MemberDaoImpl extends HibernateDaoSupport implements MemberDao {
     public boolean exists(Member member) {
         List<Member> members = (List<Member>) getHibernateTemplate().findByCriteria(
         DetachedCriteria.forClass(Member.class)
-        .add(Restrictions.eq("name", member.getName())));
+        .add(Restrictions.or(Restrictions.eq("name", member.getName()), Restrictions.eq("mail", member.getMail()))));
         
         if(!members.isEmpty()) {
             return true;
