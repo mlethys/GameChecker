@@ -143,6 +143,10 @@ public class LoginController {
         if(!newUsername.isEmpty()) {
             member.setName(newUsername);
             memberDao.update(member);
+            if(!newEmail.isEmpty()) {
+                member.setMail(newEmail);
+                memberDao.update(member);
+            }
             return "redirect:logout";
         }
         if(!newEmail.isEmpty()) {
@@ -164,5 +168,14 @@ public class LoginController {
              model.addAttribute("usersAvatar", "resources/images/default_av.jpg");
 //        }
         return "myProfile";
+    }
+    
+    @RequestMapping("games")
+    public String byGame(@RequestParam("game") String game, 
+                                        ModelMap model) {
+        GameDao games = CONTEXT.getBean("game", GameDao.class);
+        model.addAttribute("gameTitle", games.getByName(game).getName());
+        //model.addAttribute("gameDesc", games.getByName(game).getDescription);
+        return "game";
     }
 }

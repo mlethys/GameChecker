@@ -70,7 +70,7 @@
                         <h2>Hardware:</h2>
                         <p>&#160;&#160;CPU: TODO</p>
                         <p>&#160;&#160;GPU: TODO</p>
-                        <p>&#160;&#160;Memory:: TODO</p>
+                        <p>&#160;&#160;Memory: TODO</p>
                         <br/>
                         <br/>
                         <h3>${myLogin} games library:</h3>
