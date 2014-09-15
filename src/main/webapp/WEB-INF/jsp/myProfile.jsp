@@ -55,18 +55,18 @@
                             <label for="newUsername">New username</label><br/>
                             <input type="text" name="newUsername" placeholder="Logged out required"/><br/>
                             <label for="newUsername">New Email</label><br/>
-                            <input type="text" name="newEmail"/><br/>
+                            <input type="email" name="newEmail"/><br/>
                             <label for="newAvatar">New avatar</label><br/>
                             <input type="text" name="newAvatar" placeholder="URL only"/><br/>
                             <input class="formButton" type="submit" value="Change"/>
                         </form><br/>
-                        <form class="editProfileForm" metod="POST" action="editCPU">
+                        <form class="editProfileForm" metod="POST" action="editCpu">
                             <label for="newCpuName">CPU name</label><br/>
                             <input type="text" name="newCpuName"/><br/>
                             <label for="newCpuDate">Release date</label><br/>
                             <input type="date" name="newCpuDate"/><br/>
                             <label for="newCpuCompany">Company</label><br/>
-                            <input type="text" name="newCpuCompany""/><br/>
+                            <input type="text" name="newCpuCompany"/><br/>
                             <input class="formButton" type="submit" value="Change CPU" title="All fields are required"/>
                         </form>
                         <form class="editProfileForm" metod="POST" action="editGPU">

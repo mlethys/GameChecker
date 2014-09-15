@@ -49,10 +49,10 @@ public class TempDBMain {
         
         //<editor-fold defaultstate="collapsed" desc="Company Test Methods. Click on the + sign on the left to edit the code.">
         CompanyDao companyDao = context.getBean("company", CompanyDao.class);
-//        companyDao.create(new Company("GeForce"));
-//        companyDao.create(new Company("Radeon"));
-//        companyDao.create(new Company("Intel"));
-//        companyDao.create(new Company("AMD"));
+        companyDao.create(new Company("GeForce"));
+        companyDao.create(new Company("Radeon"));
+        companyDao.create(new Company("Intel"));
+        companyDao.create(new Company("AMD"));
         //</editor-fold>
         
         //<editor-fold defaultstate="collapsed" desc="Gametype additions. Click on the + sign on the left to edit the code."> 
@@ -70,27 +70,27 @@ public class TempDBMain {
         Gametype puzzle = new Gametype("Puzzle");
         Gametype simulator = new Gametype("Simulator");
         Gametype other = new Gametype("N/A");
-//        gametypeDao.create(fps);
-//        gametypeDao.create(rts);
-//        gametypeDao.create(rpg);
-//        gametypeDao.create(moba);
-//        gametypeDao.create(mmo);
-//        gametypeDao.create(action);
-//        gametypeDao.create(platform);
-//        gametypeDao.create(adventure);
-//        gametypeDao.create(arcade);
-//        gametypeDao.create(racing);
-//        gametypeDao.create(puzzle);
-//        gametypeDao.create(simulator);
-//        gametypeDao.create(other);
+        gametypeDao.create(fps);
+        gametypeDao.create(rts);
+        gametypeDao.create(rpg);
+        gametypeDao.create(moba);
+        gametypeDao.create(mmo);
+        gametypeDao.create(action);
+        gametypeDao.create(platform);
+        gametypeDao.create(adventure);
+        gametypeDao.create(arcade);
+        gametypeDao.create(racing);
+        gametypeDao.create(puzzle);
+        gametypeDao.create(simulator);
+        gametypeDao.create(other);
         //</editor-fold>
         
         //<editor-fold defaultstate="collapsed" desc="Games additions. Click on the + sign on the left to edit the code."> 
         GameDao gameDao = context.getBean("game", GameDao.class);
-//        gameDao.create(new Game("Jedi Academy", true, true, false, 5, 4, 2005, "Badrdzo dobra giereczka starwarsowa" , gametypeDao.getByName("Action")));
-//        gameDao.create(new Game("Nascar Racing", true, true, false, 4, 2, 1995, "Bardzo szybkie wyscigi, takie gta ale bez wychodzenia z auta", gametypeDao.getByName("Racing")));
-//        gameDao.create(new Game("Mario", true, false, true, 4, 2, 2000, "Klasyka gatunku pierwsza platformowka jaka powstala - prekursor gatunku", gametypeDao.getByName("Platform")));
-//        gameDao.create(new Game("Tekken", true, true, true, 4, 2, 2000, "Bijatyka, takie gta bez aut i z biciem tylko jednego chlopka", gametypeDao.getByName("Arcade")));
+        gameDao.create(new Game("Jedi Academy", true, true, false, 5, 4, 2005, "Badrdzo dobra giereczka starwarsowa" , gametypeDao.getByName("Action")));
+        gameDao.create(new Game("Nascar Racing", true, true, false, 4, 2, 1995, "Bardzo szybkie wyscigi, takie gta ale bez wychodzenia z auta", gametypeDao.getByName("Racing")));
+        gameDao.create(new Game("Mario", true, false, true, 4, 2, 2000, "Klasyka gatunku pierwsza platformowka jaka powstala - prekursor gatunku", gametypeDao.getByName("Platform")));
+        gameDao.create(new Game("Tekken", true, true, true, 4, 2, 2000, "Bijatyka, takie gta bez aut i z biciem tylko jednego chlopka", gametypeDao.getByName("Arcade")));
         //</editor-fold>
         
         //<editor-fold defaultstate="collapsed" desc="Roles additions. Click on the + sign on the left to edit the code."> 
@@ -100,11 +100,11 @@ public class TempDBMain {
         Role moderator = new Role("Moderator");
         Role premiumMember = new Role("Premium Member");
         Role member = new Role("Member");
-//        roleDao.create(admin);
-//        roleDao.create(juniorAdmin);
-//        roleDao.create(moderator);
-//        roleDao.create(premiumMember);
-//        roleDao.create(member);
+        roleDao.create(admin);
+        roleDao.create(juniorAdmin);
+        roleDao.create(moderator);
+        roleDao.create(premiumMember);
+        roleDao.create(member);
         //</editor-fold>
         
         //<editor-fold defaultstate="collapsed" desc="Members Test Methods. Click on the + sign on the left to edit the code."> 
@@ -113,21 +113,21 @@ public class TempDBMain {
         Member dspoko = new Member("dspoko", "tempPassword2", "dspoko@interia.pl", 22, 11, 2000, roleDao.getById(5));
         Member testUser = new Member("testuser", "test", "janek@dzbanek.pl", 05, 11, 2005, roleDao.getById(5));
         
-//        memberDao.create(bbZ);
-//        memberDao.create(dspoko);
-//        memberDao.create(testUser);
+        memberDao.create(bbZ);
+        memberDao.create(dspoko);
+        memberDao.create(testUser);
         //</editor-fold>
         
         //<editor-fold defaultstate="collapsed" desc="Add games to library. Click on the + sign on the left to edit the code."> 
         LibraryDao libraryDao = context.getBean("library", LibraryDao.class);
         GamesLibrariesDao gamesLibrariesDao = context.getBean("gamesLibraries", GamesLibrariesDao.class);
-//        libraryDao.addGameToMembersLibrary(memberDao.getById(1), gameDao.getById(1));
-//        libraryDao.addGameToMembersLibrary(memberDao.getById(2), gameDao.getById(1));
-//        libraryDao.addGameToMembersLibrary(memberDao.getById(3), gameDao.getById(1));
-//        libraryDao.addGameToMembersLibrary(memberDao.getById(1), gameDao.getById(2));
-//        libraryDao.addGameToMembersLibrary(memberDao.getById(1), gameDao.getById(3));
-//        libraryDao.addGameToMembersLibrary(memberDao.getById(2), gameDao.getById(3));
-//        libraryDao.addGameToMembersLibrary(memberDao.getById(1), gameDao.getById(4));
+        libraryDao.addGameToMembersLibrary(memberDao.getById(1), gameDao.getById(1));
+        libraryDao.addGameToMembersLibrary(memberDao.getById(2), gameDao.getById(1));
+        libraryDao.addGameToMembersLibrary(memberDao.getById(3), gameDao.getById(1));
+        libraryDao.addGameToMembersLibrary(memberDao.getById(1), gameDao.getById(2));
+        libraryDao.addGameToMembersLibrary(memberDao.getById(1), gameDao.getById(3));
+        libraryDao.addGameToMembersLibrary(memberDao.getById(2), gameDao.getById(3));
+        libraryDao.addGameToMembersLibrary(memberDao.getById(1), gameDao.getById(4));
         //</editor-fold>
         
         
@@ -145,13 +145,13 @@ public class TempDBMain {
         SqfaAnswerComment sac2 = new SqfaAnswerComment(memberDao.getById(1), sa, "To JEST to");
         SqfaAnswerComment sac3 = new SqfaAnswerComment(memberDao.getById(3), sa, "not to fest");
         
-//        sqfaQuestionDao.create(sq);
-//        sqfaQuestionCommentDao.create(sqc);
-//        sqfaAnswerDao.create(sa);
-//        sqfaAnswerCommentDao.create(sac);
-//        sqfaAnswerDao.create(sa2);
-//        sqfaAnswerCommentDao.create(sac2);
-//        sqfaAnswerCommentDao.create(sac3);
+        sqfaQuestionDao.create(sq);
+        sqfaQuestionCommentDao.create(sqc);
+        sqfaAnswerDao.create(sa);
+        sqfaAnswerCommentDao.create(sac);
+        sqfaAnswerDao.create(sa2);
+        sqfaAnswerCommentDao.create(sac2);
+        sqfaAnswerCommentDao.create(sac3);
         
         sqfaAnswerDao.incrementSqfaAnswerPoints(sa);
         sqfaAnswerDao.incrementSqfaAnswerPoints(sa2);

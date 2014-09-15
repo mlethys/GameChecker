@@ -191,27 +191,35 @@ public class LoginController {
         else {
             model.addAttribute("usersAvatar", member.getAvatarUrl());
         }
-        return "myProfile";
+        return "redirect:profile";
     }
     
-    @RequestMapping(value="/editCPU", method = RequestMethod.POST)
-    public String editCpu(@RequestParam(value="newCpuName")String newCpuName,
-                            @RequestParam(value="newCpuDate")String newCpuDate,
-                            @RequestParam(value="newCpuCompany") String newCpuCompany,
+    @RequestMapping(value = "/editCpu", method = RequestMethod.GET)
+    public String editCpu(@RequestParam(value="newCpuName", required = true) String newCpuName,
+                            @RequestParam(value="newCpuDate", required = true) String newCpuDate,
+                            @RequestParam(value="newCpuCompany", required = true) String newCpuCompany,
                             ModelMap model, HttpServletRequest request) {
-        
+        System.out.println("wszedl");
         try {
             if(newCpuName.isEmpty() & newCpuDate.isEmpty() & newCpuCompany.isEmpty()) {
-                return "myProfile";
+                return "redirect:profile";
             }
-            MembersCPUDao membersCPUDao = CONTEXT.getBean("membersCPU", MembersCPUDao.class);
-            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(newCpuDate);
-            MembersCPU membersCPU = new MembersCPU(newCpuName, new java.sql.Date(date.getTime()), new Company(newCpuCompany));
-            membersCPUDao.update(membersCPU);
+            String userName = (String) request.getSession().getAttribute("loggedUser");
+            MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+            Member member = memberDao.getByName(userName);
+            if(!member.getMembersPCs().isEmpty()) {
+                MembersPC tmp = new MembersPC();
+                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(newCpuDate);
+                MembersCPU membersCpu = new MembersCPU(newCpuName, new java.sql.Date(date.getTime()), new Company(newCpuCompany));
+                tmp.setMembersCPU(membersCpu);
+                member.getMembersPCs().add(tmp);
+                memberDao.update(member);
+            }
+            
         } catch (ParseException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "myProfile";
+        return "redirect:profile";
     }
 
 }
