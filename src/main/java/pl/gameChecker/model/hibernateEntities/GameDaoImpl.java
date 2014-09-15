@@ -186,6 +186,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
             else 
                 preparedQuery += "where ";
             preparedQuery += "g.stars>=" + gameStarsBeetweenLow + " ";
+            firstCriteria = false;
         }
         if(gameStarsBeetweenHigh >= gameStarsBeetweenLow && gameStarsBeetweenHigh >= 0 && gameStarsBeetweenLow <= 5) {
             if(!firstCriteria) 
@@ -193,20 +194,23 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
             else 
                 preparedQuery += "where ";
             preparedQuery += "g.stars<=" + gameStarsBeetweenHigh + " ";
+            firstCriteria = false;
         }
-        if(gamePopularityBetweenHigh >= gamePopularityBetweenLow && gamePopularityBetweenLow >= 0) {
+        if(gamePopularityBetweenHigh >= gamePopularityBetweenLow && gamePopularityBetweenLow >= 0 && gamePopularityBetweenLow <= 100) {
             if(!firstCriteria) 
                 preparedQuery += "and "; 
             else 
                 preparedQuery += "where ";
             preparedQuery += "g.popularity>=" + gamePopularityBetweenLow + " ";
+            firstCriteria = false;
         }
-        if(gamePopularityBetweenHigh >= gamePopularityBetweenLow && gamePopularityBetweenHigh <= 100) {
+        if(gamePopularityBetweenHigh >= gamePopularityBetweenLow && gamePopularityBetweenHigh <= 100 && gamePopularityBetweenLow >= 0) {
             if(!firstCriteria) 
                 preparedQuery += "and "; 
             else 
                 preparedQuery += "where ";
             preparedQuery += "g.popularity<=" + gamePopularityBetweenHigh + " ";
+            firstCriteria = false;
         }
             
         Query query = getSessionFactory().getCurrentSession().createQuery(preparedQuery);
