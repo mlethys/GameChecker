@@ -48,7 +48,18 @@ public class MembersCPUDaoImpl extends HibernateDaoSupport implements MembersCPU
 
         return membersCPUs;
     }
+    @Override
+    @Transactional
+    public MembersCPU getByName(String name){
+    List<MembersCPU> membersCPUs = (List<MembersCPU>) getHibernateTemplate().findByCriteria(
+        DetachedCriteria.forClass(MembersCPU.class)
+        .add(Restrictions.eq("name", name)));
 
+        if(membersCPUs.size() > 0) {
+            return membersCPUs.get(0);
+        } else return null;
+    }
+    
     @Override
     @Transactional
     public void create(MembersCPU membersCPU) {

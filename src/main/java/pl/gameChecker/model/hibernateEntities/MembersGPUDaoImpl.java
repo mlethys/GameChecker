@@ -38,6 +38,17 @@ public class MembersGPUDaoImpl extends HibernateDaoSupport implements MembersGPU
         MembersGPU membersGPU = (MembersGPU) getHibernateTemplate().get(MembersGPU.class, id);
         return membersGPU;
     }
+    @Override
+    @Transactional
+    public MembersGPU getByName(String name){
+        List<MembersGPU> membersGPUs = (List<MembersGPU>) getHibernateTemplate().findByCriteria(
+            DetachedCriteria.forClass(MembersGPU.class)
+            .add(Restrictions.eq("name", name)));
+
+        if(membersGPUs.size() > 0) {
+            return membersGPUs.get(0);
+        } else return null;
+    }
 
     @Override
     @Transactional

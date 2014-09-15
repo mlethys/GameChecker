@@ -53,7 +53,7 @@
                     <div id="editProfilPanel">
                         <form class="editProfileForm" method="POST" action="editProfile">
                             <label for="newUsername">New username</label><br/>
-                            <input type="text" name="newUsername" placeholder="Logged out required"/><br/>
+                            <input type="text" name="newUsername" placeholder="Log out required"/><br/>
                             <label for="newUsername">New Email</label><br/>
                             <input type="email" name="newEmail"/><br/>
                             <label for="newAvatar">New avatar</label><br/>
@@ -61,23 +61,22 @@
                             <input class="formButton" type="submit" value="Change"/>
                         </form><br/>
                         <form class="editProfileForm" metod="POST" action="editCpu">
-                            <label for="newCpuName">CPU name</label><br/>
-                            <input type="text" name="newCpuName"/><br/>
-                            <label for="newCpuDate">Release date</label><br/>
-                            <input type="date" name="newCpuDate"/><br/>
-                            <label for="newCpuCompany">Company</label><br/>
-                            <input type="text" name="newCpuCompany"/><br/>
-                            <input class="formButton" type="submit" value="Change CPU" title="All fields are required"/>
+                            <label for="cpuNames">CPU name</label><br/>
+                            <select type="text" name="cpuNames">
+                                <c:forEach items="${cpus}" varStatus="i">
+                                    <option>${cpus[i.index].name}</option>
+                                </c:forEach>
+                            </select><br/>
+                            
+                            <input class="formButton" type="submit" value="Change CPU"/>
                         </form>
-                        <form class="editProfileForm" metod="POST" action="editGPU">
+                        <form class="editProfileForm" metod="POST" action="editGpu">
                             <label for="newGpuName">GPU name</label><br/>
-                            <input type="text" name="newGpuName"/><br/>
-                            <label for="newGpuDate">Release date</label><br/>
-                            <input type="date" name="newGpuDate"/><br/>
-                            <label for="newGpuMemory">Memory MBs</label><br/>
-                            <input type="text" name="newCpuMemory" onkeypress="return isNumber(event)"/><br/>
-                            <label for="newCpuCompany">Company</label><br/>
-                            <input type="text" name="newCpuCompany""/><br/>
+                            <select type="text" name="gpuNames">
+                                <c:forEach items="${gpus}" varStatus="i">
+                                    <option>${gpus[i.index].name}</option>
+                                </c:forEach>
+                            </select><br/>
                             <input class="formButton" type="submit" value="Change GPU"/>
                         </form>
                             <form class="editProfileForm" metod="POST" action="editRam">

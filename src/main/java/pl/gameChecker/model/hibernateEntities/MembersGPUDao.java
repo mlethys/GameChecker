@@ -20,4 +20,5 @@ public interface MembersGPUDao {
     public void update(MembersGPU membersGPU);
     public void delete(MembersGPU membersGPU);
     public List<MembersGPU> getAllCPUsOfCompany(Company company);
+    public MembersGPU getByName(String name);
 }
