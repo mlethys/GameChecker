@@ -6,6 +6,7 @@
 
 package pl.gameChecker.model.hibernateEntities;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
@@ -60,46 +61,46 @@ public class LibraryDaoImpl extends HibernateDaoSupport implements LibraryDao{
     }
 
     @Override
+    @Transactional
     public void addGameToMembersLibrary(Member member, Game game) {
-        addGame(member, game);
-        updateGamePopularity(game);
+        getHibernateTemplate().save(newGameInLibrary(member, game));
+        getHibernateTemplate().update(updatedGamePopularity(game));
     }
     
-    @Transactional
-    protected void addGame(Member member, Game game) {
+    protected GamesLibraries newGameInLibrary(Member member, Game game) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         long secondsSinceEpoch = calendar.getTimeInMillis();
         
         Library library = (Library) getHibernateTemplate().get(Library.class, member.getLibrary().getId());
         GamesLibraries gamesLibraries = new GamesLibraries(game, library, new Date(secondsSinceEpoch));
-        getHibernateTemplate().save(gamesLibraries);
+        return gamesLibraries;
     }
     
-    @Transactional
-    protected void updateGamePopularity(Game game){
+    protected Game updatedGamePopularity(Game game){
         int totalMembersCount = ((Long)getSessionFactory().getCurrentSession().createQuery("select count(*) from MEMBERS").uniqueResult()).intValue();
         int membersWithGameCount = ((Long)getSessionFactory().getCurrentSession().createQuery("select count(*) from GAMES_LIBRARIES where GAMES_GAME_ID = '" + game.getId() + "'").uniqueResult()).intValue();
         
         int result = 100 * membersWithGameCount / totalMembersCount;
         game.setPopularity(result);
-        getHibernateTemplate().update(game);
+        return game;
     }
 
     @Override
+    @Transactional
     public void removeGameFromMembersLibrary(Member member, Game game) {
-        removeGame(member, game);
-        updateGamePopularity(game);
+        getHibernateTemplate().delete(removeGameFromLibrary(member, game));
+        getHibernateTemplate().update(updatedGamePopularity(game));
     }
     
-    @Transactional
-    protected void removeGame(Member member, Game game) {
+    protected GamesLibraries removeGameFromLibrary(Member member, Game game) {
         List<GamesLibraries> gamesLibraries = (List<GamesLibraries>) getHibernateTemplate().findByCriteria(
         DetachedCriteria.forClass(GamesLibraries.class)
         .add(Restrictions.and(Restrictions.eq("member", member), Restrictions.eq("game", game))));
         
         if(gamesLibraries.size() > 0)
         {
-            getHibernateTemplate().delete(gamesLibraries.get(0));
+            return gamesLibraries.get(0);
         }
+        return null;
     }
 }

@@ -109,6 +109,7 @@ public class TempDBMain {
         GamesLibrariesDao gamesLibrariesDao = context.getBean("gamesLibraries", GamesLibrariesDao.class);
         libraryDao.addGameToMembersLibrary(memberDao.getById(1), gameDao.getById(1));
         libraryDao.addGameToMembersLibrary(memberDao.getById(2), gameDao.getById(1));
+        libraryDao.addGameToMembersLibrary(memberDao.getById(3), gameDao.getById(1));
         libraryDao.addGameToMembersLibrary(memberDao.getById(1), gameDao.getById(2));
         libraryDao.addGameToMembersLibrary(memberDao.getById(1), gameDao.getById(3));
         libraryDao.addGameToMembersLibrary(memberDao.getById(2), gameDao.getById(3));
