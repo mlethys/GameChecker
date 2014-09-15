@@ -10,6 +10,7 @@ package pl.gameChecker.model.database;
 import com.itextpdf.text.DocumentException;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.logging.Level;
@@ -25,6 +26,8 @@ import pl.gameChecker.model.hibernateEntities.GametypeDao;
 import pl.gameChecker.model.hibernateEntities.LibraryDao;
 import pl.gameChecker.model.hibernateEntities.Member;
 import pl.gameChecker.model.hibernateEntities.MemberDao;
+import pl.gameChecker.model.hibernateEntities.MembersCPU;
+import pl.gameChecker.model.hibernateEntities.MembersPC;
 import pl.gameChecker.model.hibernateEntities.Role;
 import pl.gameChecker.model.hibernateEntities.RoleDao;
 import pl.gameChecker.model.hibernateEntities.SqfaAnswer;
@@ -110,8 +113,8 @@ public class TempDBMain {
         //<editor-fold defaultstate="collapsed" desc="Members Test Methods. Click on the + sign on the left to edit the code."> 
         MemberDao memberDao = context.getBean("member", MemberDao.class);
         Member bbZ = new Member("bbZ", "tempPassword", "gamemajster@gmail.com", 22, 11, 1991, roleDao.getById(1));
-        Member dspoko = new Member("dspoko", "tempPassword2", "dspoko@interia.pl", 22, 11, 2000, roleDao.getById(5));
-        Member testUser = new Member("testuser", "test", "janek@dzbanek.pl", 05, 11, 2005, roleDao.getById(5));
+        Member dspoko = new Member("dspoko", "tempPassword2", "dspoko@interia.pl", 22, 11, 2000);
+        Member testUser = new Member("testuser", "test", "janek@dzbanek.pl", 05, 11, 2005);
         
         memberDao.create(bbZ);
         memberDao.create(dspoko);
