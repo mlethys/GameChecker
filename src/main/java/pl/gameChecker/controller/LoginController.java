@@ -1,5 +1,10 @@
 package pl.gameChecker.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -7,11 +12,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import pl.gameChecker.model.hibernateEntities.Company;
 import pl.gameChecker.model.hibernateEntities.GameDao;
 import pl.gameChecker.model.hibernateEntities.GametypeDao;
 import pl.gameChecker.model.hibernateEntities.Member;
 import pl.gameChecker.model.hibernateEntities.MemberDao;
+import pl.gameChecker.model.hibernateEntities.MembersCPU;
+import pl.gameChecker.model.hibernateEntities.MembersCPUDao;
+import pl.gameChecker.model.hibernateEntities.MembersPC;
+import pl.gameChecker.model.hibernateEntities.MembersPCDao;
 
 /**
  *
@@ -73,7 +82,7 @@ public class LoginController {
                                         ModelMap model) {
         GameDao games = CONTEXT.getBean("game", GameDao.class);
         model.addAttribute("gameTitle", games.getByName(game).getName());
-        //model.addAttribute("gameDesc", games.getByName(game).getDescription);
+        model.addAttribute("gameDesc", games.getByName(game).getDescription());
         return "game";
     }
     
@@ -119,23 +128,28 @@ public class LoginController {
         model.addAttribute("myRegisterDate", member.getRegisterDate().toString());
         model.addAttribute("myAge", member.getAge());
         model.addAttribute("myPoints", member.getPoints());
-//        MembersPCDao membersPC = CONTEXT.getBean(membersPC, MembersPCDao.class);
-//        model.addAttribute("myCpu",);
-//        model.addAttribute("myGpu");
-//        model.addAttribute("myRam");
-        // TODO members cpu/gpu/ram
-        
-//        if(!userHasAvatar) {
+        MembersPCDao membersPCDao = CONTEXT.getBean("membersPC", MembersPCDao.class);
+        if(!membersPCDao.getAllPCsOfMember(member).isEmpty()) {
+             MembersPC memberPC = membersPCDao.getAllPCsOfMember(member).get(0);
+            model.addAttribute("myCpu", memberPC.getMembersCPU().getName());
+            model.addAttribute("myGpu", memberPC.getMembersGPU().getName());
+            model.addAttribute("myRam", memberPC.getMemory());
+        }
+        if(member.getAvatarUrl() == null || member.getAvatarUrl().isEmpty()) {
              model.addAttribute("usersAvatar", "resources/images/default_av.jpg");
-//        }
-       
+        }
+        else {
+            model.addAttribute("usersAvatar", member.getAvatarUrl());
+        }
+        
         
         return "myProfile";
     }
     
     @RequestMapping(value = "/editProfile", method = RequestMethod.POST)
     public String editProfile(@RequestParam(value="newUsername")String newUsername,
-                                @RequestParam(value="newEmail")String newEmail, 
+                                @RequestParam(value="newEmail")String newEmail,
+                                @RequestParam(value="newAvatar") String newAvatarURL,
                                 ModelMap model, HttpServletRequest request) {
         String userName = (String) request.getSession().getAttribute("loggedUser");
         MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
@@ -153,30 +167,51 @@ public class LoginController {
             member.setMail(newEmail);
             memberDao.update(member);
         }
+        if(!newAvatarURL.isEmpty()) {
+            member.setAvatarUrl(newAvatarURL);
+            memberDao.update(member);
+        }
+        
         model.addAttribute("myLogin", member.getName());
         model.addAttribute("myEmail", member.getMail());
         model.addAttribute("myRegisterDate", member.getRegisterDate().toString());
         model.addAttribute("myAge", member.getAge());
         model.addAttribute("myPoints", member.getPoints());
-//        MembersPCDao membersPC = CONTEXT.getBean(membersPC, MembersPCDao.class);
-//        model.addAttribute("myCpu",);
-//        model.addAttribute("myGpu");
-//        model.addAttribute("myRam");
-        // TODO members cpu/gpu/ram
+        MembersPCDao membersPC = CONTEXT.getBean("membersPC", MembersPCDao.class);
+        if(!member.getMembersPCs().isEmpty()) {
+            MembersPC memberPC = membersPC.getAllPCsOfMember(member).get(0);
+            model.addAttribute("myCpu", memberPC.getMembersCPU().getName());
+            model.addAttribute("myGpu", memberPC.getMembersGPU().getName());
+            model.addAttribute("myRam", memberPC.getMemory());
+        }
         
-//        if(!userHasAvatar) {
+        if(member.getAvatarUrl() == null || member.getAvatarUrl().isEmpty()) {
              model.addAttribute("usersAvatar", "resources/images/default_av.jpg");
-//        }
+        }
+        else {
+            model.addAttribute("usersAvatar", member.getAvatarUrl());
+        }
         return "myProfile";
     }
-    /*
-    @RequestMapping("games")
-    public String byGame(@RequestParam("game") String game, 
-                                        ModelMap model) {
-        GameDao games = CONTEXT.getBean("game", GameDao.class);
-        model.addAttribute("gameTitle", games.getByName(game).getName());
-        //model.addAttribute("gameDesc", games.getByName(game).getDescription);
-        return "game";
+    
+    @RequestMapping(value="/editCPU", method = RequestMethod.POST)
+    public String editCpu(@RequestParam(value="newCpuName")String newCpuName,
+                            @RequestParam(value="newCpuDate")String newCpuDate,
+                            @RequestParam(value="newCpuCompany") String newCpuCompany,
+                            ModelMap model, HttpServletRequest request) {
+        
+        try {
+            if(newCpuName.isEmpty() & newCpuDate.isEmpty() & newCpuCompany.isEmpty()) {
+                return "myProfile";
+            }
+            MembersCPUDao membersCPUDao = CONTEXT.getBean("membersCPU", MembersCPUDao.class);
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(newCpuDate);
+            MembersCPU membersCPU = new MembersCPU(newCpuName, new java.sql.Date(date.getTime()), new Company(newCpuCompany));
+            membersCPUDao.update(membersCPU);
+        } catch (ParseException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "myProfile";
     }
-    */
+
 }

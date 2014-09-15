@@ -234,4 +234,12 @@ public class Member implements Serializable  {
     public void setRole(Role role) {
         this.role = role;
     }
+    
+    public String getAvatarUrl() {
+        return this.avatarURL;
+    }
+    
+    public void setAvatarUrl(String avatarURL) {
+        this.avatarURL = avatarURL;
+    }
 }

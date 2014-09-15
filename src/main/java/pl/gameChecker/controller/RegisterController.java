@@ -40,7 +40,6 @@ public class RegisterController {
             ModelMap model) {
         
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {

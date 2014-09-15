@@ -13,6 +13,7 @@
         <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
         <script src="<c:url value="/resources/js/slider.js" />"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+        <script src="<c:url value="/resources/js/filter.js" />"></script>
     </head>
     <body bgcolor="e5e5e5">
         <div id="container">
@@ -50,17 +51,44 @@
             <div id="mainBody">
                 <div id="newsContainer" class="mainBody">
                     <div id="editProfilPanel">
-                        <form id="editProfileForm" method="POST" action="editProfile">
+                        <form class="editProfileForm" method="POST" action="editProfile">
                             <label for="newUsername">New username</label><br/>
-                            <input type="text" name="newUsername"/><br/>
+                            <input type="text" name="newUsername" placeholder="Logged out required"/><br/>
                             <label for="newUsername">New Email</label><br/>
                             <input type="text" name="newEmail"/><br/>
+                            <label for="newAvatar">New avatar</label><br/>
+                            <input type="text" name="newAvatar" placeholder="URL only"/><br/>
                             <input class="formButton" type="submit" value="Change"/>
+                        </form><br/>
+                        <form class="editProfileForm" metod="POST" action="editCPU">
+                            <label for="newCpuName">CPU name</label><br/>
+                            <input type="text" name="newCpuName"/><br/>
+                            <label for="newCpuDate">Release date</label><br/>
+                            <input type="date" name="newCpuDate"/><br/>
+                            <label for="newCpuCompany">Company</label><br/>
+                            <input type="text" name="newCpuCompany""/><br/>
+                            <input class="formButton" type="submit" value="Change CPU" title="All fields are required"/>
+                        </form>
+                        <form class="editProfileForm" metod="POST" action="editGPU">
+                            <label for="newGpuName">GPU name</label><br/>
+                            <input type="text" name="newGpuName"/><br/>
+                            <label for="newGpuDate">Release date</label><br/>
+                            <input type="date" name="newGpuDate"/><br/>
+                            <label for="newGpuMemory">Memory MBs</label><br/>
+                            <input type="text" name="newCpuMemory" onkeypress="return isNumber(event)"/><br/>
+                            <label for="newCpuCompany">Company</label><br/>
+                            <input type="text" name="newCpuCompany""/><br/>
+                            <input class="formButton" type="submit" value="Change GPU"/>
+                        </form>
+                            <form class="editProfileForm" metod="POST" action="editRam">
+                            <label for="newRamMemory">Memory MBs</label><br/>
+                            <input type="text" name="newRamMemory" onkeypress="return isNumber(event)"/><br/>
+                            <input class="formButton" type="submit" value="Change RAM"/>
                         </form>
                     </div>
                     <div class="profile"> 
                         <h1>${myLogin}</h1>
-                        <img src="<c:url value="${usersAvatar}"/>" align="left"/>
+                        <img src="<c:url value="${usersAvatar}"/>" align="left" width="150" height="150"/>
                         <p>&#160;&#160;Email: ${myEmail}</p>
                         <p>&#160;&#160;Register date: ${myRegisterDate}</p>
                         <p>&#160;&#160;Age: ${myAge}</p>
@@ -68,9 +96,9 @@
                         <br/>
                         <br/>
                         <h2>Hardware:</h2>
-                        <p>&#160;&#160;CPU: TODO</p>
-                        <p>&#160;&#160;GPU: TODO</p>
-                        <p>&#160;&#160;Memory: TODO</p>
+                        <p>&#160;&#160;CPU: ${myCpu}</p>
+                        <p>&#160;&#160;GPU: ${myGpu}</p>
+                        <p>&#160;&#160;Memory: ${myRam} MB</p>
                         <br/>
                         <br/>
                         <h3>${myLogin} games library:</h3>
