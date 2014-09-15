@@ -102,7 +102,7 @@
                             <img src="<c:url value="resources/images/game_miniature_default.jpg"/>" align="left"/>
                             <h2><a href="<c:url value="games?game=${games[i.index].name}"/>">${games[i.index].name}</a></h2>
                             <div class="example-2"></div>
-                            <p>Game description</p><br/><br/>
+                            <p>${games[i.index].description}</p><br/><br/>
                         </div>
                         <br/>
                         <br/>
