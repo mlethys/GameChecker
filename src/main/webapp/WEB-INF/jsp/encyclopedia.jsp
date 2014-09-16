@@ -87,9 +87,9 @@
                                 </c:forEach>
                             </select>
                             <p>Others</p>
-                            <input type="radio" name="others" value="singleplayer"/>Singleplayer<br/>
-                            <input type="radio" name="others2" value="multiplayer"/>Multiplayer<br/>
-                            <input type="radio" name="others3" value="free2play"/>Free2Play<br/>
+                            <input type="checkbox" name="others" value="singleplayer"/>Singleplayer<br/>
+                            <input type="checkbox" name="others2" value="multiplayer"/>Multiplayer<br/>
+                            <input type="checkbox" name="others3" value="free2play"/>Free2Play<br/>
                             <input class="formButton" type="submit" value="Filter!"/>
                         </form>
                     </div>

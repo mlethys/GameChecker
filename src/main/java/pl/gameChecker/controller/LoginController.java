@@ -3,8 +3,6 @@ package pl.gameChecker.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -15,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.gameChecker.model.hibernateEntities.CompanyDao;
 import pl.gameChecker.model.hibernateEntities.GameDao;
 import pl.gameChecker.model.hibernateEntities.GamesLibrariesDao;
+import pl.gameChecker.model.hibernateEntities.Gametype;
 import pl.gameChecker.model.hibernateEntities.GametypeDao;
 import pl.gameChecker.model.hibernateEntities.LibraryDao;
 import pl.gameChecker.model.hibernateEntities.Member;
 import pl.gameChecker.model.hibernateEntities.MemberDao;
-import pl.gameChecker.model.hibernateEntities.MembersCPU;
 import pl.gameChecker.model.hibernateEntities.MembersCPUDao;
 import pl.gameChecker.model.hibernateEntities.MembersGPUDao;
 import pl.gameChecker.model.hibernateEntities.MembersPC;
@@ -101,7 +99,7 @@ public class LoginController {
                         @RequestParam(value="others2", required=false, defaultValue="") String[] multiplayer,
                         @RequestParam(value="others3", required=false, defaultValue="") String[] free2play,
                         ModelMap model,
-                        HttpServletRequest request) {
+                        HttpServletRequest request) throws ParseException {
         
         GametypeDao gametypeDao = CONTEXT.getBean("gametype", GametypeDao.class);
         GameDao games = CONTEXT.getBean("game", GameDao.class);
@@ -114,6 +112,73 @@ public class LoginController {
             model.addAttribute("games", games.getList());
             return "encyclopedia";
         }
+        String strDateFrom;
+        String strDateTo;
+        if(dateFrom.isEmpty()) {
+            strDateFrom = "1800-01-01";
+        }
+        else {
+            strDateFrom = dateFrom + "-01-01";
+        }
+        if(dateTo.isEmpty()) {
+            strDateTo = "2100-12-31";
+        }
+        else {
+            strDateTo = dateTo + "-12-31";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date tmpDate = sdf.parse(strDateFrom);
+        java.sql.Date sqlDateFrom = new java.sql.Date(tmpDate.getTime());
+        tmpDate = sdf.parse(strDateTo);
+        java.sql.Date sqlDateTo = new java.sql.Date(tmpDate.getTime());
+        boolean tmpSingleplayer = true;
+        boolean tmpMultiplayer = true;
+        boolean tmpFree2play = true;
+        int gamePopularityLow = 0;
+        int gamePopularityHigh = 100;
+        if(singleplayer.length <= 0) {
+            tmpSingleplayer = false;
+        }
+        if(multiplayer.length <= 0) {
+           tmpMultiplayer = false;                 
+        }
+        if(free2play.length <= 0) {
+           tmpFree2play = false;
+        }
+        if(popularityRadios.length > 0) {
+            switch (popularityRadios[0]) {
+                case "low":
+                    gamePopularityLow = 0;
+                    gamePopularityHigh = 33;
+                    break;
+                case "medium":
+                    gamePopularityLow = 34;
+                    gamePopularityHigh = 67;
+                    break;
+                case "high":
+                    gamePopularityLow = 68;
+                    gamePopularityHigh = 100;
+                    break;
+            }
+        }
+        
+        
+        model.addAttribute("games", games.getSearchGameResults(gameName, sqlDateFrom, sqlDateTo, 
+                                    tmpSingleplayer, tmpMultiplayer, tmpFree2play, 
+                                    Double.parseDouble(rateFrom), 
+                                    Double.parseDouble(rateTo), new Gametype(type), 
+                                    gamePopularityLow, gamePopularityHigh));
+        System.out.println(gameName);
+        System.out.println(popularityRadios[0]);
+        System.out.println(rateFrom);
+        System.out.println(rateTo);
+        System.out.println(dateFrom);
+        System.out.println(dateTo);
+        System.out.println(type);
+        System.out.println(singleplayer[0]);
+        System.out.println(multiplayer[0]);
+        System.out.println(free2play[0]);
+        
         return "encyclopedia";
     }
     
