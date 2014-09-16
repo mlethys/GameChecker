@@ -3,3 +3,12 @@ $(document).ready(function() {
     $('.example-rating-2').text(data.rating);
   });
 });
+
+function addRate() {
+    $.ajax({
+        url : 'rate.html',
+        success : function(data) {
+            $('#example-rating-2').html(data);
+        }
+    });
+}

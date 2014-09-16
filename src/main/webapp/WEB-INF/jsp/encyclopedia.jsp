@@ -98,8 +98,17 @@
                         <div class="game"> 
                             <img src="<c:url value="resources/images/game_miniature_default.jpg"/>" align="left"/>
                             <h2><a href="<c:url value="games?game=${games[i.index].name}"/>">${games[i.index].name}</a></h2>
-                            <div class="example-2"></div>
-                            <p>${games[i.index].description}</p><br/><br/>
+                            <form class="ratingForm" method="POST" action="rate?game=${games[i.index].name}">
+                                <input type="radio" name="rate[]" value="1"/>1
+                                <input type="radio" name="rate[]" value="2"/>2
+                                <input type="radio" name="rate[]" value="3"/>3
+                                <input type="radio" name="rate[]" value="4"/>4
+                                <input type="radio" name="rate[]" value="5"/>5
+                                <input class="formButton" type="submit" value="Rate!"/>
+                            </form>
+                            <p>Current rating: ${games[i.index].stars}</p><br/>
+                            <p>${games[i.index].description}</p>
+                            <br/>
                         </div>
                         <br/>
                         <br/>

@@ -77,6 +77,17 @@ public class LoginController {
         model.addAttribute("games", games.getList());
         return "encyclopedia";
     }
+    @RequestMapping(value = "rate", method = RequestMethod.POST)
+    public String rateGame(@RequestParam("rate[]") String[] rateRadios, 
+                            @RequestParam("game") String gameToRate) {
+        
+        GameDao games = CONTEXT.getBean("game", GameDao.class);
+        if(rateRadios.length > 0) {
+            games.rateGame(games.getByName(gameToRate), Integer.parseInt(rateRadios[0]));
+        }
+        
+        return "redirect:encyclopedia.html";
+    }
     
     @RequestMapping("games")
     public String byGame(@RequestParam("game") String game, 
@@ -84,6 +95,7 @@ public class LoginController {
         GameDao games = CONTEXT.getBean("game", GameDao.class);
         model.addAttribute("gameTitle", games.getByName(game).getName());
         model.addAttribute("gameDesc", games.getByName(game).getDescription());
+        model.addAttribute("stars", games.getByName(game).getStars());
         return "game";
     }
     
@@ -168,17 +180,6 @@ public class LoginController {
                                     Double.parseDouble(rateFrom), 
                                     Double.parseDouble(rateTo), new Gametype(type), 
                                     gamePopularityLow, gamePopularityHigh));
-        System.out.println(gameName);
-        System.out.println(popularityRadios[0]);
-        System.out.println(rateFrom);
-        System.out.println(rateTo);
-        System.out.println(dateFrom);
-        System.out.println(dateTo);
-        System.out.println(type);
-        System.out.println(singleplayer[0]);
-        System.out.println(multiplayer[0]);
-        System.out.println(free2play[0]);
-        
         return "encyclopedia";
     }
     
@@ -375,6 +376,7 @@ public class LoginController {
         GameDao gameDao = CONTEXT.getBean("game", GameDao.class);
         String user = request.getSession().getAttribute("libraryOwner").toString();
         libraryDao.removeGameFromMembersLibrary(memberDao.getByName(user), gameDao.getByName(gameToRemove));
+        gameDao.updateGamePopularity(gameDao.getByName(gameToRemove));
         return "redirect:library?user=" + user;
     }
     

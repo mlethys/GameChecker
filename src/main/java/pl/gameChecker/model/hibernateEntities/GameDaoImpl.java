@@ -127,7 +127,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
         return result;
     }
 
-    @Override
+@Override
     @Transactional
     public List<Game> getSearchGameResults(String name, Date releasedDateBetweenLow, Date releasedDateBetweenHigh, boolean singleplayer, boolean multiplayer, boolean freeToPlay, double gameStarsBeetweenLow, double gameStarsBeetweenHigh, Gametype gametype, int gamePopularityBetweenLow, int gamePopularityBetweenHigh) {
         boolean firstCriteria = true;
@@ -137,7 +137,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
                 preparedQuery += "and "; 
             else 
                 preparedQuery += "where ";
-            preparedQuery += "g.name like %" + name + "% ";
+            preparedQuery += "g.name like '%" + name + "%' ";
             firstCriteria = false;
         }
         if(releasedDateBetweenLow != null) {
@@ -145,7 +145,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
                 preparedQuery += "and "; 
             else 
                 preparedQuery += "where ";
-            preparedQuery += "g.releaseDate <='" + releasedDateBetweenLow + "' ";
+            preparedQuery += "g.releaseDate >='" + releasedDateBetweenLow + "' ";
             firstCriteria = false;
         }
         if(releasedDateBetweenHigh != null) {
@@ -153,7 +153,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
                 preparedQuery += "and "; 
             else 
                 preparedQuery += "where ";
-            preparedQuery += "g.releaseDate >='" + releasedDateBetweenHigh + "' ";
+            preparedQuery += "g.releaseDate <='" + releasedDateBetweenHigh + "' ";
             firstCriteria = false;
         }
         if(singleplayer) {
@@ -224,7 +224,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
         }
         return games;
     }
-
+    
     @Override
     @Transactional
     public void updateGameInfo(Game game, String name, boolean isSingleplayer, boolean isMultiplayer, boolean isFreeToPlay, int releaseDay, int releaseMonth, int releaseYear, String gametypeName) {
