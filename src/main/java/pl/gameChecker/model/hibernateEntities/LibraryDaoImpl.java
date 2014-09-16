@@ -6,11 +6,11 @@
 
 package pl.gameChecker.model.hibernateEntities;
 
-import java.io.Serializable;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -88,19 +88,14 @@ public class LibraryDaoImpl extends HibernateDaoSupport implements LibraryDao{
     @Override
     @Transactional
     public void removeGameFromMembersLibrary(Member member, Game game) {
-        getHibernateTemplate().delete(removeGameFromLibrary(member, game));
-        getHibernateTemplate().update(updatedGamePopularity(game));
-    }
-    
-    protected GamesLibraries removeGameFromLibrary(Member member, Game game) {
         List<GamesLibraries> gamesLibraries = (List<GamesLibraries>) getHibernateTemplate().findByCriteria(
         DetachedCriteria.forClass(GamesLibraries.class)
-        .add(Restrictions.and(Restrictions.eq("member", member), Restrictions.eq("game", game))));
+        .add(Restrictions.and(Restrictions.eq("library", member.getLibrary()), Restrictions.eq("game", game))));
         
         if(gamesLibraries.size() > 0)
         {
-            return gamesLibraries.get(0);
-        }
-        return null;
+            getHibernateTemplate().delete(gamesLibraries.get(0));
+        }        
+//        getHibernateTemplate().update(updatedGamePopularity(game));
     }
 }

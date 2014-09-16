@@ -219,5 +219,9 @@ public class TempDBMain {
         for(Game game : gameDao.getSearchGameResults(null, null, null, false, false, false, -1, -1, null, -1, -1)) {
             System.out.println("Search result: " + game.getName());
         }
+        
+        libraryDao.removeGameFromMembersLibrary(memberDao.getById(1), gameDao.getById(2));
+        gameDao.updateGamePopularity(gameDao.getById(2));
+        
     }
 }
