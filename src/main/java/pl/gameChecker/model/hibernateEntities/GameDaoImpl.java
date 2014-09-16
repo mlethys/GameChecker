@@ -127,7 +127,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
         return result;
     }
 
-    @Override
+@Override
     @Transactional
     public List<Game> getSearchGameResults(String name, Date releasedDateBetweenLow, Date releasedDateBetweenHigh, boolean singleplayer, boolean multiplayer, boolean freeToPlay, double gameStarsBeetweenLow, double gameStarsBeetweenHigh, Gametype gametype, int gamePopularityBetweenLow, int gamePopularityBetweenHigh) {
         boolean firstCriteria = true;
@@ -212,15 +212,6 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
             preparedQuery += "g.popularity<=" + gamePopularityBetweenHigh + " ";
             firstCriteria = false;
         }
-        if(gametype != null) {
-            if(!firstCriteria) 
-                preparedQuery += "and "; 
-            else 
-                preparedQuery += "where ";
-            preparedQuery += "g.gametype=" + gametype + " ";
-            firstCriteria = false;
-        }
-        
             
         Query query = getSessionFactory().getCurrentSession().createQuery(preparedQuery);
 
@@ -233,7 +224,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
         }
         return games;
     }
-
+    
     @Override
     @Transactional
     public void updateGameInfo(Game game, String name, boolean isSingleplayer, boolean isMultiplayer, boolean isFreeToPlay, int releaseDay, int releaseMonth, int releaseYear, String gametypeName) {
