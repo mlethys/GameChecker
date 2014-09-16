@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.gameChecker.model.hibernateEntities.CompanyDao;
 import pl.gameChecker.model.hibernateEntities.GameDao;
+import pl.gameChecker.model.hibernateEntities.GamesLibrariesDao;
 import pl.gameChecker.model.hibernateEntities.GametypeDao;
+import pl.gameChecker.model.hibernateEntities.LibraryDao;
 import pl.gameChecker.model.hibernateEntities.Member;
 import pl.gameChecker.model.hibernateEntities.MemberDao;
 import pl.gameChecker.model.hibernateEntities.MembersCPU;
@@ -127,6 +129,7 @@ public class LoginController {
         MembersCPUDao membersCpuDao = CONTEXT.getBean("membersCPU", MembersCPUDao.class);
         MembersGPUDao membersGpuDao = CONTEXT.getBean("membersGPU", MembersGPUDao.class);
         Member member = memberDao.getByName(userName);
+        model.addAttribute("role", member.getRole().getName());
         model.addAttribute("myLogin", member.getName());
         model.addAttribute("myEmail", member.getMail());
         model.addAttribute("myRegisterDate", member.getRegisterDate().toString());
@@ -186,19 +189,6 @@ public class LoginController {
             memberDao.update(member);
         }
         
-//        model.addAttribute("myLogin", member.getName());
-//        model.addAttribute("myEmail", member.getMail());
-//        model.addAttribute("myRegisterDate", member.getRegisterDate().toString());
-//        model.addAttribute("myAge", member.getAge());
-//        model.addAttribute("myPoints", member.getPoints());
-//        MembersPCDao membersPC = CONTEXT.getBean("membersPC", MembersPCDao.class);
-//        if(member.getMembersPCs() != null && !member.getMembersPCs().isEmpty()) {
-//            MembersPC memberPC = membersPC.getAllPCsOfMember(member).get(0);
-//            model.addAttribute("myCpu", memberPC.getMembersCPU().getName());
-//            model.addAttribute("myGpu", memberPC.getMembersGPU().getName());
-//            model.addAttribute("myRam", memberPC.getMemory());
-//        }
-//        
         if(member.getAvatarUrl() == null || member.getAvatarUrl().isEmpty()) {
              model.addAttribute("usersAvatar", "resources/images/default_av.jpg");
         }
@@ -262,7 +252,6 @@ public class LoginController {
 
         MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
         MembersPCDao memberPCDao = CONTEXT.getBean("membersPC", MembersPCDao.class);
-        MembersGPUDao membersGpuDao = CONTEXT.getBean("membersGPU", MembersGPUDao.class);
 
         Member member = memberDao.getByName(userName);
         MembersPC membersPc = new MembersPC(member);
@@ -278,4 +267,50 @@ public class LoginController {
         return "redirect:profile";
     }
 
+    @RequestMapping("library")
+    public String usersLibrary(@RequestParam("user") String user, 
+                                        ModelMap model, HttpServletRequest request) {
+        
+        model.addAttribute("loggedUser", request.getSession().getAttribute("loggedUser"));
+        request.getSession().setAttribute("libraryOwner", user);
+        model.addAttribute("usersLibrary", user);
+        
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        Member member = memberDao.getByName(user);
+        GameDao gameDao = CONTEXT.getBean("game", GameDao.class);
+        model.addAttribute("availableGames", gameDao.getList());
+        model.addAttribute("usersGames", gameDao.getGamesFromMember(member));
+        return "library";
+    }
+    
+    @RequestMapping(value = "/addGame", method = RequestMethod.POST)
+    public String addGame(@RequestParam(value="availableGames") String newGame,
+                            HttpServletRequest request, 
+                            ModelMap model) {
+        
+        LibraryDao libraryDao = CONTEXT.getBean("library", LibraryDao.class);
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        GameDao gameDao = CONTEXT.getBean("game", GameDao.class);
+        GamesLibrariesDao gamesLibrariesDao = CONTEXT.getBean("gamesLibraries", GamesLibrariesDao.class);
+        String user = request.getSession().getAttribute("libraryOwner").toString();
+        if(gamesLibrariesDao.isMemberGotGameInLibrary(memberDao.getByName(user), gameDao.getByName(newGame))) {
+            return "redirect:library?user=" + user;
+        }
+        libraryDao.addGameToMembersLibrary(memberDao.getByName(user), gameDao.getByName(newGame));
+        return "redirect:library?user=" + user;
+    }
+    
+    @RequestMapping(value = "/removeGame", method = RequestMethod.POST)
+    public String removeGame(@RequestParam(value="usersGames") String gameToRemove,
+                                HttpServletRequest request, 
+                                ModelMap model) {
+        
+        LibraryDao libraryDao = CONTEXT.getBean("library", LibraryDao.class);
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        GameDao gameDao = CONTEXT.getBean("game", GameDao.class);
+        String user = request.getSession().getAttribute("libraryOwner").toString();
+        libraryDao.removeGameFromMembersLibrary(memberDao.getByName(user), gameDao.getByName(gameToRemove));
+        return "redirect:library?user=" + user;
+    }
+    
 }
