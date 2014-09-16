@@ -20,4 +20,5 @@ public interface MembersCPUDao {
     public void update(MembersCPU membersCPU);
     public void delete(MembersCPU membersCPU);
     public List<MembersCPU> getAllCPUsOfCompany(Company company);
+    public MembersCPU getByName(String name);
 }

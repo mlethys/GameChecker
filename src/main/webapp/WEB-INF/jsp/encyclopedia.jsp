@@ -44,9 +44,6 @@
                 <div id="about" class="menuButton">
                     <p class="menuText">About</p>
                 </div>
-                <div id="library" class="menuButton">
-                    <p class="menuText">My library</p>
-                </div>
             </div>  
             <img class="sliderImg" alt="img" src="<c:url value="/resources/images/image1.jpg"/>" id="slideshow">
             <div id="preload">
@@ -54,7 +51,7 @@
             </div>
             <div id="mainBody">
                 <div id="newsContainer" class="mainBody">
-                     <div id="filtersContainer">
+                     <div class="filtersContainer">
                         <form id="registerForm" method="POST" action="filter">
                             <p>Game name</p>
                             <input type="text" name="gameName"/>
@@ -102,7 +99,7 @@
                             <img src="<c:url value="resources/images/game_miniature_default.jpg"/>" align="left"/>
                             <h2><a href="<c:url value="games?game=${games[i.index].name}"/>">${games[i.index].name}</a></h2>
                             <div class="example-2"></div>
-                            <p>Game description</p><br/><br/>
+                            <p>${games[i.index].description}</p><br/><br/>
                         </div>
                         <br/>
                         <br/>

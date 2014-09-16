@@ -4,7 +4,6 @@ package pl.gameChecker.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import pl.gameChecker.model.hibernateEntities.Member;
 import pl.gameChecker.model.hibernateEntities.MemberDao;
+import pl.gameChecker.model.hibernateEntities.RoleDao;
 
 /**
  *
@@ -40,18 +40,18 @@ public class RegisterController {
             ModelMap model) {
         
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        Date date = new Date();
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             calendar.setTime(dateFormat.parse(dateOfBirth));
             MemberDao memberDao = context.getBean("member", MemberDao.class);
+            RoleDao roleDao = context.getBean("role", RoleDao.class);
             Member newMeber = new Member(login, 
                                             password, 
                                             email, 
                                             calendar.get(Calendar.DAY_OF_MONTH), 
                                             calendar.get(Calendar.MONTH), 
-                                            calendar.get(Calendar.YEAR));
+                                            calendar.get(Calendar.YEAR), roleDao.getByName("Member"));
             if(memberDao.exists(newMeber)) {
                 return "registerFailed";
             }

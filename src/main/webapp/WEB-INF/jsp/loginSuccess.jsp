@@ -40,9 +40,6 @@
                 <div id="about" class="menuButton">
                     <p class="menuText">About</p>
                 </div>
-                <div id="library" class="menuButton">
-                    <p class="menuText">My library</p>
-                </div>
             </div>  
             <img class="sliderImg" alt="img" src="<c:url value="/resources/images/image1.jpg"/>" id="slideshow">
             <div id="preload">

@@ -43,9 +43,6 @@
                 <div id="about" class="menuButton">
                     <p class="menuText">About</p>
                 </div>
-                <div id="library" class="menuButton">
-                    <p class="menuText">My library</p>
-                </div>
             </div>  
             <img class="sliderImg" alt="img" src="<c:url value="/resources/images/image1.jpg"/>" id="slideshow">
             <div id="preload">
@@ -54,11 +51,11 @@
             <div id="mainBody">
                 <div id="newsContainer" class="mainBody">
                     <h1 class="headline">Games</h1>
-                    <div class="game"> 
+                    <div class="gameDetails"> 
                         <img src="<c:url value="resources/images/game_miniature_default.jpg"/>" align="left"/>
-                        <h2>${gameTitle}</h2>
+                        <h2>&#160;&#160;${gameTitle}</h2>
                         <div class="example-2"></div>
-                        <p>Game description</p><br/><br/>
+                        <p>&#160;&#160;${gameDesc}</p><br/><br/>
                     </div>
                 </div>
                 <div id="addsContainer" class="mainBody">
