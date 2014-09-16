@@ -26,7 +26,7 @@ public class MembersPC implements Serializable {
     @Column(name="MEMBERS_PC_ID", unique = true, nullable = false)
     protected int id;
     
-    @Column(name = "MEMBERS_PC_NAME", unique = true, nullable = true, length = 45)
+    @Column(name = "MEMBERS_PC_NAME", nullable = true, length = 45)
     protected String name;
     
     @Column(name="MEMBERS_PC_MEMORY", nullable = true)
@@ -36,11 +36,11 @@ public class MembersPC implements Serializable {
     @JoinColumn(name = "MEMBERS_MEMBER_ID", nullable = false)
     protected Member member;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "MEMBERS_CPUS_ID", nullable = true)
     protected MembersCPU membersCPU;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "MEMBERS_GPUS_ID", nullable = true)
     protected MembersGPU membersGPU;
 
