@@ -284,4 +284,30 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
         getHibernateTemplate().update(game);
     }
 
+    @Override
+    @Transactional
+    public List<Game> getByNameAndMember(String name, Member member) {
+        List<Object[]> objects;
+        List<Game> games = new Vector<Game>();
+        
+        Query query = getSessionFactory().getCurrentSession().createQuery("from GAMES_LIBRARIES gl, GAMES g where "
+                + "g.id=gl.game and gl.library = :memberLibrary and g.name like :gameName group by gl.id");
+        query.setParameter("memberLibrary", member.getLibrary());
+        query.setParameter("gameName", "%"+name+"%");
+
+        objects = query.list();
+        
+        
+        if(objects != null) {
+            games.clear();
+            for(Object[] obj : objects){
+                games.add((Game) obj[1]);
+            }
+        }
+        if(games.size() > 0)
+            return games;
+        else
+            return null;
+    }
+
 }

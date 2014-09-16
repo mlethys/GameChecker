@@ -10,7 +10,6 @@ package pl.gameChecker.model.database;
 import com.itextpdf.text.DocumentException;
 import java.io.IOException;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.logging.Level;
@@ -26,8 +25,6 @@ import pl.gameChecker.model.hibernateEntities.GametypeDao;
 import pl.gameChecker.model.hibernateEntities.LibraryDao;
 import pl.gameChecker.model.hibernateEntities.Member;
 import pl.gameChecker.model.hibernateEntities.MemberDao;
-import pl.gameChecker.model.hibernateEntities.MembersCPU;
-import pl.gameChecker.model.hibernateEntities.MembersPC;
 import pl.gameChecker.model.hibernateEntities.Role;
 import pl.gameChecker.model.hibernateEntities.RoleDao;
 import pl.gameChecker.model.hibernateEntities.SqfaAnswer;
@@ -236,6 +233,10 @@ public class TempDBMain {
         
         libraryDao.removeGameFromMembersLibrary(memberDao.getById(1), gameDao.getById(2));
         gameDao.updateGamePopularity(gameDao.getById(2));
+        
+        for(Game game : gameDao.getByNameAndMember("je", memberDao.getById(1))){
+            System.out.println("getByNameAndMember: " + game.getName());
+        }
         
     }
 }

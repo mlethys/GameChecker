@@ -17,6 +17,7 @@ public interface GameDao {
     public List<Game> getList();
     public Game getById(int id);
     public Game getByName(String name);
+    public List<Game> getByNameAndMember(String name, Member member);
     public List<Game> getGamesWhereNameLike(String likeThis);
     public List<Object[]> getGamesAdditionAfterDate(Date afterThisDate);
     public void rateGame(Game game, int rating);
