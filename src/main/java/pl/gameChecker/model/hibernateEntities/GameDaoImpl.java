@@ -137,7 +137,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
                 preparedQuery += "and "; 
             else 
                 preparedQuery += "where ";
-            preparedQuery += "g.name like %" + name + "% ";
+            preparedQuery += "g.name like '%" + name + "%' ";
             firstCriteria = false;
         }
         if(releasedDateBetweenLow != null) {
@@ -145,7 +145,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
                 preparedQuery += "and "; 
             else 
                 preparedQuery += "where ";
-            preparedQuery += "g.releaseDate <='" + releasedDateBetweenLow + "' ";
+            preparedQuery += "g.releaseDate >='" + releasedDateBetweenLow + "' ";
             firstCriteria = false;
         }
         if(releasedDateBetweenHigh != null) {
@@ -153,7 +153,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
                 preparedQuery += "and "; 
             else 
                 preparedQuery += "where ";
-            preparedQuery += "g.releaseDate >='" + releasedDateBetweenHigh + "' ";
+            preparedQuery += "g.releaseDate <='" + releasedDateBetweenHigh + "' ";
             firstCriteria = false;
         }
         if(singleplayer) {
@@ -212,6 +212,15 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
             preparedQuery += "g.popularity<=" + gamePopularityBetweenHigh + " ";
             firstCriteria = false;
         }
+        if(gametype != null) {
+            if(!firstCriteria) 
+                preparedQuery += "and "; 
+            else 
+                preparedQuery += "where ";
+            preparedQuery += "g.gametype=" + gametype + " ";
+            firstCriteria = false;
+        }
+        
             
         Query query = getSessionFactory().getCurrentSession().createQuery(preparedQuery);
 

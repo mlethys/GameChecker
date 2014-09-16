@@ -216,7 +216,21 @@ public class TempDBMain {
         else
             System.out.println("Member nie posiada Tekken");
         
-        for(Game game : gameDao.getSearchGameResults(null, null, null, false, false, false, -1, -1, null, -1, -1)) {
+        calendar.clear();
+        calendar.set(1990, 1, 1);
+        secondsSinceEpoch = calendar.getTimeInMillis();
+        dateFrom = new Date(secondsSinceEpoch);
+        calendar.clear();
+        calendar.set(2014, 12, 31);
+        secondsSinceEpoch = calendar.getTimeInMillis();
+        dateTo = new Date(secondsSinceEpoch);
+        
+        for(Game game : gameDao.getSearchGameResults("jedi", dateFrom, dateTo, false, false, false, -1, -1, null, -34, -67)) {
+            System.out.println("Search result: " + game.getName());
+        }
+        
+        
+        for(Game game : gameDao.getSearchGameResults("nascar", dateFrom, dateTo, false, false, false, 1, 5, gametypeDao.getByName("action"), 0, 100)) {
             System.out.println("Search result: " + game.getName());
         }
         
