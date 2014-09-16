@@ -168,6 +168,14 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     color: #ffffff;
 }
+.footer a {
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    color: #ffffff;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
 .loginRegisterText {
     font-family: Arial, Helvetica, sans-serif;
