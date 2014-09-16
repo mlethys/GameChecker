@@ -57,7 +57,10 @@
             </div>
         </div>
         <footer class="footer">
-            <p>© 2014 GameChecker Team. All Rights Reserved.</p>
+            <p>© 2014 GameChecker Team. All Rights Reserved. </p>
+            <c:if test="${memberRole == 'Admin'}">
+                <a href="<c:url value="adminPanel"/>">Admin panel</a>
+            </c:if>
         </footer>
     </body>
 </html>

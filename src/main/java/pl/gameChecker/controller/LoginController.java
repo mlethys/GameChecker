@@ -53,10 +53,14 @@ public class LoginController {
     }
     
     @RequestMapping("loggedIndex")
-    public String loggedIndex(HttpServletRequest request) {
+    public String loggedIndex(HttpServletRequest request, ModelMap model) {
         if(request.getSession().getAttribute("loggedUser") == null) {
             return "login";
         }
+        
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        Member member = memberDao.getByName(request.getSession().getAttribute("loggedUser").toString());
+        model.addAttribute("memberRole", member.getRole().getName());
         return "loggedIndex";
     }
     
@@ -346,6 +350,7 @@ public class LoginController {
         GameDao gameDao = CONTEXT.getBean("game", GameDao.class);
         model.addAttribute("availableGames", gameDao.getList());
         model.addAttribute("usersGames", gameDao.getGamesFromMember(member));
+        model.addAttribute("usersGamesToRemove", gameDao.getGamesFromMember(member));
         return "library";
     }
     
@@ -380,4 +385,57 @@ public class LoginController {
         return "redirect:library?user=" + user;
     }
     
+    @RequestMapping(value="searchInLibrary", method = RequestMethod.POST)
+    public String searchLibrary(@RequestParam("gameName") String gameName,
+                                    @RequestParam("user") String user, 
+                                    ModelMap model, HttpServletRequest request) {
+        model.addAttribute("loggedUser", request.getSession().getAttribute("loggedUser"));
+        request.getSession().setAttribute("libraryOwner", user);
+        model.addAttribute("usersLibrary", user);
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        Member member = memberDao.getByName(user);
+        Member memberLogged = memberDao.getByName(request.getSession().getAttribute("loggedUser").toString());
+        model.addAttribute("loggedRole", memberLogged.getRole().getName());
+        GameDao gameDao = CONTEXT.getBean("game", GameDao.class);
+        model.addAttribute("availableGames", gameDao.getList());
+        model.addAttribute("usersGames", gameDao.getByNameAndMember(gameName, member));
+        model.addAttribute("usersGamesToRemove", gameDao.getGamesFromMember(member));
+        return "library";
+    }
+    
+    @RequestMapping(value="deleteUser", method = RequestMethod.POST)
+    public String deleteUser(@RequestParam("users") String username) {
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        memberDao.delete(memberDao.getByName(username));
+        return "redirect:adminPanel";
+    }
+    
+    @RequestMapping(value="changeUserName", method = RequestMethod.POST)
+    public String changeUsername(@RequestParam("users") String username,
+                                    @RequestParam("newUsername") String newUsername) {
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        Member member =  memberDao.getByName(username);
+        member.setName(newUsername);
+        memberDao.update(member);
+        return "redirect:adminPanel";
+    }
+    
+    @RequestMapping(value="deleteAvatar", method = RequestMethod.POST)
+    public String deleteAvatar(@RequestParam("users") String username) {
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        Member member =  memberDao.getByName(username);
+        member.setAvatarUrl("resources/images/default_av.jpg");
+        memberDao.update(member);
+        return "redirect:adminPanel";
+    }
+  
+    @RequestMapping("adminPanel")
+    public String displayAdminPanel(ModelMap model) {
+        
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        GameDao gameDao = CONTEXT.getBean("game", GameDao.class);
+        model.addAttribute("members", memberDao.getList());
+        model.addAttribute("games", gameDao.getList());
+        return "adminPanel";
+    }
 }

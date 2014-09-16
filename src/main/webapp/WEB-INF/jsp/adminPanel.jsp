@@ -1,9 +1,8 @@
 <%-- 
-    Document   : library
-    Created on : 2014-09-16, 10:19:17
+    Document   : adminPanel
+    Created on : 2014-09-16, 19:27:06
     Author     : mlethys
 --%>
-
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -48,43 +47,32 @@
             </div>
             <div id="mainBody">
                 <div id="newsContainer" class="mainBody">
-                    <h1 id="gameLibraryHeadline">${usersLibrary} games library</h1>
-                    <div id="searchPanel">
-                        <form method="POST" action="searchInLibrary?user=${usersLibrary}">
-                            <input type="text" name="gameName"/>
-                            <input class="formButton" type="submit" value="Search"/>
-                        </form>
-                    </div>
-                    <c:if test="${(usersLibrary == loggedUser) || (loggedRole == 'Admin') || (loggedRole == 'Junior Admin')}">
-                        <div class="filtersContainer">
-                            <form method="POST" action="addGame">
-                                <select type="text" name="availableGames">
-                                    <c:forEach items="${availableGames}" varStatus="i">
-                                        <option>${availableGames[i.index].name}</option>
-                                    </c:forEach>
-                                </select>
-                                <input class="formButton" type="submit" value="Add game"/>
-                            </form>
-                            <form method="POST" action="removeGame">
-                                <select type="text" name="usersGames">
-                                    <c:forEach items="${usersGamesToRemove}" varStatus="i">
-                                        <option>${usersGamesToRemove[i.index].name}</option>
-                                    </c:forEach>
-                                </select>
-                                <input class="formButton" type="submit" value="Remove game"/>
-                            </form>
-                        </div>
-                    </c:if>
-                    <c:forEach items="${usersGames}" varStatus="i">
-                        <div class="game"> 
-                            <img src="<c:url value="resources/images/game_miniature_default.jpg"/>" align="left"/>
-                            <h2><a href="<c:url value="games?game=${usersGames[i.index].name}"/>">${usersGames[i.index].name}</a></h2>
-                            <p>Release date: ${usersGames[i.index].releaseDate}</p>
-                            <p>${usersGames[i.index].description}</p><br/><br/>
-                        </div>
-                        <br/>
-                        <br/>
-                    </c:forEach>
+                    <h1>Administration Panel</h1>
+                    <form method="POST" action="deleteUser">
+                        <select type="text" name="users">
+                            <c:forEach items="${members}" varStatus="i">
+                                <option>${members[i.index].name}</option>
+                            </c:forEach>
+                        </select>
+                        <input type="submit" value="Remove member"/>
+                    </form>
+                    <form method="POST" action="changeUserName">
+                        <select type="text" name="users">
+                            <c:forEach items="${members}" varStatus="i">
+                                <option>${members[i.index].name}</option>
+                            </c:forEach>
+                        </select>
+                        <input type="text" name="newUsername"/>
+                        <input type="submit" value="Change username"/>
+                    </form>
+                    <form method="POST" action="deleteAvatar">
+                        <select type="text" name="users">
+                            <c:forEach items="${members}" varStatus="i">
+                                <option>${members[i.index].name}</option>
+                            </c:forEach>
+                        </select>
+                        <input type="submit" value="Delete avatar"/>
+                    </form>
                 </div>
                 <div id="addsContainer" class="mainBody">
                     <img src="<c:url value="/resources/images/sampleAdd.jpg"/>" alt="add" class="add"/>
