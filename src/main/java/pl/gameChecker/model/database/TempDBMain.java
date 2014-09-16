@@ -238,5 +238,7 @@ public class TempDBMain {
             System.out.println("getByNameAndMember: " + game.getName());
         }
         
+        gameDao.rateGame(memberDao.getById(1), gameDao.getById(2), 4);
+        
     }
 }

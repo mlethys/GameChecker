@@ -105,7 +105,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
 
     @Override
     @Transactional
-    public void rateGame(Game game, int rating) {
+    public void rateGame(Member member, Game game, int rating) {
         double stars = game.getStars();
         int rates = game.getRates();
         int newRates = rates + 1;
@@ -113,7 +113,22 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
 
         double average = (stars * rates + rating) / newRates;
         game.setStars(average);
-
+        
+        List<MembersRatesGames> membersRatesGames = (List<MembersRatesGames>) getHibernateTemplate().findByCriteria(
+        DetachedCriteria.forClass(MembersRatesGames.class)
+        .add(Restrictions.and(Restrictions.eq("member", member), Restrictions.eq("game", game))));
+        
+        if(membersRatesGames.size() > 0){
+            if(!membersRatesGames.get(0).isIsRated()) {
+                membersRatesGames.get(0).setIsRated(true);
+                getHibernateTemplate().update(membersRatesGames.get(0));
+            }
+        } else{
+            MembersRatesGames newMembersRatesGames = new MembersRatesGames(true, member, game);
+            getHibernateTemplate().save(newMembersRatesGames);
+        }
+        
+        
         getHibernateTemplate().update(game);
     }
 

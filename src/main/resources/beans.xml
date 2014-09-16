@@ -11,7 +11,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost:3306/gamecheckerdb?zeroDateTimeBehavior=convertToNull" />
         <property name="username" value="root" />
-        <property name="password" value="atiwada3524" />
+        <property name="password" value="haslo3" />
     </bean>
  
     <tx:annotation-driven />
@@ -37,13 +37,14 @@
                 <value>pl.gameChecker.model.hibernateEntities.MembersCPU</value>         <!-- DONE -->   <!-- DONE -->         
                 <value>pl.gameChecker.model.hibernateEntities.MembersGPU</value>         <!-- DONE -->   <!-- DONE -->   
                 <value>pl.gameChecker.model.hibernateEntities.GamesLibraries</value>
+                <value>pl.gameChecker.model.hibernateEntities.MembersRatesGames</value>
             </list>
         </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                 <prop key="hibernate.show_sql">false</prop>
-                <prop key="hibernate.hbm2ddl.auto">create-update</prop>
+                <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
             </props>
         </property>
     </bean>
@@ -135,6 +136,12 @@
     </bean>
     
     <bean id="sqfaQuestionComment" class="pl.gameChecker.model.hibernateEntities.SqfaQuestionCommentDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    
+    <bean id="membersRatesGames" class="pl.gameChecker.model.hibernateEntities.MembersRatesGamesDaoImpl">
         <constructor-arg>
             <ref bean="sessionFactory" />
         </constructor-arg>

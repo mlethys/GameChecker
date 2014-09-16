@@ -20,7 +20,7 @@ public interface GameDao {
     public List<Game> getByNameAndMember(String name, Member member);
     public List<Game> getGamesWhereNameLike(String likeThis);
     public List<Object[]> getGamesAdditionAfterDate(Date afterThisDate);
-    public void rateGame(Game game, int rating);
+    public void rateGame(Member member, Game game, int rating);
     public int getGamePopularityProcent(Game game);
     public void create(Game game);
     public void update(Game game);

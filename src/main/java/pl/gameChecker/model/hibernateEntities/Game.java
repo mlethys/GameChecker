@@ -59,6 +59,9 @@ public class Game implements Serializable {
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "GAMETYPES_GAMETYPE_ID", nullable = false)
     protected Gametype gametype;
+    
+    @OneToMany(mappedBy = "game")
+    protected List<MembersRatesGames> membersRatesGames;
 
     public Game() {}
     
@@ -219,6 +222,12 @@ public class Game implements Serializable {
     public void setPopularity(int popularity) {
         this.popularity = popularity;
     }
-    
-    
+
+    public List<MembersRatesGames> getMembersRatesGames() {
+        return membersRatesGames;
+    }
+
+    public void setMembersRatesGames(List<MembersRatesGames> membersRatesGames) {
+        this.membersRatesGames = membersRatesGames;
+    }
 }

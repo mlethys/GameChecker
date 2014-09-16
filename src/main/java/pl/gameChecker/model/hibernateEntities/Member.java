@@ -71,7 +71,10 @@ public class Member implements Serializable  {
     
     @OneToMany(mappedBy = "member")
     protected List<SqfaAnswerComment> sqfaAnswerComments;
-
+    
+    @OneToMany(mappedBy = "member")
+    protected List<MembersRatesGames> membersRatesGames;
+    
     public Member(){}
     
     @Deprecated
@@ -242,4 +245,22 @@ public class Member implements Serializable  {
     public void setAvatarUrl(String avatarURL) {
         this.avatarURL = avatarURL;
     }
+
+    public String getAvatarURL() {
+        return avatarURL;
+    }
+
+    public void setAvatarURL(String avatarURL) {
+        this.avatarURL = avatarURL;
+    }
+
+    public List<MembersRatesGames> getMembersRatesGames() {
+        return membersRatesGames;
+    }
+
+    public void setMembersRatesGames(List<MembersRatesGames> membersRatesGames) {
+        this.membersRatesGames = membersRatesGames;
+    }
+    
+    
 }
