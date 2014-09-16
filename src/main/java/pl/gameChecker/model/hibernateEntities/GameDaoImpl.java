@@ -273,4 +273,15 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
             return null;
     }
 
+    @Override
+    @Transactional
+    public void updateGamePopularity(Game game) {
+        int totalMembersCount = ((Long)getSessionFactory().getCurrentSession().createQuery("select count(*) from MEMBERS").uniqueResult()).intValue();
+        int membersWithGameCount = ((Long)getSessionFactory().getCurrentSession().createQuery("select count(*) from GAMES_LIBRARIES where GAMES_GAME_ID = '" + game.getId() + "'").uniqueResult()).intValue();
+        
+        int result = 100 * membersWithGameCount / totalMembersCount;
+        game.setPopularity(result);
+        getHibernateTemplate().update(game);
+    }
+
 }
