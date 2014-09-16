@@ -22,6 +22,7 @@ import pl.gameChecker.model.hibernateEntities.MembersCPUDao;
 import pl.gameChecker.model.hibernateEntities.MembersGPUDao;
 import pl.gameChecker.model.hibernateEntities.MembersPC;
 import pl.gameChecker.model.hibernateEntities.MembersPCDao;
+import pl.gameChecker.model.hibernateEntities.RoleDao;
 
 /**
  *
@@ -346,6 +347,8 @@ public class LoginController {
         model.addAttribute("usersLibrary", user);
         
         MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        Member memberLogged = memberDao.getByName(request.getSession().getAttribute("loggedUser").toString());
+        model.addAttribute("loggedRole", memberLogged.getRole().getName());
         Member member = memberDao.getByName(user);
         GameDao gameDao = CONTEXT.getBean("game", GameDao.class);
         model.addAttribute("availableGames", gameDao.getList());
@@ -428,6 +431,25 @@ public class LoginController {
         memberDao.update(member);
         return "redirect:adminPanel";
     }
+    
+    @RequestMapping(value="deleteGame", method = RequestMethod.POST)
+    public String deleteGame(@RequestParam("games") String game) {
+        GameDao gameDao = CONTEXT.getBean("game", GameDao.class);
+        gameDao.delete(gameDao.getByName(game));
+        return "redirect:adminPanel";
+    }
+    
+    @RequestMapping(value="setRole", method = RequestMethod.POST)
+    public String setRole(@RequestParam("users") String user,
+                            @RequestParam("roles") String roleName) {
+        
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        RoleDao roleDao = CONTEXT.getBean("role", RoleDao.class);
+        Member member =  memberDao.getByName(user);
+        member.setRole(roleDao.getByName(roleName));
+        memberDao.update(member);
+        return "redirect:adminPanel";
+    }
   
     @RequestMapping("adminPanel")
     public String displayAdminPanel(ModelMap model) {
@@ -436,6 +458,8 @@ public class LoginController {
         GameDao gameDao = CONTEXT.getBean("game", GameDao.class);
         model.addAttribute("members", memberDao.getList());
         model.addAttribute("games", gameDao.getList());
+        RoleDao roleDao = CONTEXT.getBean("role", RoleDao.class);
+        model.addAttribute("roles", roleDao.getList());
         return "adminPanel";
     }
 }

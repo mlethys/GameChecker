@@ -73,6 +73,28 @@
                         </select>
                         <input type="submit" value="Delete avatar"/>
                     </form>
+                     <form method="POST" action="setRole">
+                        <select type="text" name="users">
+                            <c:forEach items="${members}" varStatus="i">
+                                <option>${members[i.index].name}</option>
+                            </c:forEach>
+                        </select>
+                        <select type="text" name="roles">
+                            <c:forEach items="${roles}" varStatus="i">
+                                <option>${roles[i.index].name}</option>
+                            </c:forEach>
+                        </select>
+                        <input type="submit" value="Set role"/>
+                     </form>
+                    <br/><br/>
+                    <form method="POST" action="deleteGame">
+                        <select type="text" name="games">
+                            <c:forEach items="${games}" varStatus="i">
+                                <option>${games[i.index].name}</option>
+                            </c:forEach>
+                        </select>
+                        <input type="submit" value="Delete game"/>
+                    </form>
                 </div>
                 <div id="addsContainer" class="mainBody">
                     <img src="<c:url value="/resources/images/sampleAdd.jpg"/>" alt="add" class="add"/>
