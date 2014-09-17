@@ -17,6 +17,7 @@ public interface GamesLibrariesDao {
     public List<GamesLibraries> getList();
     public GamesLibraries getById(int id);
     public List<GamesLibraries> getGamesLibrariesByLibrary(Library library);
+    public List<GamesLibraries> getGamesLibrariesByGame(Game games);
     public void create(GamesLibraries gamesLibraries);
     public void update(GamesLibraries gamesLibraries);
     public void delete(GamesLibraries gamesLibraries);

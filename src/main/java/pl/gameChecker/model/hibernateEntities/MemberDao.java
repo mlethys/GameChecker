@@ -22,9 +22,9 @@ public interface MemberDao {
     public void update(Member member);
     public void delete(Member member);
     public void delete(Member member, List<SqfaAnswer> sqfaAnswersFromMember, List<SqfaQuestion> sqfaQuestionsFromMember,
-        List<SqfaQuestionComment> sqfaQuestionCommentsFromMember, List<SqfaAnswerComment> sqfaAnswerCommentsFromMember);
+        List<SqfaQuestionComment> sqfaQuestionCommentsFromMember, List<SqfaAnswerComment> sqfaAnswerCommentsFromMember,
+        List<MembersRatesGames> membersRatesGamesFromMember);
     public boolean isMemberLoginMatchPassword(String login, String password);
     public void updateMemberProfile(Member member, String name, String password, String mail, int birthDay, int birthMonth, int birthYear);
-    public void deleteMemberHelper(Member member);
     public boolean exists(Member member);
 }

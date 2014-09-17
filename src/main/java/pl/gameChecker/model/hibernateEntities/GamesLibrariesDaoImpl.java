@@ -82,4 +82,13 @@ public class GamesLibrariesDaoImpl extends HibernateDaoSupport implements GamesL
         else return false;
     }
 
+    @Override
+    public List<GamesLibraries> getGamesLibrariesByGame(Game game) {
+        List<GamesLibraries> gamesLibraries = (List<GamesLibraries>) getHibernateTemplate().findByCriteria(
+        DetachedCriteria.forClass(GamesLibraries.class)
+        .add(Restrictions.eq("game", game)));
+
+        return gamesLibraries;
+    }
+
 }

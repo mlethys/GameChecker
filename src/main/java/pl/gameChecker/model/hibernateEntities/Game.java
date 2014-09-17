@@ -53,14 +53,14 @@ public class Game implements Serializable {
     @Column(name = "GAME_POPULARITY", nullable = false, length = 3)
     protected int popularity;
     
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL)
     protected List<GamesLibraries> gamesLibraries;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "GAMETYPES_GAMETYPE_ID", nullable = false)
     protected Gametype gametype;
     
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL)
     protected List<MembersRatesGames> membersRatesGames;
 
     public Game() {}

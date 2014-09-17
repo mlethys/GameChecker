@@ -7,12 +7,12 @@ package pl.gameChecker.model.hibernateEntities;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 import javax.persistence.*;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.hibernate.annotations.Cascade;
 
 /**
  *

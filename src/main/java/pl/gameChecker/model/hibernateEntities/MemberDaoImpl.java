@@ -102,7 +102,8 @@ public class MemberDaoImpl extends HibernateDaoSupport implements MemberDao {
     @Override
     @Transactional
     public void delete(Member member, List<SqfaAnswer> sqfaAnswersFromMember, List<SqfaQuestion> sqfaQuestionsFromMember,
-        List<SqfaQuestionComment> sqfaQuestionCommentsFromMember, List<SqfaAnswerComment> sqfaAnswerCommentsFromMember) {
+        List<SqfaQuestionComment> sqfaQuestionCommentsFromMember, List<SqfaAnswerComment> sqfaAnswerCommentsFromMember,
+        List<MembersRatesGames> membersRatesGamesFromMember) {
         
         for(SqfaAnswer answer : sqfaAnswersFromMember) {
             answer.setMember(null);
@@ -122,6 +123,11 @@ public class MemberDaoImpl extends HibernateDaoSupport implements MemberDao {
         for(SqfaAnswerComment answerComment : sqfaAnswerCommentsFromMember) {
             answerComment.setMember(null);
             getHibernateTemplate().update(answerComment);
+        }
+        
+        for(MembersRatesGames membersRatesGames : membersRatesGamesFromMember) {
+            membersRatesGames.setMember(null);
+            getHibernateTemplate().update(membersRatesGames);
         }
         
         getHibernateTemplate().delete(member);
@@ -170,45 +176,6 @@ public class MemberDaoImpl extends HibernateDaoSupport implements MemberDao {
     @Transactional
     public void delete(Member member) {
         getHibernateTemplate().delete(member);
-    }
-    
-    @Override
-    @Transactional
-    public void deleteMemberHelper(Member member){
-        List<SqfaAnswer> sqfaAnswers = (List<SqfaAnswer>) getHibernateTemplate().findByCriteria(
-        DetachedCriteria.forClass(SqfaAnswer.class)
-        .add(Restrictions.eq("member", member)));
-        
-        for(SqfaAnswer sa : sqfaAnswers){
-            sa.setMember(null);
-            getHibernateTemplate().update(sa);
-        }
-        
-        List<SqfaQuestion> sqfaQuestions = (List<SqfaQuestion>) getHibernateTemplate().findByCriteria(
-        DetachedCriteria.forClass(SqfaQuestion.class)
-        .add(Restrictions.eq("member", member)));
-        
-        for(SqfaQuestion sq : sqfaQuestions){
-            sq.setMember(null);
-            getHibernateTemplate().update(sq);
-        }
-        
-        List<SqfaAnswerComment> sqfaAnswerComments = (List<SqfaAnswerComment>) getHibernateTemplate().findByCriteria(
-        DetachedCriteria.forClass(SqfaAnswerComment.class)
-        .add(Restrictions.eq("member", member)));
-        
-        for(SqfaAnswerComment sac : sqfaAnswerComments){
-            sac.setMember(null);
-            getHibernateTemplate().update(sac);
-        }
-        
-        List<SqfaQuestionComment> sqfaQuestionComments = (List<SqfaQuestionComment>) getHibernateTemplate().findByCriteria(
-        DetachedCriteria.forClass(SqfaQuestionComment.class)
-        .add(Restrictions.eq("member", member)));
-        
-        for(SqfaQuestionComment sqc : sqfaQuestionComments){
-            sqc.setMember(null);
-            getHibernateTemplate().update(sqc);
-        }
+        getHibernateTemplate().delete(member.getLibrary());
     }
 }

@@ -25,6 +25,7 @@ import pl.gameChecker.model.hibernateEntities.GametypeDao;
 import pl.gameChecker.model.hibernateEntities.LibraryDao;
 import pl.gameChecker.model.hibernateEntities.Member;
 import pl.gameChecker.model.hibernateEntities.MemberDao;
+import pl.gameChecker.model.hibernateEntities.MembersRatesGamesDao;
 import pl.gameChecker.model.hibernateEntities.Role;
 import pl.gameChecker.model.hibernateEntities.RoleDao;
 import pl.gameChecker.model.hibernateEntities.SqfaAnswer;
@@ -237,8 +238,16 @@ public class TempDBMain {
         for(Game game : gameDao.getByNameAndMember("je", memberDao.getById(1))){
             System.out.println("getByNameAndMember: " + game.getName());
         }
-        
+
         gameDao.rateGame(memberDao.getById(1), gameDao.getById(2), 4);
-        
+        gameDao.rateGame(memberDao.getById(2), gameDao.getById(1), 5);
+
+        MembersRatesGamesDao membersRatesGamesDao = context.getBean("membersRatesGames", MembersRatesGamesDao.class);
+        Member deleteMember = memberDao.getByName("bbZ");
+        memberDao.delete(deleteMember, sqfaAnswerDao.getAllAnswersFromMember(deleteMember), sqfaQuestionDao.getAllQuestionsFromMember(deleteMember), 
+                sqfaQuestionCommentDao.getAllQuestionCommentsFromMember(deleteMember), sqfaAnswerCommentDao.getAllAnswerCommentsFromMember(deleteMember),
+                membersRatesGamesDao.getMembersRatesGamesByMember(deleteMember));
+
+        gameDao.delete(gameDao.getById(1));
     }
 }
