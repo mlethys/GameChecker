@@ -35,11 +35,11 @@ public class MembersPC implements Serializable {
     @JoinColumn(name = "MEMBERS_MEMBER_ID", nullable = false)
     protected Member member;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "MEMBERS_CPUS_ID", nullable = true)
     protected MembersCPU membersCPU;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "MEMBERS_GPUS_ID", nullable = true)
     protected MembersGPU membersGPU;
 

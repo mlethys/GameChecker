@@ -33,7 +33,7 @@ public class MembersCPU implements Serializable {
     @Column(name = "MEMBERS_CPU_RELEASE_DATE", nullable = false)
     protected Date releaseDate;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "COMPANIES_COMPANY_ID", nullable = false)
     protected Company company;
     

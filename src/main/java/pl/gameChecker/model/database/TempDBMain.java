@@ -25,6 +25,12 @@ import pl.gameChecker.model.hibernateEntities.GametypeDao;
 import pl.gameChecker.model.hibernateEntities.LibraryDao;
 import pl.gameChecker.model.hibernateEntities.Member;
 import pl.gameChecker.model.hibernateEntities.MemberDao;
+import pl.gameChecker.model.hibernateEntities.MembersCPU;
+import pl.gameChecker.model.hibernateEntities.MembersCPUDao;
+import pl.gameChecker.model.hibernateEntities.MembersGPU;
+import pl.gameChecker.model.hibernateEntities.MembersGPUDao;
+import pl.gameChecker.model.hibernateEntities.MembersPC;
+import pl.gameChecker.model.hibernateEntities.MembersPCDao;
 import pl.gameChecker.model.hibernateEntities.MembersRatesGamesDao;
 import pl.gameChecker.model.hibernateEntities.Role;
 import pl.gameChecker.model.hibernateEntities.RoleDao;
@@ -48,12 +54,56 @@ public class TempDBMain {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         
-        //<editor-fold defaultstate="collapsed" desc="Company Test Methods. Click on the + sign on the left to edit the code.">
+        //<editor-fold defaultstate="collapsed" desc="Company and hardware additions. Click on the + sign on the left to edit the code.">
         CompanyDao companyDao = context.getBean("company", CompanyDao.class);
         companyDao.create(new Company("GeForce"));
         companyDao.create(new Company("Radeon"));
         companyDao.create(new Company("Intel"));
         companyDao.create(new Company("AMD"));
+        
+        MembersCPUDao membersCPUDao = context.getBean("membersCPU", MembersCPUDao.class);
+        MembersGPUDao membersGPUDao = context.getBean("membersGPU", MembersGPUDao.class);
+        
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        calendar.clear();
+        calendar.set(2009, 4, 26);
+        long gpuDate = calendar.getTimeInMillis();
+        membersGPUDao.create(new MembersGPU("GTX460", new Date(gpuDate), 1024, companyDao.getById(1))); 
+        
+        calendar.clear();
+        calendar.set(2002, 1, 1);
+        gpuDate = calendar.getTimeInMillis();
+        membersGPUDao.create(new MembersGPU("GeForce4 Ti", new Date(gpuDate), 128, companyDao.getById(1)));
+        
+        calendar.clear();
+        calendar.set(2005, 9, 5);
+        gpuDate = calendar.getTimeInMillis();
+        membersGPUDao.create(new MembersGPU("X1600", new Date(gpuDate), 512, companyDao.getById(2)));
+        
+        calendar.clear();
+        calendar.set(2001, 1, 1);
+        gpuDate = calendar.getTimeInMillis();
+        membersGPUDao.create(new MembersGPU("R100", new Date(gpuDate), 64, companyDao.getById(2)));
+        
+        calendar.clear();
+        calendar.set(2007, 1, 1);
+        long cpuDate = calendar.getTimeInMillis();
+        membersCPUDao.create(new MembersCPU("Athlon II x4 640", new Date(cpuDate), companyDao.getById(4)));
+        
+        calendar.clear();
+        calendar.set(2008, 1, 1);
+        cpuDate = calendar.getTimeInMillis();
+        membersCPUDao.create(new MembersCPU("Phenom II x4 965", new Date(cpuDate), companyDao.getById(4)));
+        
+        calendar.clear();
+        calendar.set(2006, 1, 1);
+        cpuDate = calendar.getTimeInMillis();
+        membersCPUDao.create(new MembersCPU("Celeron Cedar Mill", new Date(cpuDate), companyDao.getById(3)));
+        
+        calendar.clear();
+        calendar.set(2009, 1, 1);
+        cpuDate = calendar.getTimeInMillis();
+        membersCPUDao.create(new MembersCPU("Core i5-750", new Date(cpuDate), companyDao.getById(3)));
         //</editor-fold>
         
         //<editor-fold defaultstate="collapsed" desc="Gametype additions. Click on the + sign on the left to edit the code."> 
@@ -88,10 +138,14 @@ public class TempDBMain {
         
         //<editor-fold defaultstate="collapsed" desc="Games additions. Click on the + sign on the left to edit the code."> 
         GameDao gameDao = context.getBean("game", GameDao.class);
-        gameDao.create(new Game("Jedi Academy", true, true, false, 5, 4, 2005, "Badrdzo dobra giereczka starwarsowa" , gametypeDao.getByName("Action")));
-        gameDao.create(new Game("Nascar Racing", true, true, false, 4, 2, 1995, "Bardzo szybkie wyscigi, takie gta ale bez wychodzenia z auta", gametypeDao.getByName("Racing")));
-        gameDao.create(new Game("Mario", true, false, true, 4, 2, 2000, "Klasyka gatunku pierwsza platformowka jaka powstala - prekursor gatunku", gametypeDao.getByName("Platform")));
-        gameDao.create(new Game("Tekken", true, true, true, 4, 2, 2000, "Bijatyka, takie gta bez aut i z biciem tylko jednego chlopka", gametypeDao.getByName("Arcade")));
+        gameDao.create(new Game("Jedi Academy", true, true, false, 5, 4, 2005, 
+                "Badrdzo dobra giereczka starwarsowa" , 2003, 2003, 512, 2005, 2005, 1024, gametypeDao.getByName("Action")));
+        gameDao.create(new Game("Nascar Racing", true, true, false, 4, 2, 2005, 
+                "Bardzo szybkie wyscigi, takie gta ale bez wychodzenia z auta", 2003, 2002, 256, 2006, 2006, 512, gametypeDao.getByName("Racing")));
+        gameDao.create(new Game("Mario", true, false, true, 4, 2, 2000, 
+                "Klasyka gatunku pierwsza platformowka jaka powstala - prekursor gatunku", 1994, 1994, 256, 1998, 1996, 512, gametypeDao.getByName("Platform")));
+        gameDao.create(new Game("Tekken", true, true, true, 4, 2, 2010, 
+                "Bijatyka, takie gta bez aut i z biciem tylko jednego chlopka", 2007, 2008, 1024, 2010, 2010, 2048, gametypeDao.getByName("Arcade")));
         //</editor-fold>
         
         //<editor-fold defaultstate="collapsed" desc="Roles additions. Click on the + sign on the left to edit the code."> 
@@ -117,6 +171,12 @@ public class TempDBMain {
         memberDao.create(bbZ);
         memberDao.create(dspoko);
         memberDao.create(testUser);
+        
+        MembersPCDao membersPCDao = context.getBean("membersPC", MembersPCDao.class);
+        MembersPC bbZPC = new MembersPC(bbZ, "PC", 4096, membersCPUDao.getByName("Athlon II x4 640"), membersGPUDao.getByName("gtx460"));
+        MembersPC dspokoPC = new MembersPC(dspoko, "Laptop", 1024, membersCPUDao.getById(4), membersGPUDao.getByName("X1600"));
+        membersPCDao.create(bbZPC);
+        membersPCDao.create(dspokoPC);
         //</editor-fold>
         
         //<editor-fold defaultstate="collapsed" desc="Add games to library. Click on the + sign on the left to edit the code."> 
@@ -158,7 +218,6 @@ public class TempDBMain {
         sqfaAnswerDao.incrementSqfaAnswerPoints(sa2);
         sqfaAnswerDao.incrementSqfaAnswerPoints(sa2);
                 
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         long secondsTillNow = calendar.getTimeInMillis();
         Date dateTo = new Date(secondsTillNow);
         calendar.clear();
@@ -243,11 +302,20 @@ public class TempDBMain {
         gameDao.rateGame(memberDao.getById(2), gameDao.getById(1), 5);
 
         MembersRatesGamesDao membersRatesGamesDao = context.getBean("membersRatesGames", MembersRatesGamesDao.class);
-        Member deleteMember = memberDao.getByName("bbZ");
-        memberDao.delete(deleteMember, sqfaAnswerDao.getAllAnswersFromMember(deleteMember), sqfaQuestionDao.getAllQuestionsFromMember(deleteMember), 
-                sqfaQuestionCommentDao.getAllQuestionCommentsFromMember(deleteMember), sqfaAnswerCommentDao.getAllAnswerCommentsFromMember(deleteMember),
-                membersRatesGamesDao.getMembersRatesGamesByMember(deleteMember));
+//        Member deleteMember = memberDao.getByName("bbZ");
+//        memberDao.delete(deleteMember, sqfaAnswerDao.getAllAnswersFromMember(deleteMember), sqfaQuestionDao.getAllQuestionsFromMember(deleteMember), 
+//                sqfaQuestionCommentDao.getAllQuestionCommentsFromMember(deleteMember), sqfaAnswerCommentDao.getAllAnswerCommentsFromMember(deleteMember),
+//                membersRatesGamesDao.getMembersRatesGamesByMember(deleteMember));
 
-        gameDao.delete(gameDao.getById(1));
+//        gameDao.delete(gameDao.getById(1));
+        
+        System.out.println("bbZPC vs Jedi Academy score: " + gameDao.getGameVsPCResult(gameDao.getById(1), bbZPC));
+        System.out.println("dspokoPC vs Jedi Academy score: " + gameDao.getGameVsPCResult(gameDao.getById(1), dspokoPC));
+        System.out.println("bbZPC vs Nascar score: " + gameDao.getGameVsPCResult(gameDao.getById(2), bbZPC));
+        System.out.println("dspokoPC vs Nascar score: " + gameDao.getGameVsPCResult(gameDao.getById(2), dspokoPC));
+        System.out.println("bbZPC vs Mario score: " + gameDao.getGameVsPCResult(gameDao.getById(3), bbZPC));
+        System.out.println("dspokoPC vs Mario score: " + gameDao.getGameVsPCResult(gameDao.getById(3), dspokoPC));
+        System.out.println("bbZPC vs Tekken score: " + gameDao.getGameVsPCResult(gameDao.getById(4), bbZPC));
+        System.out.println("dspokoPC vs Tekken score: " + gameDao.getGameVsPCResult(gameDao.getById(4), dspokoPC));
     }
 }

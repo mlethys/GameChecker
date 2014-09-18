@@ -29,4 +29,5 @@ public interface GameDao {
     public void updateGameInfo(Game game, String name, boolean isSingleplayer, boolean isMultiplayer, boolean isFreeToPlay, int releaseDay, int releaseMonth, int releaseYear, String gametypeName);
     public List<Game> getGamesFromMember(Member member);
     public void updateGamePopularity(Game game);
+    public int getGameVsPCResult(Game game, MembersPC membersPC);
 }

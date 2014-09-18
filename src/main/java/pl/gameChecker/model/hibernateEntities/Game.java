@@ -50,6 +50,24 @@ public class Game implements Serializable {
     @Column(name = "GAME_DESCRIPTION")
     protected String description;
     
+    @Column(name = "GAME_MINIMAL_CPU_RELEASE_YEAR")
+    protected int minimalCPUReleaseYear;
+    
+    @Column(name = "GAME_MINIMAL_GPU_RELEASE_YEAR")
+    protected int minimalGPUReleaseYear;
+    
+    @Column(name = "GAME_MINIMAL_RAM")
+    protected int minimalRam;
+    
+    @Column(name = "GAME_RECOMMENDED_CPU_RELEASE_YEAR")
+    protected int recommendedCPUReleaseYear;
+    
+    @Column(name = "GAME_RECOMMENDED_GPU_RELEASE_YEAR")
+    protected int recommendedGPUReleaseYear;
+    
+    @Column(name = "GAME_RECOMMENDED_RAM")
+    protected int recommendedRam;
+    
     @Column(name = "GAME_POPULARITY", nullable = false, length = 3)
     protected int popularity;
     
@@ -126,6 +144,60 @@ public class Game implements Serializable {
         this.description = description;
         this.popularity = 0;
     }
+
+    public Game(String name, boolean singleplayer, boolean multiplayer, boolean freeToPlay, 
+            int releaseDay, int releaseMonth, int releaseYear, String description, 
+            int minimalCPUReleaseYear, int minimalGPUReleaseYear, int minimalRam, 
+            int recommendedCPUReleaseYear, int recommendedGPUReleaseYear, int recommendedRam, Gametype gametype) {
+        
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        calendar.clear();
+        calendar.set(releaseYear, releaseMonth - 1, releaseDay);
+        long secondsSinceEpoch = calendar.getTimeInMillis();
+        
+        this.name = name;
+        this.releaseDate = new Date(secondsSinceEpoch);
+        this.singleplayer = singleplayer;
+        this.multiplayer = multiplayer;
+        this.freeToPlay = freeToPlay;
+        this.description = description;
+        this.minimalCPUReleaseYear = minimalCPUReleaseYear;
+        this.minimalGPUReleaseYear = minimalGPUReleaseYear;
+        this.minimalRam = minimalRam;
+        this.recommendedCPUReleaseYear = recommendedCPUReleaseYear;
+        this.recommendedGPUReleaseYear = recommendedGPUReleaseYear;
+        this.recommendedRam = recommendedRam;
+        this.gametype = gametype;
+        
+        this.stars = 0;
+        this.rates = 0;
+        this.popularity = 0;
+    }
+    
+    public Game(String name, Date releaseDate, boolean singleplayer, boolean multiplayer, boolean freeToPlay, String description, 
+            int minimalCPUReleaseYear, int minimalGPUReleaseYear, int minimalRam, 
+            int recommendedCPUReleaseYear, int recommendedGPUReleaseYear, int recommendedRam, Gametype gametype) {
+        
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.singleplayer = singleplayer;
+        this.multiplayer = multiplayer;
+        this.freeToPlay = freeToPlay;
+        this.description = description;
+        this.minimalCPUReleaseYear = minimalCPUReleaseYear;
+        this.minimalGPUReleaseYear = minimalGPUReleaseYear;
+        this.minimalRam = minimalRam;
+        this.recommendedCPUReleaseYear = recommendedCPUReleaseYear;
+        this.recommendedGPUReleaseYear = recommendedGPUReleaseYear;
+        this.recommendedRam = recommendedRam;
+        this.gametype = gametype;
+        
+        this.stars = 0;
+        this.rates = 0;
+        this.popularity = 0;
+    }
+    
+    
     
     public int getId() {
         return id;
@@ -230,4 +302,54 @@ public class Game implements Serializable {
     public void setMembersRatesGames(List<MembersRatesGames> membersRatesGames) {
         this.membersRatesGames = membersRatesGames;
     }
+
+    public int getMinimalCPUReleaseYear() {
+        return minimalCPUReleaseYear;
+    }
+
+    public void setMinimalCPUReleaseYear(int minimalCPUReleaseYear) {
+        this.minimalCPUReleaseYear = minimalCPUReleaseYear;
+    }
+
+    public int getMinimalGPUReleaseYear() {
+        return minimalGPUReleaseYear;
+    }
+
+    public void setMinimalGPUReleaseYear(int minimalGPUReleaseYear) {
+        this.minimalGPUReleaseYear = minimalGPUReleaseYear;
+    }
+
+    public int getMinimalRam() {
+        return minimalRam;
+    }
+
+    public void setMinimalRam(int minimalRam) {
+        this.minimalRam = minimalRam;
+    }
+
+    public int getRecommendedCPUReleaseYear() {
+        return recommendedCPUReleaseYear;
+    }
+
+    public void setRecommendedCPUReleaseYear(int recommendedCPUReleaseYear) {
+        this.recommendedCPUReleaseYear = recommendedCPUReleaseYear;
+    }
+
+    public int getRecommendedGPUReleaseYear() {
+        return recommendedGPUReleaseYear;
+    }
+
+    public void setRecommendedGPUReleaseYear(int recommendedGPUReleaseYear) {
+        this.recommendedGPUReleaseYear = recommendedGPUReleaseYear;
+    }
+
+    public int getRecommendedRam() {
+        return recommendedRam;
+    }
+
+    public void setRecommendedRam(int recommendedRam) {
+        this.recommendedRam = recommendedRam;
+    }
+    
+    
 }

@@ -7,6 +7,7 @@
 package pl.gameChecker.model.hibernateEntities;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -323,6 +324,63 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
             return games;
         else
             return null;
+    }
+
+    @Override
+    public int getGameVsPCResult(Game game, MembersPC membersPC) {
+        int procentPoints = 0;
+        
+        SimpleDateFormat df = new SimpleDateFormat("yyyy");
+        int cpuReleaseYear = Integer.valueOf(df.format(membersPC.getMembersCPU().getReleaseDate()));
+        int gpuReleaseYear = Integer.valueOf(df.format(membersPC.getMembersGPU().getReleaseDate()));
+        
+        if(game.getMinimalCPUReleaseYear() <= cpuReleaseYear) {
+            procentPoints += 10;
+        } else {
+            return procentPoints = 0;
+        }
+        
+        if(game.getMinimalGPUReleaseYear() <= gpuReleaseYear) {
+            procentPoints += 10;
+        } else {
+            return procentPoints = 0;
+        }
+        
+        if(game.getMinimalRam() <= membersPC.getMemory()) {
+            procentPoints += 10;
+        } else {
+            return procentPoints = 0;
+        }
+        
+        if(game.getRecommendedCPUReleaseYear() <= cpuReleaseYear) {
+            procentPoints += 15;
+        }
+        
+        if(game.getRecommendedGPUReleaseYear() <= gpuReleaseYear) {
+            procentPoints += 15;
+        }
+        
+        if(game.getRecommendedRam() <= membersPC.getMemory()) {
+            procentPoints += 15;
+        }
+        
+        if((game.getRecommendedCPUReleaseYear() + 2) <= cpuReleaseYear) {
+            procentPoints += 10;
+        } else if ((game.getRecommendedCPUReleaseYear() + 1) <= cpuReleaseYear) {
+            procentPoints += 5;
+        }
+        
+        if((game.getRecommendedGPUReleaseYear() + 2) <= gpuReleaseYear) {
+            procentPoints += 10;
+        } else if ((game.getRecommendedGPUReleaseYear() + 1) <= gpuReleaseYear) {
+            procentPoints += 5;
+        }
+        
+        if((game.getRecommendedRam() + 2048) <= membersPC.getMemory()) {
+            procentPoints += 5;
+        }
+        
+        return procentPoints;
     }
 
 }
