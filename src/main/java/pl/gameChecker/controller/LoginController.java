@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.gameChecker.model.hibernateEntities.CompanyDao;
+import pl.gameChecker.model.hibernateEntities.Game;
 import pl.gameChecker.model.hibernateEntities.GameDao;
 import pl.gameChecker.model.hibernateEntities.GamesLibrariesDao;
 import pl.gameChecker.model.hibernateEntities.Gametype;
@@ -22,7 +23,9 @@ import pl.gameChecker.model.hibernateEntities.MembersCPUDao;
 import pl.gameChecker.model.hibernateEntities.MembersGPUDao;
 import pl.gameChecker.model.hibernateEntities.MembersPC;
 import pl.gameChecker.model.hibernateEntities.MembersPCDao;
+import pl.gameChecker.model.hibernateEntities.MembersRatesGamesDao;
 import pl.gameChecker.model.hibernateEntities.RoleDao;
+import pl.gameChecker.model.hibernateEntities.SqfaQuestionDao;
 
 /**
  *
@@ -84,11 +87,16 @@ public class LoginController {
     }
     @RequestMapping(value = "rate", method = RequestMethod.POST)
     public String rateGame(@RequestParam("rate[]") String[] rateRadios, 
-                            @RequestParam("game") String gameToRate) {
+                            @RequestParam("game") String gameToRate, 
+                            HttpServletRequest request) {
         
         GameDao games = CONTEXT.getBean("game", GameDao.class);
-        if(rateRadios.length > 0) {
-            games.rateGame(games.getByName(gameToRate), Integer.parseInt(rateRadios[0]));
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        MembersRatesGamesDao membersRatesGamesDao = CONTEXT.getBean("membersRatesGames", MembersRatesGamesDao.class);
+        Member member = memberDao.getByName(request.getSession().getAttribute("loggedUser").toString());
+        Game game = games.getByName(gameToRate);
+        if(rateRadios.length > 0 && !membersRatesGamesDao.isMemberRatedGame(member, game)) {
+            games.rateGame(member, game, Integer.parseInt(rateRadios[0]));
         }
         
         return "redirect:encyclopedia.html";
@@ -96,8 +104,15 @@ public class LoginController {
     
     @RequestMapping("games")
     public String byGame(@RequestParam("game") String game, 
-                                        ModelMap model) {
+                                        ModelMap model, HttpServletRequest request) {
         GameDao games = CONTEXT.getBean("game", GameDao.class);
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        Member member = memberDao.getByName(request.getSession().getAttribute("loggedUser").toString());
+        MembersPCDao memberPCDao = CONTEXT.getBean("membersPC", MembersPCDao.class);
+        if(!memberPCDao.getAllPCsOfMember(member).isEmpty()) {
+            MembersPC membersPC = memberPCDao.getAllPCsOfMember(member).get(0);
+            model.addAttribute("score", games.getGameVsPCResult(games.getByName(game), membersPC));
+        }
         model.addAttribute("gameTitle", games.getByName(game).getName());
         model.addAttribute("gameDesc", games.getByName(game).getDescription());
         model.addAttribute("stars", games.getByName(game).getStars());
@@ -462,4 +477,27 @@ public class LoginController {
         model.addAttribute("roles", roleDao.getList());
         return "adminPanel";
     }
+    
+    @RequestMapping("sqfa.html")
+    public String displaySqfa(HttpServletRequest request, ModelMap model) {
+        if(request.getSession().getAttribute("loggedUser") == null) {
+            return "login";
+        }
+        SqfaQuestionDao sqfaQuestionDao = CONTEXT.getBean("sqfaQuestion", SqfaQuestionDao.class);
+        model.addAttribute("questions", sqfaQuestionDao.getList());
+        return "sqfa";
+    }
+    
+//    @RequestMapping("questions")
+//    public String displayQuestion(@RequestParam("question") String questionTitle, 
+//                                    ModelMap model) {
+//        
+//        SqfaQuestionDao sqfaQuestionDao = CONTEXT.getBean("sqfaQuestion", SqfaQuestionDao.class);
+//        SqfaQuestion sqfaQuestion = sqfaQuestionDao.getByTitle(questionTitle);
+//        Member author = sqfaQuestion.getMember();
+//        model.addAttribute("question", sqfaQuestion);
+//        model.addAttribute("author", author);
+//        
+//        return "question";
+//    }
 }

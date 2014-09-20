@@ -44,7 +44,7 @@ public class SqfaQuestion implements Serializable {
 
     @OneToMany(mappedBy = "sqfaQuestion", cascade = CascadeType.ALL)
     protected List<SqfaQuestionComment> sqfaQuestionComments;
-
+    
     public SqfaQuestion() {}
 
     public SqfaQuestion(Member member, String title, String content) { 
