@@ -51,10 +51,13 @@
             <div id="mainBody">
                 <div id="newsContainer" class="mainBody">
                     <h1 class="headline">Games</h1>
+                    <div class="checkGameForm">
+                        <p>You have ${score} points in this game</p>
+                    </div>
                     <div class="gameDetails"> 
                         <img src="<c:url value="resources/images/game_miniature_default.jpg"/>" align="left"/>
                         <h2>&#160;&#160;${gameTitle}</h2>
-                        <p>Current rating: ${stars}</p><br/>
+                        <p>&#160;&#160;Current rating: ${stars}</p><br/>
                         <p>&#160;&#160;${gameDesc}</p><br/><br/>
                     </div>
                 </div>

@@ -265,5 +265,42 @@ body {
 .ratingForm {
     margin-top: -35px;
 }
-
+.rectangle {
+    width: 75px;
+    height: 75px;
+    background-color: #77c4ff;
+    float: left;
+    margin: 5px;
+}
+.answersConst {
+    margin-top: -60px;
+    text-align: center;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.answersNumber {
+    margin-top: -2px;
+    text-align: center;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+}
+.question {
+    margin-top: 50px;
+    margin-left: 100px;
+}
+.question a {
+    color: #000000;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.checkGameForm {
+    float:right;
+    position: relative;
+    margin: 5px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+}
 //-------------------------------------------------------
