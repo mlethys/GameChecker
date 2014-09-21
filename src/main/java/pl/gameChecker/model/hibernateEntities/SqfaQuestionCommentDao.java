@@ -15,6 +15,7 @@ import java.util.List;
 public interface SqfaQuestionCommentDao {
     public List<SqfaQuestionComment> getList();
     public SqfaQuestionComment getById(int id);
+    public List<SqfaQuestionComment> getCommentsFromQuestion(SqfaQuestion sqfaQuestion);
     public void create(SqfaQuestionComment sqfaQuestionComment);
     public void update(SqfaQuestionComment sqfaQuestionComment);
     public void delete(SqfaQuestionComment sqfaQuestionComment);

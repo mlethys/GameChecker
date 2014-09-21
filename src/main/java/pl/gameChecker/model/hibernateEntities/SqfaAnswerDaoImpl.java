@@ -106,4 +106,14 @@ public class SqfaAnswerDaoImpl extends HibernateDaoSupport implements SqfaAnswer
         getHibernateTemplate().update(sqfaAnswer.getMember());
         getHibernateTemplate().update(sqfaAnswer);
     }
+
+    @Override
+    @Transactional
+    public List<SqfaAnswer> getAnswersFromQuestion(SqfaQuestion sqfaQuestion) {
+        List<SqfaAnswer> sqfaAnswers = (List<SqfaAnswer>) getHibernateTemplate().findByCriteria(
+        DetachedCriteria.forClass(SqfaAnswer.class)
+        .add(Restrictions.eq("sqfaQuestion", sqfaQuestion)));
+
+        return sqfaAnswers;
+    }
 }

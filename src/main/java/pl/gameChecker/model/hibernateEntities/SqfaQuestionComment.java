@@ -11,7 +11,6 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.TimeZone;
 import javax.persistence.*;
-import org.hibernate.annotations.Cascade;
 
 /**
  *

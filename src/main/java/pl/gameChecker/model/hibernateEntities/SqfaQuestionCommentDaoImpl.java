@@ -65,5 +65,15 @@ public class SqfaQuestionCommentDaoImpl extends HibernateDaoSupport implements S
 
         return sqfaQuestionComments;
     }
+
+    @Override
+    @Transactional
+    public List<SqfaQuestionComment> getCommentsFromQuestion(SqfaQuestion sqfaQuestion) {
+        List<SqfaQuestionComment> sqfaQuestionComments = (List<SqfaQuestionComment>) getHibernateTemplate().findByCriteria(
+        DetachedCriteria.forClass(SqfaQuestionComment.class)
+        .add(Restrictions.eq("sqfaQuestion", sqfaQuestion)));
+
+        return sqfaQuestionComments;
+    }
     
 }

@@ -78,6 +78,7 @@ public class SqfaQuestionDaoImpl extends HibernateDaoSupport implements SqfaQues
     }
 
     @Override
+    @Transactional
     public SqfaQuestion getByTitle(String title) {
         List<SqfaQuestion> sqfaQuestions = (List<SqfaQuestion>) getHibernateTemplate().findByCriteria(
         DetachedCriteria.forClass(SqfaQuestion.class)

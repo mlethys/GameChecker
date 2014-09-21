@@ -16,6 +16,7 @@ import java.util.List;
 public interface SqfaAnswerDao {
     public List<SqfaAnswer> getList();
     public SqfaAnswer getById(int id);
+    public List<SqfaAnswer> getAnswersFromQuestion(SqfaQuestion sqfaQuestion);
     public void create(SqfaAnswer sqfaAnswer);
     public void update(SqfaAnswer sqfaAnswer);
     public void delete(SqfaAnswer sqfaAnswer);
