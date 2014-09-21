@@ -32,8 +32,11 @@ public class SqfaQuestion implements Serializable {
     @Column(name = "SQFA_QUESTION_CONTENT", nullable = false)
     protected String content;
     
-    @Column(name = "SQFA_ANSWER_ADDITION_DATE", nullable = false)
+    @Column(name = "SQFA_QUESTION_ADDITION_DATE", nullable = false)
     protected Timestamp additionDate;
+    
+    @Column(name = "SQFA_QUESTION_ASNWERS_COUNT")
+    protected int answersCount;
 
     @ManyToOne
     @JoinColumn(name="MEMBERS_MEMBER_ID", nullable = true)
@@ -111,5 +114,13 @@ public class SqfaQuestion implements Serializable {
 
     public void setAdditionDate(Timestamp additionDate) {
         this.additionDate = additionDate;
+    }
+
+    public int getAnswersCount() {
+        return answersCount;
+    }
+
+    public void setAnswersCount(int answersCount) {
+        this.answersCount = answersCount;
     }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 public interface SqfaQuestionDao {
     public List<SqfaQuestion> getList();
     public SqfaQuestion getById(int id);
+    public SqfaQuestion getByTitle(String title);
     public List<SqfaQuestion> getWhereTitleLike(String title);
     public void create(SqfaQuestion sqfaQuestion);
     public void update(SqfaQuestion sqfaQuestion);

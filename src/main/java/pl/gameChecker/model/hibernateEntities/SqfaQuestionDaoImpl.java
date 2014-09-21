@@ -76,5 +76,15 @@ public class SqfaQuestionDaoImpl extends HibernateDaoSupport implements SqfaQues
 
         return sqfaQuestions;
     }
-    
+
+    @Override
+    public SqfaQuestion getByTitle(String title) {
+        List<SqfaQuestion> sqfaQuestions = (List<SqfaQuestion>) getHibernateTemplate().findByCriteria(
+        DetachedCriteria.forClass(SqfaQuestion.class)
+        .add(Restrictions.eq("title", title)));
+
+        if(sqfaQuestions.size() > 0){
+            return sqfaQuestions.get(0);
+        } else return null;
+    }
 }
