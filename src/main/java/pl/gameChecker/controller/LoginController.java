@@ -3,6 +3,7 @@ package pl.gameChecker.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,11 @@ import pl.gameChecker.model.hibernateEntities.MembersPC;
 import pl.gameChecker.model.hibernateEntities.MembersPCDao;
 import pl.gameChecker.model.hibernateEntities.MembersRatesGamesDao;
 import pl.gameChecker.model.hibernateEntities.RoleDao;
+import pl.gameChecker.model.hibernateEntities.SqfaAnswer;
+import pl.gameChecker.model.hibernateEntities.SqfaAnswerDao;
+import pl.gameChecker.model.hibernateEntities.SqfaQuestion;
+import pl.gameChecker.model.hibernateEntities.SqfaQuestionComment;
+import pl.gameChecker.model.hibernateEntities.SqfaQuestionCommentDao;
 import pl.gameChecker.model.hibernateEntities.SqfaQuestionDao;
 
 /**
@@ -484,20 +490,76 @@ public class LoginController {
             return "login";
         }
         SqfaQuestionDao sqfaQuestionDao = CONTEXT.getBean("sqfaQuestion", SqfaQuestionDao.class);
-        model.addAttribute("questions", sqfaQuestionDao.getList());
+        SqfaAnswerDao sqfaAnswerDao = CONTEXT.getBean("sqfaAnswer", SqfaAnswerDao.class);
+        List<SqfaQuestion> questions = sqfaQuestionDao.getList();
+        for(SqfaQuestion question : questions) {
+            System.out.println(sqfaAnswerDao.getAnswersFromQuestion(question).size());
+            question.setAnswersCount(sqfaAnswerDao.getAnswersFromQuestion(question).size());
+        }
+        model.addAttribute("questions", questions);
         return "sqfa";
     }
     
-//    @RequestMapping("questions")
-//    public String displayQuestion(@RequestParam("question") String questionTitle, 
-//                                    ModelMap model) {
-//        
-//        SqfaQuestionDao sqfaQuestionDao = CONTEXT.getBean("sqfaQuestion", SqfaQuestionDao.class);
-//        SqfaQuestion sqfaQuestion = sqfaQuestionDao.getByTitle(questionTitle);
-//        Member author = sqfaQuestion.getMember();
-//        model.addAttribute("question", sqfaQuestion);
-//        model.addAttribute("author", author);
-//        
-//        return "question";
-//    }
+    @RequestMapping(value = "searchSqfa", method = RequestMethod.POST)
+    public String searchSqfa(@RequestParam("questionTitle") String questionTitle, ModelMap model) {
+        
+        SqfaQuestionDao sqfaQuestionDao = CONTEXT.getBean("sqfaQuestion", SqfaQuestionDao.class);
+        SqfaAnswerDao sqfaAnswerDao = CONTEXT.getBean("sqfaAnswer", SqfaAnswerDao.class);
+        List<SqfaQuestion> questions = sqfaQuestionDao.getWhereTitleLike(questionTitle);
+        for(SqfaQuestion question : questions) {
+            question.setAnswersCount(sqfaAnswerDao.getAnswersFromQuestion(question).size());
+        }
+        model.addAttribute("questions", questions);
+        return "sqfa";
+    }
+    
+    @RequestMapping("questions")
+    public String displayQuestion(@RequestParam("question") String questionTitle, 
+                                    ModelMap model) {
+        
+        SqfaQuestionDao sqfaQuestionDao = CONTEXT.getBean("sqfaQuestion", SqfaQuestionDao.class);
+        SqfaAnswerDao sqfaAnswerDao = CONTEXT.getBean("sqfaAnswer", SqfaAnswerDao.class);
+        SqfaQuestion sqfaQuestion = sqfaQuestionDao.getByTitle(questionTitle);
+        SqfaQuestionCommentDao sqfaQuestionCommentDao = CONTEXT.getBean("sqfaQuestionComment", SqfaQuestionCommentDao.class);
+        Member author = sqfaQuestion.getMember();
+        model.addAttribute("question", sqfaQuestion);
+        model.addAttribute("author", author);
+        model.addAttribute("answers", sqfaAnswerDao.getAnswersFromQuestion(sqfaQuestion));
+        model.addAttribute("questionComments", sqfaQuestionCommentDao.getCommentsFromQuestion(sqfaQuestion));
+        return "question";
+    }
+    
+    @RequestMapping(value="addComment", method = RequestMethod.POST)
+    public String addComment(@RequestParam("question") String questionTitle,
+                                @RequestParam("comment") String comment, HttpServletRequest request) {
+        
+        if(comment == null || comment.isEmpty()) {
+            return "redirect:questions?question=" + questionTitle;
+        }
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        Member member = memberDao.getByName(request.getSession().getAttribute("loggedUser").toString());
+        SqfaQuestionDao sqfaQuestionDao = CONTEXT.getBean("sqfaQuestion", SqfaQuestionDao.class);
+        SqfaQuestion sqfaQuestion = sqfaQuestionDao.getByTitle(questionTitle);
+        SqfaQuestionCommentDao sqfaQuestionCommentDao = CONTEXT.getBean("sqfaQuestionComment", SqfaQuestionCommentDao.class);
+        SqfaQuestionComment questionComment = new SqfaQuestionComment(member, sqfaQuestion, comment);
+        sqfaQuestionCommentDao.create(questionComment);
+        return "redirect:questions?question=" + questionTitle;
+    }
+    
+    @RequestMapping(value="addAnswer", method = RequestMethod.POST)
+    public String addAnswer(@RequestParam("question") String questionTitle,
+                                @RequestParam("answer") String answer, HttpServletRequest request) {
+    
+        if(answer == null || answer.isEmpty()) {
+            return "redirect:questions?question=" + questionTitle;
+        }
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        Member member = memberDao.getByName(request.getSession().getAttribute("loggedUser").toString());
+        SqfaQuestionDao sqfaQuestionDao = CONTEXT.getBean("sqfaQuestion", SqfaQuestionDao.class);
+        SqfaQuestion sqfaQuestion = sqfaQuestionDao.getByTitle(questionTitle);
+        SqfaAnswerDao sqfaAnswerDao = CONTEXT.getBean("sqfaAnswer", SqfaAnswerDao.class);
+        SqfaAnswer questionAnswer = new SqfaAnswer(member, sqfaQuestion, answer);
+        sqfaAnswerDao.create(questionAnswer);
+        return "redirect:questions?question=" + questionTitle;
+    }
 }

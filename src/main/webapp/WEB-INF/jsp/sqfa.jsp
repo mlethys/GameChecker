@@ -50,14 +50,14 @@
                     <h1 id="gameLibraryHeadline">Short questions fast answers</h1>
                     <div id="searchPanel">
                         <form method="POST" action="searchSqfa">
-                            <input type="text" name="title"/>
+                            <input type="text" name="questionTitle"/>
                             <input class="formButton" type="submit" value="Search"/>
                         </form>
                     </div>
                     <c:forEach items="${questions}" varStatus="i">
                         <div class="question">
                             <div class="rectangle">
-                                <p class="answersNumber">2</p>
+                                <p class="answersNumber">${questions[i.index].answersCount}</p>
                                 <p class="answersConst">answers</p>
                             </div><br/>
                         <a href="<c:url value="questions?question=${questions[i.index].title}"/>">${questions[i.index].title}</a>

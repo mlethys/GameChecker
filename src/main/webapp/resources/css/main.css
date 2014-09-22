@@ -303,4 +303,49 @@ body {
     border-width: 1px;
     border-color: #000000;
 }
+.questionHeader {
+    float:left;
+    width: 150px;
+    height: 100px;
+    position: relative;
+    margin: 5px;
+    margin-left: 15px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+}
+.authorsPoints {
+    margin-top: -2px;
+    color: #000000;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.link {
+    margin-top: 5px;
+    margin-left: 5px;
+    color: #000000;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#line {
+    height: 1px;
+    width:100%;
+    background-color: #000000;
+    position: relative;
+    float:right;
+}
+.answer {
+    margin-left: 100px;
+}
+.authorLink {
+    text-decoration: none;
+    font-size: 15px;
+}
+.questionComment {
+    margin-left: 100px;
+}
+.date {
+    font-size: 10px;
+}
 //-------------------------------------------------------

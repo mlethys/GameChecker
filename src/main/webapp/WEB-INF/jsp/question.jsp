@@ -48,7 +48,40 @@
             <div id="mainBody">
                 <div id="newsContainer" class="mainBody">
                     <h1 id="gameLibraryHeadline">Short questions fast answers</h1>
-                    
+                    <div class="questionHeader">
+                        <img src="<c:url value="${author.avatarURL}"/>" width="50px" height="50px" align="left"/>
+                        <a class="link" href="<c:url value="profile?user=${author.name}"/>">${author.name}</a>
+                        <p class="authorsPoints">&#160;Points: ${author.points}</p><br/>
+                        <p class="authorsPoints">${question.additionDate}</p>
+                    </div>
+                    <div class="question">
+                        <h2>${question.title}</h2>
+                        <p>${question.content}</p>
+                        <div id="line"></div>
+                        <c:forEach items="${questionComments}" varStatus="i">
+                            <div class="questionComment">
+                                <p>${questionComments[i.index].content} ~<a class="authorLink" href="<c:url value="profile?user=${questionComments[i.index].member.name}"/>">${questionComments[i.index].member.name}</a></p>
+                                <p class="date">${questionComments[i.index].additionDate}</p>
+                            </div>
+                            <div id="line"></div>
+                        </c:forEach>
+                        <form method="POST" action="addComment?question=${question.title}">
+                            <textarea cols="40" rows="5" name="comment" maxlength="300"></textarea>
+                            <input class="formButton" type="submit" value="Send"/>
+                        </form>
+                    </div>
+                    <c:forEach items="${answers}" varStatus="i">
+                        <div class="answer">
+                            <h3>Answer</h3>
+                            <p>${answers[i.index].content} ~<a class="authorLink" href="<c:url value="profile?user=${answers[i.index].member.name}"/>">${answers[i.index].member.name}</a></p>
+                            <p class="date">${answers[i.index].additionDate}</p>
+                        </div>    
+                        <div id="line"></div>
+                    </c:forEach>
+                    <form method="POST" action="addAnswer?question=${question.title}">
+                        <textarea cols="40" rows="5" name="answer" maxlength="5000"></textarea>
+                        <input class="formButton" type="submit" value="Send"/>
+                    </form>
                 </div>
                 <div id="addsContainer" class="mainBody">
                     <img src="<c:url value="/resources/images/sampleAdd.jpg"/>" alt="add" class="add"/>
