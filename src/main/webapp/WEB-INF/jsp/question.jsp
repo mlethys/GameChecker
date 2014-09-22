@@ -72,6 +72,7 @@
                             <div id="line"></div>
                         </c:forEach>
                         <form method="POST" action="addComment?question=${question.title}">
+                            <label for="comment">Comment</label><br/>
                             <textarea cols="40" rows="5" name="comment" maxlength="300"></textarea>
                             <input class="formButton" type="submit" value="Send"/>
                         </form>
@@ -88,6 +89,7 @@
                         <div id="line"></div>
                     </c:forEach>
                     <form method="POST" action="addAnswer?question=${question.title}">
+                        <label for="answer">Answer</label><br/>
                         <textarea cols="40" rows="5" name="answer" maxlength="5000"></textarea>
                         <input class="formButton" type="submit" value="Send"/>
                     </form>

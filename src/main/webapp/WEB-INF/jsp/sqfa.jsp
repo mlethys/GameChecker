@@ -54,6 +54,14 @@
                             <input class="formButton" type="submit" value="Search"/>
                         </form>
                     </div>
+                    <div>
+                        <form method="POST" action="addQuestion">
+                            <label>Add question</label><br/>
+                            <input type="text" name="questionTitle" maxlength="300" placeholder="Title"/><br/>
+                            <textarea cols="40" rows="5" name="questionContent" maxlength="5000" placeholder="Content"/></textarea><br/>
+                            <input class="formButton" type="submit" value="Add"/>
+                        </form>
+                    </div>
                     <c:forEach items="${questions}" varStatus="i">
                         <div class="question">
                             <div class="rectangle">

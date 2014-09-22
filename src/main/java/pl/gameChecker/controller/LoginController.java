@@ -590,4 +590,17 @@ public class LoginController {
         sqfaAnswerDao.delete(questionAnswer);
         return "redirect:sqfa.html";
     }
+    
+    @RequestMapping(value = "addQuestion", method = RequestMethod.POST)
+    public String addQuestion(@RequestParam("questionTitle") String questionTitle,
+                                @RequestParam("questionContent") String questionContent,
+                                HttpServletRequest request) {
+        
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        Member member = memberDao.getByName(request.getSession().getAttribute("loggedUser").toString());
+        SqfaQuestionDao sqfaQuestionDao = CONTEXT.getBean("sqfaQuestion", SqfaQuestionDao.class);
+        SqfaQuestion question = new SqfaQuestion(member, questionTitle, questionContent);
+        sqfaQuestionDao.create(question);
+        return "redirect:sqfa.html";
+    }
 }
