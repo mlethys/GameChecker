@@ -1,9 +1,13 @@
 package pl.gameChecker.controller;
 
+import com.itextpdf.text.DocumentException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -33,6 +37,7 @@ import pl.gameChecker.model.hibernateEntities.SqfaQuestion;
 import pl.gameChecker.model.hibernateEntities.SqfaQuestionComment;
 import pl.gameChecker.model.hibernateEntities.SqfaQuestionCommentDao;
 import pl.gameChecker.model.hibernateEntities.SqfaQuestionDao;
+import pl.gameChecker.model.pdf.PdfModel;
 
 /**
  *
@@ -512,6 +517,56 @@ public class LoginController {
         java.sql.Date sqlDate = new java.sql.Date(tmpDate.getTime());
         Game game = new Game(gameTitle, sqlDate, tmpSingleplayer, tmpMultiplayer, tmpFree2play, gameDescription, gametypeDao.getByName(type));
         gameDao.create(game);
+        return "redirect:adminPanel";
+    }
+    
+    @RequestMapping(value="createNewMembersRaport", method = RequestMethod.POST)
+    public String createNewMembersRaport(@RequestParam(value="newMembersFrom", required=true) String newMembersFrom,
+                                            @RequestParam(value="newMembersTo", required=true) String newMembersTo) throws ParseException {
+        
+        PdfModel pdf = CONTEXT.getBean("pdfModel", PdfModel.class);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date tmpDate = sdf.parse(newMembersFrom);
+        java.sql.Date sqlDateFrom = new java.sql.Date(tmpDate.getTime());
+        tmpDate = sdf.parse(newMembersTo);
+        java.sql.Date sqlDateTo = new java.sql.Date(tmpDate.getTime());
+        try {
+            pdf.createNewMembersRaport(sqlDateFrom, sqlDateTo);
+        } catch (DocumentException | IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "redirect:adminPanel";
+    }
+    
+    @RequestMapping(value="createGameAdditionsRaport", method = RequestMethod.POST)
+    public String createGameAdditionsRaport(@RequestParam(value="gameAdditionsFrom", required=true) String gameAdditionsFrom) throws ParseException {
+        PdfModel pdf = CONTEXT.getBean("pdfModel", PdfModel.class);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date tmpDate = sdf.parse(gameAdditionsFrom);
+        java.sql.Date sqlDateFrom = new java.sql.Date(tmpDate.getTime());
+        try {
+            pdf.createGamesAdditionsReport(sqlDateFrom);
+        } catch (DocumentException | IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "redirect:adminPanel";
+    }
+    
+    @RequestMapping(value="createSqfaSummaryRaport", method = RequestMethod.POST)
+    public String createSqfaSummaryRaport(@RequestParam(value="sqfaSummaryFrom", required=true) String sqfaSummaryFrom,
+                                            @RequestParam(value="sqfaSummaryTo", required=true) String sqfaSummaryTo) throws ParseException {
+        
+        PdfModel pdf = CONTEXT.getBean("pdfModel", PdfModel.class);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date tmpDate = sdf.parse(sqfaSummaryFrom);
+        java.sql.Date sqlDateFrom = new java.sql.Date(tmpDate.getTime());
+        tmpDate = sdf.parse(sqfaSummaryTo);
+        java.sql.Date sqlDateTo = new java.sql.Date(tmpDate.getTime());
+        try {
+            pdf.createSqfaSummaryReport(sqlDateFrom, sqlDateTo);
+        } catch (DocumentException | IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return "redirect:adminPanel";
     }
   

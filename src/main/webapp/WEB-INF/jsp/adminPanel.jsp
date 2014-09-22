@@ -113,6 +113,30 @@
                         <textarea cols="40" rows="5" name="gameDescription" maxlength="5000" placeholder="Description"/></textarea>
                         <input class="formButton" type="submit" value="Add"/>
                     </form>
+                    <br/>
+                    <br/>
+                    <p>New members raport</p>
+                    <form method="POST" action="createNewMembersRaport">
+                        <label>From</label>
+                        <input type="date" name="newMembersFrom"/><br/>
+                        <label>To</label>
+                        <input type="date" name="newMembersTo"/><br/>
+                        <input class="formButton" type="submit" value="Create"/>
+                    </form>
+                    <p>Game additions raport</p>
+                    <form method="POST" action="createGameAdditionsRaport">
+                        <label>From</label>
+                        <input type="date" name="gameAdditionsFrom"/><br/>
+                        <input class="formButton" type="submit" value="Create"/>
+                    </form>
+                    <p>SQFA summary raport</p>
+                    <form method="POST" action="createSqfaSummaryRaport">
+                        <label>From</label>
+                        <input type="date" name="sqfaSummaryFrom"/><br/>
+                        <label>To</label>
+                        <input type="date" name="sqfaSummaryTo"/><br/>
+                        <input class="formButton" type="submit" value="Create"/>
+                    </form>
                 </div>
                 <div id="addsContainer" class="mainBody">
                     <img src="<c:url value="/resources/images/sampleAdd.jpg"/>" alt="add" class="add"/>
