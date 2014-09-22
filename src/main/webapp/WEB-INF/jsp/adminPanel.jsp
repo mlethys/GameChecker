@@ -95,6 +95,24 @@
                         </select>
                         <input type="submit" value="Delete game"/>
                     </form>
+                    <br/>
+                    <form method="POST" action="adminAddGame">
+                        <label>Add game</label><br/>
+                        <label>Game type</label>
+                        <select type="text" name="types">
+                                <c:forEach items="${gameTypes}" varStatus="i">
+                                    <option>${gameTypes[i.index].name}</option>
+                                </c:forEach>
+                        </select><br/>
+                        <label>Release date</label>
+                        <input type="date" name="gameRelease"/><br/>
+                        <input type="checkbox" name="others" value="singleplayer"/>Singleplayer<br/>
+                        <input type="checkbox" name="others2" value="multiplayer"/>Multiplayer<br/>
+                        <input type="checkbox" name="others3" value="free2play"/>Free2Play<br/>
+                        <input type="text" name="gameTitle" placeholder="Game title"/><br/>
+                        <textarea cols="40" rows="5" name="gameDescription" maxlength="5000" placeholder="Description"/></textarea>
+                        <input class="formButton" type="submit" value="Add"/>
+                    </form>
                 </div>
                 <div id="addsContainer" class="mainBody">
                     <img src="<c:url value="/resources/images/sampleAdd.jpg"/>" alt="add" class="add"/>

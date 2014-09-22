@@ -50,7 +50,7 @@
                     <h1 id="gameLibraryHeadline">Short questions fast answers</h1>
                     <div class="questionHeader">
                         <img src="<c:url value="${author.avatarURL}"/>" width="50px" height="50px" align="left"/>
-                        <a class="link" href="<c:url value="profile?user=${author.name}"/>">${author.name}</a>
+                        <a class="link" href="<c:url value="usrProfile?user=${author.name}"/>">${author.name}</a>
                         <p class="authorsPoints">&#160;Points: ${author.points}</p><br/>
                         <p class="authorsPoints">${question.additionDate}</p>
                     </div>
@@ -63,7 +63,7 @@
                         <div id="line"></div>
                         <c:forEach items="${questionComments}" varStatus="i">
                             <div class="questionComment">
-                                <p>${questionComments[i.index].content} ~<a class="authorLink" href="<c:url value="profile?user=${questionComments[i.index].member.name}"/>">${questionComments[i.index].member.name}</a></p>
+                                <p>${questionComments[i.index].content} ~<a class="authorLink" href="<c:url value="usrProfile?user=${questionComments[i.index].member.name}"/>">${questionComments[i.index].member.name}</a></p>
                                 <p class="date">${questionComments[i.index].additionDate}</p>
                             </div>
                             <c:if test="${(loggedUser.name == questionComments[i.index].member.name) || (loggedUser.role.name == 'Admin') || (loggedUser.role.name == 'Moderator') || (loggedUser.role.name == 'Junior Admin')}">
@@ -80,7 +80,7 @@
                     <c:forEach items="${answers}" varStatus="i">
                         <div class="answer">
                             <h3>Answer</h3>
-                            <p>${answers[i.index].content} ~<a class="authorLink" href="<c:url value="profile?user=${answers[i.index].member.name}"/>">${answers[i.index].member.name}</a></p>
+                            <p>${answers[i.index].content} ~<a class="authorLink" href="<c:url value="usrProfile?user=${answers[i.index].member.name}"/>">${answers[i.index].member.name}</a></p>
                             <p class="date">${answers[i.index].additionDate}</p>
                             <c:if test="${(loggedUser.name == answers[i.index].member.name) || (loggedUser.role.name == 'Admin') || (loggedUser.role.name == 'Moderator') || (loggedUser.role.name == 'Junior Admin')}">
                                 <a href="<c:url value="deleteAnswer?id=${answers[i.index].id}"/>">Delete</a>

@@ -47,7 +47,7 @@ public class MembersRatesGamesDaoImpl extends HibernateDaoSupport implements Mem
         {
             return membersRatesGames;
         }
-        else return null;
+        else return membersRatesGames;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class MembersRatesGamesDaoImpl extends HibernateDaoSupport implements Mem
         {
             return membersRatesGames;
         }
-        else return null;
+        else return membersRatesGames;
     }
 
     @Override

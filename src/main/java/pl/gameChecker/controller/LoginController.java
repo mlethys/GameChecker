@@ -27,6 +27,7 @@ import pl.gameChecker.model.hibernateEntities.MembersPCDao;
 import pl.gameChecker.model.hibernateEntities.MembersRatesGamesDao;
 import pl.gameChecker.model.hibernateEntities.RoleDao;
 import pl.gameChecker.model.hibernateEntities.SqfaAnswer;
+import pl.gameChecker.model.hibernateEntities.SqfaAnswerCommentDao;
 import pl.gameChecker.model.hibernateEntities.SqfaAnswerDao;
 import pl.gameChecker.model.hibernateEntities.SqfaQuestion;
 import pl.gameChecker.model.hibernateEntities.SqfaQuestionComment;
@@ -430,7 +431,17 @@ public class LoginController {
     @RequestMapping(value="deleteUser", method = RequestMethod.POST)
     public String deleteUser(@RequestParam("users") String username) {
         MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
-        memberDao.delete(memberDao.getByName(username));
+        SqfaQuestionDao sqfaQuestionDao = CONTEXT.getBean("sqfaQuestion", SqfaQuestionDao.class);
+        SqfaAnswerDao sqfaAnswerDao = CONTEXT.getBean("sqfaAnswer", SqfaAnswerDao.class);
+        SqfaQuestionCommentDao sqfaQuestionCommentDao = CONTEXT.getBean("sqfaQuestionComment", SqfaQuestionCommentDao.class);
+        SqfaAnswerCommentDao sqfaAnswerCommentDao = CONTEXT.getBean("sqfaAnswerComment", SqfaAnswerCommentDao.class);
+        MembersRatesGamesDao membersRatesGamesDao = CONTEXT.getBean("membersRatesGames", MembersRatesGamesDao.class);
+        Member member = memberDao.getByName(username);
+        memberDao.delete(member, sqfaAnswerDao.getAllAnswersFromMember(member), 
+                            sqfaQuestionDao.getAllQuestionsFromMember(member), 
+                            sqfaQuestionCommentDao.getAllQuestionCommentsFromMember(member), 
+                            sqfaAnswerCommentDao.getAllAnswerCommentsFromMember(member), 
+                            membersRatesGamesDao.getMembersRatesGamesByMember(member));
         return "redirect:adminPanel";
     }
     
@@ -456,6 +467,7 @@ public class LoginController {
     @RequestMapping(value="deleteGame", method = RequestMethod.POST)
     public String deleteGame(@RequestParam("games") String game) {
         GameDao gameDao = CONTEXT.getBean("game", GameDao.class);
+        
         gameDao.delete(gameDao.getByName(game));
         return "redirect:adminPanel";
     }
@@ -471,12 +483,45 @@ public class LoginController {
         memberDao.update(member);
         return "redirect:adminPanel";
     }
+    
+    @RequestMapping(value = "adminAddGame", method = RequestMethod.POST)
+    public String addGameToEncyclopedia(@RequestParam(value="types", required=true) String type,
+                                        @RequestParam(value="gameRelease", required=true) String releaseDate,
+                                        @RequestParam(value="others", required=false, defaultValue="") String[] singleplayer,
+                                        @RequestParam(value="others2", required=false, defaultValue="") String[] multiplayer,
+                                        @RequestParam(value="others3", required=false, defaultValue="") String[] free2play,
+                                        @RequestParam(value="gameTitle", required=true) String gameTitle,
+                                        @RequestParam(value="gameDescription", required=true) String gameDescription) throws ParseException {
+        
+        GameDao gameDao = CONTEXT.getBean("game", GameDao.class);
+        GametypeDao gametypeDao = CONTEXT.getBean("gametype", GametypeDao.class);
+        boolean tmpSingleplayer = true;
+        boolean tmpMultiplayer = true;
+        boolean tmpFree2play = true;
+        if(singleplayer.length <= 0) {
+            tmpSingleplayer = false;
+        }
+        if(multiplayer.length <= 0) {
+           tmpMultiplayer = false;                 
+        }
+        if(free2play.length <= 0) {
+           tmpFree2play = false;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date tmpDate = sdf.parse(releaseDate);
+        java.sql.Date sqlDate = new java.sql.Date(tmpDate.getTime());
+        Game game = new Game(gameTitle, sqlDate, tmpSingleplayer, tmpMultiplayer, tmpFree2play, gameDescription, gametypeDao.getByName(type));
+        gameDao.create(game);
+        return "redirect:adminPanel";
+    }
   
     @RequestMapping("adminPanel")
     public String displayAdminPanel(ModelMap model) {
         
         MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
         GameDao gameDao = CONTEXT.getBean("game", GameDao.class);
+        GametypeDao gametypeDao = CONTEXT.getBean("gametype", GametypeDao.class);
+        model.addAttribute("gameTypes", gametypeDao.getList());
         model.addAttribute("members", memberDao.getList());
         model.addAttribute("games", gameDao.getList());
         RoleDao roleDao = CONTEXT.getBean("role", RoleDao.class);
@@ -602,5 +647,30 @@ public class LoginController {
         SqfaQuestion question = new SqfaQuestion(member, questionTitle, questionContent);
         sqfaQuestionDao.create(question);
         return "redirect:sqfa.html";
+    }
+    
+    @RequestMapping("usrProfile")
+    public String displayUserProfile(@RequestParam("user") String user, HttpServletRequest request, ModelMap model) {
+        
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        Member member = memberDao.getByName(user);
+        if(member.getName().equals(request.getSession().getAttribute("loggedUser").toString())) {
+            return "myProfile";
+        }
+        model.addAttribute("member", member);
+        model.addAttribute("age", member.getAge());
+        MembersPCDao membersPCDao = CONTEXT.getBean("membersPC", MembersPCDao.class);
+        if(!membersPCDao.getAllPCsOfMember(member).isEmpty()) {
+            MembersPC membersPc = membersPCDao.getAllPCsOfMember(member).get(0);
+            if(membersPc.getMembersCPU() != null) {
+                model.addAttribute("cpu", membersPc.getMembersCPU().getName() + " " + membersPc.getMembersCPU().getCompany().getName());
+            }
+            if(membersPc.getMembersGPU() != null) {
+                model.addAttribute("gpu", membersPc.getMembersGPU().getName() + " " + membersPc.getMembersGPU().getCompany().getName());
+            }
+            model.addAttribute("ram", membersPc.getMemory());
+        }
+        
+        return "profile";
     }
 }
