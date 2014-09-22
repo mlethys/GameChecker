@@ -515,8 +515,9 @@ public class LoginController {
     
     @RequestMapping("questions")
     public String displayQuestion(@RequestParam("question") String questionTitle, 
-                                    ModelMap model) {
-        
+                                    ModelMap model,HttpServletRequest request) {
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        model.addAttribute("loggedUser", memberDao.getByName(request.getSession().getAttribute("loggedUser").toString()));
         SqfaQuestionDao sqfaQuestionDao = CONTEXT.getBean("sqfaQuestion", SqfaQuestionDao.class);
         SqfaAnswerDao sqfaAnswerDao = CONTEXT.getBean("sqfaAnswer", SqfaAnswerDao.class);
         SqfaQuestion sqfaQuestion = sqfaQuestionDao.getByTitle(questionTitle);
@@ -561,5 +562,32 @@ public class LoginController {
         SqfaAnswer questionAnswer = new SqfaAnswer(member, sqfaQuestion, answer);
         sqfaAnswerDao.create(questionAnswer);
         return "redirect:questions?question=" + questionTitle;
+    }
+    
+    @RequestMapping("deleteQuestion")
+    public String deleteQuestion(@RequestParam("id") String id) {
+        
+        SqfaQuestionDao sqfaQuestionDao = CONTEXT.getBean("sqfaQuestion", SqfaQuestionDao.class);
+        SqfaQuestion sqfaQuestion = sqfaQuestionDao.getById(Integer.parseInt(id));
+        sqfaQuestionDao.delete(sqfaQuestion); 
+        return "redirect:sqfa.html";
+    }
+   
+    @RequestMapping("deleteComment")
+    public String deleteComment(@RequestParam("id") String id) {
+        
+        SqfaQuestionCommentDao sqfaQuestionCommentDao = CONTEXT.getBean("sqfaQuestionComment", SqfaQuestionCommentDao.class);
+        SqfaQuestionComment comment = sqfaQuestionCommentDao.getById(Integer.parseInt(id));
+        sqfaQuestionCommentDao.delete(comment);
+        return "redirect:sqfa.html";
+    }
+    
+    @RequestMapping("deleteAnswer")
+    public String deleteAnswer(@RequestParam("id") String id) {
+        
+        SqfaAnswerDao sqfaAnswerDao = CONTEXT.getBean("sqfaAnswer", SqfaAnswerDao.class);
+        SqfaAnswer questionAnswer = sqfaAnswerDao.getById(Integer.parseInt(id));
+        sqfaAnswerDao.delete(questionAnswer);
+        return "redirect:sqfa.html";
     }
 }

@@ -57,12 +57,18 @@
                     <div class="question">
                         <h2>${question.title}</h2>
                         <p>${question.content}</p>
+                        <c:if test="${(loggedUser.name == author.name) || (loggedUser.role.name == 'Admin') || (loggedUser.role.name == 'Moderator') || (loggedUser.role.name == 'Junior Admin')}">
+                            <a href="<c:url value="deleteQuestion?id=${question.id}"/>">Delete</a>
+                        </c:if>
                         <div id="line"></div>
                         <c:forEach items="${questionComments}" varStatus="i">
                             <div class="questionComment">
                                 <p>${questionComments[i.index].content} ~<a class="authorLink" href="<c:url value="profile?user=${questionComments[i.index].member.name}"/>">${questionComments[i.index].member.name}</a></p>
                                 <p class="date">${questionComments[i.index].additionDate}</p>
                             </div>
+                            <c:if test="${(loggedUser.name == questionComments[i.index].member.name) || (loggedUser.role.name == 'Admin') || (loggedUser.role.name == 'Moderator') || (loggedUser.role.name == 'Junior Admin')}">
+                                <a href="<c:url value="deleteComment?id=${questionComments[i.index].id}"/>">Delete</a>
+                            </c:if>
                             <div id="line"></div>
                         </c:forEach>
                         <form method="POST" action="addComment?question=${question.title}">
@@ -75,6 +81,9 @@
                             <h3>Answer</h3>
                             <p>${answers[i.index].content} ~<a class="authorLink" href="<c:url value="profile?user=${answers[i.index].member.name}"/>">${answers[i.index].member.name}</a></p>
                             <p class="date">${answers[i.index].additionDate}</p>
+                            <c:if test="${(loggedUser.name == answers[i.index].member.name) || (loggedUser.role.name == 'Admin') || (loggedUser.role.name == 'Moderator') || (loggedUser.role.name == 'Junior Admin')}">
+                                <a href="<c:url value="deleteAnswer?id=${answers[i.index].id}"/>">Delete</a>
+                            </c:if>
                         </div>    
                         <div id="line"></div>
                     </c:forEach>
