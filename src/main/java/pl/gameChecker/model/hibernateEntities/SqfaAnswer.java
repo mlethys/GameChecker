@@ -47,6 +47,9 @@ public class SqfaAnswer implements Serializable {
     @JoinColumn(name = "SQFA_QUESTIONS_QUESTION_ID", nullable = false)
     protected SqfaQuestion sqfaQuestion;
     
+    @OneToMany(mappedBy = "sqfaAnswer", cascade = CascadeType.ALL)
+    protected List<MembersRatesAnswers> membersRatesAnswers;
+    
     public SqfaAnswer() {}
     
     public SqfaAnswer(Member member, SqfaQuestion sqfaQuestion, String content) {

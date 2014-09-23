@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.TimeZone;
 import javax.persistence.*;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.hibernate.annotations.Cascade;
 
 /**
  *
@@ -74,6 +73,9 @@ public class Member implements Serializable  {
     
     @OneToMany(mappedBy = "member")
     protected List<MembersRatesGames> membersRatesGames;
+    
+    @OneToMany(mappedBy = "member")
+    protected List<MembersRatesAnswers> membersRatesAnswers;
     
     public Member(){}
     
@@ -261,6 +263,12 @@ public class Member implements Serializable  {
     public void setMembersRatesGames(List<MembersRatesGames> membersRatesGames) {
         this.membersRatesGames = membersRatesGames;
     }
-    
-    
+
+    public List<MembersRatesAnswers> getMembersRatesAnswers() {
+        return membersRatesAnswers;
+    }
+
+    public void setMembersRatesAnswers(List<MembersRatesAnswers> membersRatesAnswers) {
+        this.membersRatesAnswers = membersRatesAnswers;
+    }
 }

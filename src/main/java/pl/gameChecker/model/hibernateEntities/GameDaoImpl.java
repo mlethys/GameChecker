@@ -143,7 +143,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
         return result;
     }
 
-@Override
+    @Override
     @Transactional
     public List<Game> getSearchGameResults(String name, Date releasedDateBetweenLow, Date releasedDateBetweenHigh, boolean singleplayer, boolean multiplayer, boolean freeToPlay, double gameStarsBeetweenLow, double gameStarsBeetweenHigh, Gametype gametype, int gamePopularityBetweenLow, int gamePopularityBetweenHigh) {
         boolean firstCriteria = true;
@@ -201,7 +201,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
                 preparedQuery += "and "; 
             else 
                 preparedQuery += "where ";
-            preparedQuery += "g.stars>=" + gameStarsBeetweenLow + " ";
+            preparedQuery += "(g.stars - " + gameStarsBeetweenLow + ") >= 0.00 ";
             firstCriteria = false;
         }
         if(gameStarsBeetweenHigh >= gameStarsBeetweenLow && gameStarsBeetweenHigh >= 0 && gameStarsBeetweenLow <= 5) {
@@ -209,7 +209,8 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
                 preparedQuery += "and "; 
             else 
                 preparedQuery += "where ";
-            preparedQuery += "g.stars<=" + gameStarsBeetweenHigh + " ";
+            //preparedQuery += "g.stars<=" + gameStarsBeetweenHigh + " ";
+            preparedQuery += "(g.stars - " + gameStarsBeetweenHigh + ") <= 0.00 ";
             firstCriteria = false;
         }
         if(gamePopularityBetweenHigh >= gamePopularityBetweenLow && gamePopularityBetweenLow >= 0 && gamePopularityBetweenLow <= 100) {
@@ -226,7 +227,6 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
             else 
                 preparedQuery += "where ";
             preparedQuery += "g.popularity<=" + gamePopularityBetweenHigh + " ";
-            firstCriteria = false;
         }
             
         Query query = getSessionFactory().getCurrentSession().createQuery(preparedQuery);
@@ -236,7 +236,7 @@ public class GameDaoImpl extends HibernateDaoSupport implements GameDao {
         List<Game> games = query.list();
                 
         for(Game g : games) {
-            System.out.println(g.getName());
+            System.out.println("Found: " + g.getName());
         }
         return games;
     }

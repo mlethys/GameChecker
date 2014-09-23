@@ -26,5 +26,6 @@
     <mapping class="com.bbzoftware.hibernateEntities.MembersGPU"/>
     <mapping class="com.bbzoftware.hibernateEntities.GamesLibraries"/>
     <mapping class="com.bbzoftware.hibernateEntities.MembersRatesGames"/>
+    <mapping class="com.bbzoftware.hibernateEntities.MembersRatesAnswers"/>
   </session-factory>
 </hibernate-configuration>

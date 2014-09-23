@@ -31,6 +31,7 @@ import pl.gameChecker.model.hibernateEntities.MembersGPU;
 import pl.gameChecker.model.hibernateEntities.MembersGPUDao;
 import pl.gameChecker.model.hibernateEntities.MembersPC;
 import pl.gameChecker.model.hibernateEntities.MembersPCDao;
+import pl.gameChecker.model.hibernateEntities.MembersRatesAnswersDao;
 import pl.gameChecker.model.hibernateEntities.MembersRatesGamesDao;
 import pl.gameChecker.model.hibernateEntities.Role;
 import pl.gameChecker.model.hibernateEntities.RoleDao;
@@ -287,7 +288,11 @@ public class TempDBMain {
         }
         
         
-        for(Game game : gameDao.getSearchGameResults("nascar", dateFrom, dateTo, false, false, false, 1, 5, gametypeDao.getByName("action"), 0, 100)) {
+        for(Game game : gameDao.getSearchGameResults("nascar", dateFrom, dateTo, false, false, false, 1, 5, gametypeDao.getByName("action"), -1, -100)) {
+            System.out.println("Search result: " + game.getName());
+        }
+        
+        for(Game game : gameDao.getSearchGameResults(null, null, null, false, true, false, -1, -5, null, 0, 100)) {
             System.out.println("Search result: " + game.getName());
         }
         
@@ -302,10 +307,11 @@ public class TempDBMain {
         gameDao.rateGame(memberDao.getById(2), gameDao.getById(1), 5);
 
         MembersRatesGamesDao membersRatesGamesDao = context.getBean("membersRatesGames", MembersRatesGamesDao.class);
+        MembersRatesAnswersDao membersRatesAnswersDao = context.getBean("membersRatesAnswers", MembersRatesAnswersDao.class);
 //        Member deleteMember = memberDao.getByName("bbZ");
 //        memberDao.delete(deleteMember, sqfaAnswerDao.getAllAnswersFromMember(deleteMember), sqfaQuestionDao.getAllQuestionsFromMember(deleteMember), 
 //                sqfaQuestionCommentDao.getAllQuestionCommentsFromMember(deleteMember), sqfaAnswerCommentDao.getAllAnswerCommentsFromMember(deleteMember),
-//                membersRatesGamesDao.getMembersRatesGamesByMember(deleteMember));
+//                membersRatesGamesDao.getMembersRatesGamesByMember(deleteMember), membersRatesAnswersDao.getMembersRatesGamesByMember(deleteMember));
 
 //        gameDao.delete(gameDao.getById(1));
         

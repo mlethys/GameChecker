@@ -15,32 +15,32 @@ import javax.persistence.*;
  * @version 1.0
  */
 @Entity
-@Table(name = "MEMBERS_RATES_GAMES")
-public class MembersRatesGames implements Serializable{
+@Table(name = "MEMBERS_RATES_ANSWERS")
+public class MembersRatesAnswers implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MEMBERS_RATES_GAMES_ID")
+    @Column(name = "MEMBERS_RATES_ANSWERS_ID")
     protected int id;
     
-    @Column(name = "MEMBERS_RATES_GAMES_IS_RATED", nullable = false)
+    @Column(name = "MEMBERS_RATES_ANSWERS_IS_RATED", nullable = false)
     protected boolean isRated;
     
     @ManyToOne
-    @JoinColumn(name = "MEMBERS_RATES_GAMES_MEMBER_ID")
+    @JoinColumn(name = "MEMBERS_RATES_ANSWERS_MEMBER_ID")
     protected Member member;
     
     @ManyToOne
-    @JoinColumn(name = "MEMBERS_RATES_GAMES_GAME_ID")
-    protected Game game;
+    @JoinColumn(name = "MEMBERS_RATES_ANSWERS_ANSWER_ID")
+    protected SqfaAnswer sqfaAnswer;
 
-    public MembersRatesGames(boolean isRated, Member member, Game game) {
+    public MembersRatesAnswers(boolean isRated, Member member, SqfaAnswer sqfaAnswer) {
         this.isRated = isRated;
         this.member = member;
-        this.game = game;
+        this.sqfaAnswer = sqfaAnswer;
     }
 
-    public MembersRatesGames() {
+    public MembersRatesAnswers() {
     }
 
     public int getId() {
@@ -67,13 +67,11 @@ public class MembersRatesGames implements Serializable{
         this.member = member;
     }
 
-    public Game getGame() {
-        return game;
+    public SqfaAnswer getSqfaAnswer() {
+        return sqfaAnswer;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public void setSqfaAnswer(SqfaAnswer sqfaAnswer) {
+        this.sqfaAnswer = sqfaAnswer;
     }
-    
-    
 }

@@ -41,7 +41,7 @@ public class Game implements Serializable {
     @Column(name = "GAME_FREE", nullable = false)
     protected boolean freeToPlay;
     
-    @Column(name = "GAME_STARS", nullable = false, length = 1)
+    @Column(name = "GAME_STARS", nullable = false)
     protected double stars;
     
     @Column(name = "GAME_RATES", nullable = false)

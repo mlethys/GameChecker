@@ -43,11 +43,7 @@ public class MembersRatesGamesDaoImpl extends HibernateDaoSupport implements Mem
         DetachedCriteria.forClass(MembersRatesGames.class)
         .add(Restrictions.eq("game", game)));
         
-        if(membersRatesGames.size() > 0)
-        {
-            return membersRatesGames;
-        }
-        else return membersRatesGames;
+    return membersRatesGames;
     }
 
     @Override
@@ -55,12 +51,8 @@ public class MembersRatesGamesDaoImpl extends HibernateDaoSupport implements Mem
         List<MembersRatesGames> membersRatesGames = (List<MembersRatesGames>) getHibernateTemplate().findByCriteria(
         DetachedCriteria.forClass(MembersRatesGames.class)
         .add(Restrictions.eq("member", member)));
-        
-        if(membersRatesGames.size() > 0)
-        {
-            return membersRatesGames;
-        }
-        else return membersRatesGames;
+
+        return membersRatesGames;
     }
 
     @Override

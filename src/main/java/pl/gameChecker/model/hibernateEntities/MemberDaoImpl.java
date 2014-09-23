@@ -103,7 +103,7 @@ public class MemberDaoImpl extends HibernateDaoSupport implements MemberDao {
     @Transactional
     public void delete(Member member, List<SqfaAnswer> sqfaAnswersFromMember, List<SqfaQuestion> sqfaQuestionsFromMember,
         List<SqfaQuestionComment> sqfaQuestionCommentsFromMember, List<SqfaAnswerComment> sqfaAnswerCommentsFromMember,
-        List<MembersRatesGames> membersRatesGamesFromMember) {
+        List<MembersRatesGames> membersRatesGamesFromMember, List<MembersRatesAnswers> membersRatesAnswersFromMember) {
         
         for(SqfaAnswer answer : sqfaAnswersFromMember) {
             answer.setMember(null);
@@ -128,6 +128,11 @@ public class MemberDaoImpl extends HibernateDaoSupport implements MemberDao {
         for(MembersRatesGames membersRatesGames : membersRatesGamesFromMember) {
             membersRatesGames.setMember(null);
             getHibernateTemplate().update(membersRatesGames);
+        }
+        
+        for(MembersRatesAnswers membersRatesAnswers : membersRatesAnswersFromMember) {
+            membersRatesAnswers.setMember(null);
+            getHibernateTemplate().update(membersRatesAnswers);
         }
         
         getHibernateTemplate().delete(member);
