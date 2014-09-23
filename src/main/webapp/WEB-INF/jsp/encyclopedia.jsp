@@ -59,22 +59,6 @@
                             <input type="radio" name="popularity[]" value="low"/>Low
                             <input type="radio" name="popularity[]" value="medium"/>Medium
                             <input type="radio" name="popularity[]" value="high"/>High
-                            <p>Rate</p>
-                            <select type="text" name="rateFrom">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                            <label for="rate" >-</label>
-                            <select type="text" name="rateTo">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
                             <p>Release day</p>
                             <label for="from">From</label>
                             <input type="text" maxlength="4" name="from" class="datesInput" onkeypress="return isNumber(event)"/>

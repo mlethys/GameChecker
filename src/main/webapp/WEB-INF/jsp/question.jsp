@@ -79,6 +79,9 @@
                     </div>
                     <c:forEach items="${answers}" varStatus="i">
                         <div class="answer">
+                            <form class="plusForm" method="POST" action="rateAnswer?id=${answers[i.index].id}&question=${question.title}">
+                                <input type="submit" class="formButton" value="+"/>
+                            </form>
                             <h3>Answer</h3>
                             <p>${answers[i.index].content} ~<a class="authorLink" href="<c:url value="usrProfile?user=${answers[i.index].member.name}"/>">${answers[i.index].member.name}</a></p>
                             <p class="date">${answers[i.index].additionDate}</p>

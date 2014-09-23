@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,6 +29,7 @@ import pl.gameChecker.model.hibernateEntities.MembersCPUDao;
 import pl.gameChecker.model.hibernateEntities.MembersGPUDao;
 import pl.gameChecker.model.hibernateEntities.MembersPC;
 import pl.gameChecker.model.hibernateEntities.MembersPCDao;
+import pl.gameChecker.model.hibernateEntities.MembersRatesAnswersDao;
 import pl.gameChecker.model.hibernateEntities.MembersRatesGamesDao;
 import pl.gameChecker.model.hibernateEntities.RoleDao;
 import pl.gameChecker.model.hibernateEntities.SqfaAnswer;
@@ -134,8 +136,6 @@ public class LoginController {
     @RequestMapping(value = "/filter", method = RequestMethod.POST)
     public String filter(@RequestParam(value="gameName", required=false, defaultValue="") String gameName,
                         @RequestParam(value="popularity[]", required=false, defaultValue="") String[] popularityRadios, 
-                        @RequestParam(value="rateFrom", required=false, defaultValue="") String rateFrom,
-                        @RequestParam(value="rateTo", required=false, defaultValue="") String rateTo,
                         @RequestParam(value="from", required=false, defaultValue="") String dateFrom,
                         @RequestParam(value="to", required=false, defaultValue="") String dateTo,
                         @RequestParam(value="types", required=false, defaultValue="") String type,
@@ -149,7 +149,7 @@ public class LoginController {
         GameDao games = CONTEXT.getBean("game", GameDao.class);
         model.addAttribute("gameTypes", gametypeDao.getList());
         if(gameName.isEmpty() && (popularityRadios.length <= 0) 
-                && (rateFrom.equals(rateTo)) && dateFrom.isEmpty() 
+                && dateFrom.isEmpty() 
                 && dateTo.isEmpty() && (singleplayer.length <= 0) 
                 && (multiplayer.length <= 0) && (free2play.length <= 0)) {
 
@@ -209,8 +209,8 @@ public class LoginController {
         
         model.addAttribute("games", games.getSearchGameResults(gameName, sqlDateFrom, sqlDateTo, 
                                     tmpSingleplayer, tmpMultiplayer, tmpFree2play, 
-                                    Double.parseDouble(rateFrom), 
-                                    Double.parseDouble(rateTo), new Gametype(type), 
+                                    1, 
+                                    5, new Gametype(type), 
                                     gamePopularityLow, gamePopularityHigh));
         return "encyclopedia";
     }
@@ -441,12 +441,14 @@ public class LoginController {
         SqfaQuestionCommentDao sqfaQuestionCommentDao = CONTEXT.getBean("sqfaQuestionComment", SqfaQuestionCommentDao.class);
         SqfaAnswerCommentDao sqfaAnswerCommentDao = CONTEXT.getBean("sqfaAnswerComment", SqfaAnswerCommentDao.class);
         MembersRatesGamesDao membersRatesGamesDao = CONTEXT.getBean("membersRatesGames", MembersRatesGamesDao.class);
+        MembersRatesAnswersDao membersRatesAnswersDao = CONTEXT.getBean("membersRatesAnswers", MembersRatesAnswersDao.class);
         Member member = memberDao.getByName(username);
         memberDao.delete(member, sqfaAnswerDao.getAllAnswersFromMember(member), 
                             sqfaQuestionDao.getAllQuestionsFromMember(member), 
                             sqfaQuestionCommentDao.getAllQuestionCommentsFromMember(member), 
                             sqfaAnswerCommentDao.getAllAnswerCommentsFromMember(member), 
-                            membersRatesGamesDao.getMembersRatesGamesByMember(member));
+                            membersRatesGamesDao.getMembersRatesGamesByMember(member), 
+                            membersRatesAnswersDao.getMembersRatesGamesByMember(member));
         return "redirect:adminPanel";
     }
     
@@ -662,6 +664,22 @@ public class LoginController {
         SqfaAnswer questionAnswer = new SqfaAnswer(member, sqfaQuestion, answer);
         sqfaAnswerDao.create(questionAnswer);
         return "redirect:questions?question=" + questionTitle;
+    }
+    
+    @RequestMapping(value="rateAnswer", method = RequestMethod.POST)
+    public String rateAnswer(@RequestParam("id") String id,
+                                @RequestParam("question") String question,
+                                HttpServletRequest request) {
+        
+        MemberDao memberDao = CONTEXT.getBean("member", MemberDao.class);
+        Member member = memberDao.getByName(request.getSession().getAttribute("loggedUser").toString());
+        SqfaAnswerDao sqfaAnswerDao = CONTEXT.getBean("sqfaAnswer", SqfaAnswerDao.class);
+        SqfaAnswer answer = sqfaAnswerDao.getById(Integer.parseInt(id));
+        MembersRatesAnswersDao membersRatesAnswersDao = CONTEXT.getBean("membersRatesAnswers", MembersRatesAnswersDao.class);
+        if(!membersRatesAnswersDao.isMemberRatedAnswer(member,answer)) {
+            sqfaAnswerDao.incrementSqfaAnswerPoints(answer);
+        }
+        return "redirect:questions?question=" + question;
     }
     
     @RequestMapping("deleteQuestion")
