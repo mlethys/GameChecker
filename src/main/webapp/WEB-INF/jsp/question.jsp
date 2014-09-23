@@ -82,7 +82,7 @@
                             <form class="plusForm" method="POST" action="rateAnswer?id=${answers[i.index].id}&question=${question.title}">
                                 <input type="submit" class="formButton" value="+"/>
                             </form>
-                            <h3>Answer</h3>
+                                <h3>Answer</h3><h4>Current points: ${answers[i.index].points}</h4>
                             <p>${answers[i.index].content} ~<a class="authorLink" href="<c:url value="usrProfile?user=${answers[i.index].member.name}"/>">${answers[i.index].member.name}</a></p>
                             <p class="date">${answers[i.index].additionDate}</p>
                             <c:if test="${(loggedUser.name == answers[i.index].member.name) || (loggedUser.role.name == 'Admin') || (loggedUser.role.name == 'Moderator') || (loggedUser.role.name == 'Junior Admin')}">

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,6 +28,7 @@ import pl.gameChecker.model.hibernateEntities.MembersCPUDao;
 import pl.gameChecker.model.hibernateEntities.MembersGPUDao;
 import pl.gameChecker.model.hibernateEntities.MembersPC;
 import pl.gameChecker.model.hibernateEntities.MembersPCDao;
+import pl.gameChecker.model.hibernateEntities.MembersRatesAnswers;
 import pl.gameChecker.model.hibernateEntities.MembersRatesAnswersDao;
 import pl.gameChecker.model.hibernateEntities.MembersRatesGamesDao;
 import pl.gameChecker.model.hibernateEntities.RoleDao;
@@ -676,8 +676,12 @@ public class LoginController {
         SqfaAnswerDao sqfaAnswerDao = CONTEXT.getBean("sqfaAnswer", SqfaAnswerDao.class);
         SqfaAnswer answer = sqfaAnswerDao.getById(Integer.parseInt(id));
         MembersRatesAnswersDao membersRatesAnswersDao = CONTEXT.getBean("membersRatesAnswers", MembersRatesAnswersDao.class);
+        MembersRatesAnswers rates = new MembersRatesAnswers(true, member, answer);
         if(!membersRatesAnswersDao.isMemberRatedAnswer(member,answer)) {
+            membersRatesAnswersDao.create(rates);
             sqfaAnswerDao.incrementSqfaAnswerPoints(answer);
+
+            System.out.println("wszedl do rated answer if");
         }
         return "redirect:questions?question=" + question;
     }

@@ -32,12 +32,14 @@ public class MembersRatesGamesDaoImpl extends HibernateDaoSupport implements Mem
     }
 
     @Override
+    @Transactional
     public MembersRatesGames getById(int id) {
         MembersRatesGames membersRatesGame = (MembersRatesGames) getHibernateTemplate().get(MembersRatesGames.class, id);
         return membersRatesGame;
     }
 
     @Override
+    @Transactional
     public List<MembersRatesGames> getMembersRatesGamesByGame(Game game) {
         List<MembersRatesGames> membersRatesGames = (List<MembersRatesGames>) getHibernateTemplate().findByCriteria(
         DetachedCriteria.forClass(MembersRatesGames.class)
@@ -47,6 +49,7 @@ public class MembersRatesGamesDaoImpl extends HibernateDaoSupport implements Mem
     }
 
     @Override
+    @Transactional
     public List<MembersRatesGames> getMembersRatesGamesByMember(Member member) {
         List<MembersRatesGames> membersRatesGames = (List<MembersRatesGames>) getHibernateTemplate().findByCriteria(
         DetachedCriteria.forClass(MembersRatesGames.class)
@@ -56,21 +59,25 @@ public class MembersRatesGamesDaoImpl extends HibernateDaoSupport implements Mem
     }
 
     @Override
+    @Transactional
     public void create(MembersRatesGames membersRatesGames) {
         getHibernateTemplate().save(membersRatesGames);
     }
 
     @Override
+    @Transactional
     public void update(MembersRatesGames membersRatesGames) {
         getHibernateTemplate().update(membersRatesGames);
     }
 
     @Override
+    @Transactional
     public void delete(MembersRatesGames membersRatesGames) {
         getHibernateTemplate().delete(membersRatesGames);
     }
 
     @Override
+    @Transactional
     public boolean isMemberRatedGame(Member member, Game game) {
         List<MembersRatesGames> membersRatesGames = (List<MembersRatesGames>) getHibernateTemplate().findByCriteria(
         DetachedCriteria.forClass(MembersRatesGames.class)
