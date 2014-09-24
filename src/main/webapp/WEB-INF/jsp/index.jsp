@@ -37,6 +37,9 @@
                 <div id="sqfa" class="menuButton" onclick="location.href='sqfa.html';">
                     <p class="menuText">SQFA</p>
                 </div>
+                <div id="about" class="menuButton" onclick="location.href='help.html';">
+                    <p class="menuText">Help</p>
+                </div>
               
             </div>  
             <img class="sliderImg" alt="img" src="<c:url value="/resources/images/image1.jpg"/>" id="slideshow">
