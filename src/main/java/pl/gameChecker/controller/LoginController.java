@@ -750,9 +750,4 @@ public class LoginController {
         
         return "profile";
     }
-    
-    @RequestMapping("help.html")
-    public String displayHelp() {
-        return "help";
-    }
 }
